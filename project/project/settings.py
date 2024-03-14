@@ -34,6 +34,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'ClassePrive.apps.ClassepriveConfig',
+    'publications.apps.PublicationsConfig',
     'home.apps.HomeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
