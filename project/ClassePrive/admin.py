@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from .models import classePrive
+from .models import ClassePrive,CourEnligne,Annonce
 
-admin.site.register(classePrive)
+admin.site.register(ClassePrive)
+admin.site.register(CourEnligne)
+admin.site.register(Annonce)
 # Register your models here.

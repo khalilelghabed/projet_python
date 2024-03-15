@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'profil.apps.ProfilConfig',
     'Utilisateurs.apps.UtilisateursConfig',
     'ClassePrive.apps.ClassepriveConfig',
     'publications.apps.PublicationsConfig',

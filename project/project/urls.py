@@ -23,6 +23,7 @@ urlpatterns = [
     path('accounts/',include('authantification.urls')),
     path('publications/',include('publications.urls')),
     path('classe privé/',include('ClassePrive.urls')),
-    path('utilisateurs/',include('Utilisateurs.urls'))
+    path('utilisateurs/',include('Utilisateurs.urls')),
+    path('profil/',include('profil.urls'))
 
 ]

@@ -5,6 +5,7 @@ from multiselectfield import MultiSelectField
 from multiselectfield.validators import MaxValueMultiFieldValidator
 
 
+
 class Utilisateur(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     REGIONS_CHOICES = [
@@ -25,7 +26,7 @@ class Utilisateur(models.Model):
     photo_profil=models.ImageField(upload_to='photos/photos_Profil',null=True,blank=False)
     nom = models.CharField(max_length=50,default='&&')
     prenom = models.CharField(max_length=50, default='&&')
-
+    date_naissenc=models.DateField(null=True)   
     def __str__(self):
         
         return f"{self.nom} {self.prenom}"
@@ -33,6 +34,7 @@ class Utilisateur(models.Model):
 
 class Etudiant(Utilisateur):
     filiere=models.CharField(max_length=255)
+    
     def __str__(self):
         return super().__str__()
     
@@ -92,6 +94,26 @@ class Enseignant(Utilisateur):
     def __str__(self):
         return super().__str__()
     
+
+class formation(models.Model):
+    titre=models.CharField(max_length=100)
+    description=models.TextField()
+    date_debut=models.DateTimeField( auto_now=False, auto_now_add=False)
+    date_fin=models.DateField( auto_now=False, auto_now_add=False)
+    etudiant=models.ManyToManyField(Etudiant)
+    def __str__(self) :
+        return self.titre
+
+class ActivitePedarogique(models.Model):
+    titre=models.CharField(max_length=100)
+    date=models.DateField( auto_now=False, auto_now_add=False)
+    nombres_participants=models.IntegerField()
+    description=models.TextField()
+    enseignant=models.ForeignKey(Enseignant, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.titre
+
+
 
 
 
