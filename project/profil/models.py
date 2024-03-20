@@ -5,11 +5,7 @@ class Profil(models.Model):
     etudiant = models.OneToOneField(Etudiant, on_delete=models.CASCADE, blank=True, null=True)
     enseignant = models.OneToOneField(Enseignant, on_delete=models.CASCADE, blank=True, null=True)
     description = models.TextField(max_length=500)
-    PROFIL_CHOICES = [
-        ('ETU', 'Etudiant'),
-        ('ENS', 'Enseignant')
-    ]
-    type_profil = models.CharField(choices=PROFIL_CHOICES, max_length=3)
+    
    
     def __str__(self):
         if self.etudiant:
