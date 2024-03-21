@@ -45,10 +45,6 @@ class Etudiant(Utilisateur):
     
 
 
-  
-
-
-
 class projet(models.Model):
     nom=models.CharField(max_length=255)
     description=models.TextField()

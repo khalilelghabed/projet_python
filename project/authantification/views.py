@@ -3,6 +3,7 @@ from django.http import  HttpResponse
 from Utilisateurs.models import Utilisateur, Enseignant,Etudiant
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth import login , authenticate, logout 
 
 def creer_compte(request):
     if request.method == 'POST':
@@ -26,7 +27,7 @@ def creer_compte(request):
                     count += 1
             else:
                 username = email
-            user = User.objects.create_user(
+                user = User.objects.create_user(
                 username=username,  # Utilisation de l'email comme nom d'utilisateur
                 email=email,
                 password=password
@@ -58,4 +59,23 @@ def creer_compte(request):
             messages.error(request,'les deux messages sont differents')
             return redirect('creerCompte')
     return render(request,'login/creerCompte.html')
+
+def authentifier(request):
+  if request.method=='POST':
+    email=request.POST.get('email')
+    password=request.POST.get('password')
+    utilisateur=authenticate(request,username=email,password=password)
+    print (utilisateur)
+    if utilisateur is not None:
+       print("vous avez authentifie")
+       login(request,utilisateur)
+       return redirect('homeAuthentifie')
+    else:
+       return render(request, 'login/authentification.html', {'error_message': 'email ou mot pass incorrect'})
+  return render(request,'login/authentification.html')
+
+
+def logOut(request):
+   logout(request)
+   return redirect('home')
 # Create your views here.

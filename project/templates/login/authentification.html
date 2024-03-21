@@ -1,0 +1,33 @@
+{% block content  %}
+<h4>se connecter</h4>
+<div class="creerForm">
+    
+    <form method="POST" action="" class="login">
+        {% csrf_token %}
+        <div>
+        <label for="email">email :</label>
+        <input type="email" name="email" id="email" required >
+        </div>
+
+    
+    <div>
+        <label for="password">password :</label>
+        <input type="password" name="password" id="password" required  minlength=10>
+    </div>
+       <div>
+         <p style="font-size: 12px;">tu n'as pas un compte ? <a href="{% url 'creerCompte'%}" >creer un compte</a></p>
+        <button type="submit" class="send">se connecter </button>
+    </div>
+        <p style="font-size: 1em; font-weight: bolder; color: red;">
+            
+
+            <p style="color:red;">{{error_message}}</p>
+            
+          </p>
+
+    </form>
+   
+    </div>
+
+
+{% endblock content  %}
