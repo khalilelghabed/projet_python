@@ -27,6 +27,11 @@ class Utilisateur(models.Model):
     nom = models.CharField(max_length=50,default='&&')
     prenom = models.CharField(max_length=50, default='&&')
     date_naissenc=models.DateField(null=True)   
+    PROFIL_CHOICES = [
+        ('etu', 'Etudiant'),
+        ('ens', 'Enseignant')
+    ]
+    type_profil = models.CharField(choices=PROFIL_CHOICES, max_length=3, default='etu')
     def __str__(self):
         
         return f"{self.nom} {self.prenom}"
@@ -34,14 +39,10 @@ class Utilisateur(models.Model):
 
 class Etudiant(Utilisateur):
     filiere=models.CharField(max_length=255)
-    
+
     def __str__(self):
         return super().__str__()
     
-
-
-  
-
 
 
 class projet(models.Model):
