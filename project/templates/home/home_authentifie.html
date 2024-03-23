@@ -1,3 +1,124 @@
-vous avez authentifie , c'est la page principale (home)
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+       
+<section>
+    <div class="parent">
+        <div class="publication">
+            <div class="profile">
+                {% if user.is_authenticated %}
+                <img src="{{ user.utilisateur.photo_profil.url }}" alt="Photo de profil">
 
-<a href='{% url "logOut" %}'>logout</a>
+                {% endif %}
+               
+                <div class="user-info">
+                    <p>Nom Prénom</p>
+                </div>
+            </div>
+            <div class="content">
+               
+                <textarea placeholder="Exprimez-vous..."></textarea>
+                
+                <div class="details">
+                    <div class="type">
+                    <div class="media">
+                        <i class="fas fa-image"></i>
+                        <!-- Ajoutez ici l'icône de média -->
+                    </div>
+                    <div class="video">
+                        <i class="fas fa-video"></i>
+                        <!-- Ajoutez ici l'icône de vidéo -->
+                    </div>
+                </div>
+                    <div class="publish">
+                        <!-- Ajoutez ici l'icône de publication -->
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                </div>
+            </div>
+           
+            
+        
+        </div>
+        <hr>
+        <div class="post-container">
+            <div class="post">
+                <div class="profile-picture">
+                    <img src={% static "images/user_image.png" %} alt="Photo de profil">
+                </div>
+                <div class="post-content">
+                    <div class="header">
+                        <div class="name">Prénom Nom</div>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </div>
+                    <div class="date">Date de publication</div>
+                    <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. A
+                        liquid ratione sunt eligendi numquam neque libero unde repellat exercitationem! Fugiat praesentium hic accusantium. Eos temporibus voluptatibus fugit! Eveniet adipisci totam aliquid!</div>
+                    
+                        <div class="interactions">
+                        <div>
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <span class="like-count">100</span>
+                        </div>
+                        <div>
+                         <i class="fa-solid fa-comment-dots"></i>
+                        <span class="comment-count">50</span>
+                    </div>
+                    
+                    <div>
+                        <i class="fa-solid fa-share"></i>
+                        <span class="share-count">30</span>
+                    
+                    </div>
+                    <div>
+        
+                    </div>
+                  
+                    </div>
+                        
+                    </div>
+                        
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        
+        </div>
+
+</section>
+<aside>  <div class="messages_side_bar">
+    Messages
+
+    <div class="search-container">
+        <i class="glyphicon glyphicon-search"></i>
+        <input type="text" class="search-input" placeholder="Search">
+    </div>
+
+    <a href="" class="requests">Requests</a>
+    <hr style="margin-top: 30px;">
+
+    <div class="users">
+
+        <div class="user">
+            <img src={% static "images/user_image.png" %} alt="User 1">
+            <span>User 1</span>
+        </div>
+
+        <div class="user">
+            <img src={% static "images/user_image.png" %} alt="User 1">
+            <span>User 2</span>
+        </div>
+
+        <div class="user">
+            <img src={% static "images/user_image.png" %} alt="User 1">
+            <span>User 3</span>
+        </div>
+
+    </div>
+
+
+    <a href="" class="view_all_chat">View All</a>
+</div></aside>   
+{% endblock content %}
+

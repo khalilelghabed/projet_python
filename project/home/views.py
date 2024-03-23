@@ -6,4 +6,6 @@ def home(request):
 
 @login_required
 def home_authentifie(request):
+    print(request.user.utilisateur.photo_profil)
+    
     return render(request, "home/home_authentifie.html")
