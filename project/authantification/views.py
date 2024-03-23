@@ -7,16 +7,16 @@ from django.contrib.auth import login , authenticate, logout
 
 def creer_compte(request):
     if request.method == 'POST':
-        firstname=request.POST.get("firstname")
-        lastname=request.POST.get("lastname")
-        email=request.POST.get("email")
-        password=request.POST.get("password1")
-        confirmer=request.POST.get("password2")
-        date_naissence=request.POST.get("date_naissenc")
-        region=request.POST.get("region")
-        type=request.POST.get("type")
-        if password==confirmer:
-           
+        firstname = request.POST.get("firstname")
+        lastname = request.POST.get("lastname")
+        email = request.POST.get("email")
+        password = request.POST.get("password1")
+        confirmer = request.POST.get("password2")
+        date_naissence = request.POST.get("date_naissenc")
+        region = request.POST.get("region")
+        type = request.POST.get("type")
+        
+        if password == confirmer:
             # Vérifier si un utilisateur avec le même email existe déjà
             if User.objects.filter(username=email).exists():
                 # Générer un nom d'utilisateur unique en ajoutant un suffixe numérique
@@ -28,37 +28,37 @@ def creer_compte(request):
             else:
                 username = email
                 user = User.objects.create_user(
-                username=username,  # Utilisation de l'email comme nom d'utilisateur
-                email=email,
-                password=password
-            )
-            if type=='etu':
-               etudiant= Etudiant.objects.create(
-                   user=user,
-                   nom=lastname,
-                   prenom=firstname,
-                   date_naissenc=date_naissence,
-                   type_profil =type,
-                   region=region
-               )
-               etudiant.save()
-            if type=='ens':
-               enseignant= Enseignant.objects.create(
-                   user=user,
-                   nom=lastname,
-                   prenom=firstname,
-                   type_profil =type,
-                   date_naissenc=date_naissence,
-                   region=region
-               )
-               enseignant.save()
-               messages.success(request,"compte a été crée avec succes")
-               return redirect('home')
-
+                    username=username,  # Utilisation de l'email comme nom d'utilisateur
+                    email=email,
+                    password=password
+                )
+                if type == 'etu':
+                    etudiant = Etudiant.objects.create(
+                        user=user,
+                        nom=lastname,
+                        prenom=firstname,
+                        date_naissenc=date_naissence,
+                        type_profil=type,
+                        region=region
+                    )
+                    etudiant.save()
+                if type == 'ens':
+                    enseignant = Enseignant.objects.create(
+                        user=user,
+                        nom=lastname,
+                        prenom=firstname,
+                        type_profil=type,
+                        date_naissenc=date_naissence,
+                        region=region
+                    )
+                    enseignant.save()
+                messages.success(request, "compte a été crée avec succes")
+                return redirect('home')
         else:
-            messages.error(request,'les deux messages sont differents')
+            messages.error(request, 'les deux mots de passe sont différents')
             return redirect('creerCompte')
-    return render(request,'login/creerCompte.html')
+    return render(request, 'login/creerCompte.html')
+
 
 def authentifier(request):
   if request.method=='POST':
