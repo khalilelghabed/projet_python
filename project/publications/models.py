@@ -4,11 +4,12 @@ from django.db import models
 class Publication(models.Model):
   
     contenu=models.TextField()
-    date_publication=models.DateTimeField(auto_now_add=True)
-    nombre_react=models.IntegerField(default=0)
-    nombre_commentaires=models.IntegerField(default=0)
-    auteur=models.ForeignKey('auth.user',on_delete=models.CASCADE)
-
+    date_publication=models.DateTimeField(auto_now_add=True , null=False, blank=False   )
+    nombre_react=models.IntegerField(default=0, null=False , blank=False)
+    nombre_commentaires=models.IntegerField(default=0 , null=False , blank=False )
+    auteur=models.ForeignKey('auth.user',on_delete=models.CASCADE,related_name='publier')
+    media=models.ImageField(upload_to='publications/publications_medias',null=True,blank=False)
+    
 
 class Commentaire(models.Model):
     contenu=models.TextField(max_length=500)

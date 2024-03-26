@@ -13,7 +13,7 @@ class Utilisateur(models.Model):
     ('ORIENTAL', 'Oriental'),
     ('FÈS-MEKNÈS', 'Fès-Meknès'),
     ('RABAT-SALÉ-KÉNITRA', 'Rabat-Salé-Kénitra'),
-    ('BÉNI MELLAL-KHÉNIFRA', 'Béni Mellal-Khénifra'),
+    ('BÉNI MELLAL-KHÉNIFRA', 'Béni Mellal-Khénifra'),  
     ('CASABLANCA-SETTAT', 'Casablanca-Settat'),
     ('MARRAKECH-SAFI', 'Marrakech-Safi'),
     ('DRÂA-TAFILALET', 'Drâa-Tafilalet'),
@@ -23,14 +23,18 @@ class Utilisateur(models.Model):
     ('DAKHLA-OUED ED-DAHAB', 'Dakhla-Oued Ed-Dahab'),
 ]
     region=models.CharField(choices=REGIONS_CHOICES,max_length=255,default='TANGER-TÉTOUAN-AL HOCEIMA')
-    photo_profil=models.ImageField(upload_to='photos/photos_Profil',null=True,blank=False)
+    photo_profil=models.ImageField(upload_to='photos/photos_Profil',null=True,blank=False, default='photos/photos_Profil/user_image.png')
     nom = models.CharField(max_length=50,default='&&')
     prenom = models.CharField(max_length=50, default='&&')
-    date_naissenc=models.DateField(null=True)   
+    date_naissenc=models.DateField(null=True)       
     PROFIL_CHOICES = [
         ('etu', 'Etudiant'),
         ('ens', 'Enseignant')
     ]
+    is_public = models.BooleanField(default=True)  # Attribute for public/private profile
+
+    followers = models.ManyToManyField('self', symmetrical=False, related_name='following_users')
+    following = models.ManyToManyField('self', symmetrical=False, related_name='followers_users')
     type_profil = models.CharField(choices=PROFIL_CHOICES, max_length=3, default='etu')
     def __str__(self):
         
