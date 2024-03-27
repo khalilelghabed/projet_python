@@ -9,7 +9,7 @@ from .models import Conversation
 from Utilisateurs.models import Utilisateur
 from notification.models import Notification
 from .models import Message, Conversation
-
+from django.db.models import Max
 
 
 
