@@ -22,9 +22,8 @@ class Conversation(models.Model):
             if existing_conversation:
                 raise ValidationError('Conversation already exists between these users.')
         super().save(*args, **kwargs)
-
 class Message(models.Model):
-    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE, related_name='messages')
+    conversation = models.ForeignKey('Conversation', on_delete=models.CASCADE, related_name='messages')
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
     content = models.TextField(blank=True)  # For text content
@@ -32,3 +31,8 @@ class Message(models.Model):
     image = models.ImageField(upload_to='message_images/', blank=True, null=True)  # For images
     video = models.FileField(upload_to='message_videos/', blank=True, null=True)  # For videos
     timestamp = models.DateTimeField(auto_now_add=True)
+    seen = models.BooleanField(default=False)  # New field to track message seen status
+
+    def mark_as_seen(self):
+        self.seen = True
+        self.save()
