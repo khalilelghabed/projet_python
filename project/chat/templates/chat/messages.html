@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Conversation with {{ profile_user.username }}</h1>
+
+<div id="message-list">
+    {% for message in messages %}
+    <div class="message">
+        <p>Sender: {{ message.sender.username }}</p>
+        <p>Receiver: {{ message.receiver.username }}</p>
+        <p>Content: {{ message.content }}</p>
+        <!-- Display other message details as needed -->
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

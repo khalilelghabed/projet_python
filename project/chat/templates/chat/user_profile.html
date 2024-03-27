@@ -1,0 +1,36 @@
+<!-- user_profile.html -->
+
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>User Profile</h1>
+
+<div class="user-profile">
+    {% if utilisateur.photo_profil %}
+        <img src="{{ utilisateur.photo_profil.url }}" class="user-avatar" alt="Avatar">
+    {% else %}
+        <img src="" class="user-avatar" alt="Avatar">
+    {% endif %}
+    <div>
+        <p>Username: {{ utilisateur.user_username }}</p>
+        <p>Name: {{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
+        <p>Region: {{ utilisateur.region }}</p>
+        <p>Date of Birth: {{ utilisateur.date_naissenc }}</p>
+        <p>Type of Profile: {{ utilisateur.type_profil }}</p>
+        <!-- Add other user information here -->
+    </div>
+</div>
+
+<form id="follow-form" action="" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="profile_user_id" value="{{ profile_user.id }}">
+    {% if profile_user.utilisateur in request.user.utilisateur.following.all %}
+        <button type="submit" name="action" value="unfollow">Unfollow</button>
+    {% else %}
+        <button type="submit" name="action" value="follow">Follow</button>
+    {% endif %}
+
+    <a href="{% url 'conversation_messages' request.user.id profile_user.id %}">View Conversation Messages</a>
+
+
+{% endblock content %}
