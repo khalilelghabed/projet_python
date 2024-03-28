@@ -5,9 +5,11 @@ from django.contrib import messages
 def createPublication(request):
     if request.method == 'POST':
         print("La méthode s'applique")
-        user = request.user
+        user = request.user.utilisateur
         contenu = request.POST.get('contenu')
-        publication = Publication(auteur=user, contenu=contenu)
+        fichier=request.POST.get('fichier')
+        media=request.POST.get('media')
+        publication = Publication(auteur=user, contenu=contenu,fichier=fichier, media=media)
         publication.save()
         messages.success(request, "Publication a été créée avec succès.")
         return redirect('homeAuthentifie')        
@@ -19,5 +21,7 @@ def createPublication(request):
 
 # Create your views here.
         
+
+
 
 

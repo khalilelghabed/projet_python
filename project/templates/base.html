@@ -186,8 +186,10 @@
 <nav>nav</nav>
 {% block content %}{% endblock content %}
 <footer>footer</footer>
-
-
+<script>
+    var csrftoken = '{{ csrf_token }}';
+</script>
+=======
 <script src="{% static "js/home.js" %}"> </script>
 </body>
 </html>
