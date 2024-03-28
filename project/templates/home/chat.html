@@ -1,137 +1,66 @@
 {% load static %}
-<link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}" />
-<!-- Css -->
-<link href="{% static 'assets/libs/simplebar/simplebar.min.css' %}" rel="stylesheet">
-<!-- Bootstrap Css -->
-<link href="{% static 'assets/css/bootstrap.min.css' %}" class="theme-opt" rel="stylesheet" type="text/css" />
-<!-- Icons Css -->
-<link href="{% static 'assets/libs/@mdi/font/css/materialdesignicons.min.css' %}" rel="stylesheet" type="text/css">
-<link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
-<link href="{% static 'assets/libs/@iconscout/unicons/css/line.css' %}" type="text/css" rel="stylesheet" />
-<!-- Style Css-->
-<link href="{% static 'assets/css/style.min.css' %}" class="theme-opt" rel="stylesheet" type="text/css" />
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-    .messages_side_bar {
-        background-color: #FFFFFF;
-        width: 280px;
-        height: 500px;
-        float: right;
-        margin-top: 40px;
-        margin-right: 20px;
-        border-radius: 28px 28px 0 0;
-        padding: 25px 16px 0px 18px;
-        cursor: pointer;
-        position: relative;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 
-    .search-container {
-        display: flex;
-        align-items: center;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 4px;
-        background: #F7F5F2;
-        width: 250px;
-        margin-top: 18px;
-        margin-bottom: 5px;
-    }
+    <style>
+        .container {
+            display: flex;
+        }
 
-    .glyphicon-search {
-        color: #C8C6C6;
-        padding: 4px;
-    }
+        body {
+            background-color: #E8E2E2;
+        }
 
-    .search-input {
-        background-color: #F7F5F2;
-        flex-grow: 1;
-        border: none;
-        outline: none;
-        padding: 4px;
-        border: 0;
-    }
+        .nav_chat,.side_chat,.messages {
+            flex: 1;
+            height: 100vh;
+        }
 
-    .requests {
-        float: right;
-        color: #008DDA;
-    }
+        .nav_chat {
+            background-color: #E8E2E2;
+            max-width: 240px;
+        }
 
-    .user {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-    }
+        .side_chat {
+            border-left: 0.2px solid #a3a2a2;
+            background-color: #E8E2E2;
+            max-width: 350px;
+        }
 
-    .user img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
+        .chat_list_header {
+            height: 65px;
+            background-color: #343a40;
+        }
 
-    .view_all_chat {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        margin-bottom: 10px;
-        margin-right: 16px;
-        color: #4c4b4b;
-    }
-</style>
 
-<nav>
-    <div class="col-lg-3 col-md-6 mt-4 order-md-2 order-lg-2 order-2 w-100">
-        <div class="card border-0 rounded shadow p-4">
-            <h5 class="mb-4">Useful Links:</h5>
-            <ul class="list-unstyled">
-                <li class="mb-3"><a href="#" class="text-decoration-none"><i data-feather="bar-chart-2" class="icon-feather me-2"></i> Dashboard</a></li>
-                <li class="mb-3"><a href="#" class="text-decoration-none"><i data-feather="user" class="icon-feather me-2"></i> Profile</a></li>
-                <li class="mb-3"><a href="#" class="text-decoration-none"><i data-feather="file-text" class="icon-feather me-2"></i> My Resume</a></li>
-                <li class="mb-3"><a href="#" class="text-decoration-none"><i data-feather="message-circle" class="icon-feather me-2"></i> Messaging</a></li>
-                <li class="mb-3"><a href="#" class="text-decoration-none"><i data-feather="book-open" class="icon-feather me-2"></i> Classrooms</a></li>
-                <li class="mb-3"><a href="#" class="text-decoration-none"><i data-feather="briefcase" class="icon-feather me-2"></i> Job Offers</a></li>
-                <li class="mb-3"><a href="#" class="text-decoration-none"><i data-feather="award" class="icon-feather me-2"></i> Internship Offers</a></li>
-                <li class="mb-3"><a href="#" class="text-decoration-none"><i data-feather="calendar" class="icon-feather me-2"></i> Events</a></li>
+        .messages {
+            border-left: 0.2px solid #a3a2a2;
+            /* Add left border */
+            background-color: #E8E2E2;
+        }
+    </style>
+</head>
 
-            </ul>
+<body>
+    <div class="container">
+        <nav class="nav_chat">Nav Chat</nav>
+        <div class="side_chat">
+            Side Chat
+
+            <div class="chat_list_header">
+                Chats
+            </div>
+
         </div>
-    </div>
-</nav>
-
-{% block extra_css %}
-<!-- Include extra CSS files specific to this child template -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-{% endblock extra_css %}
-
-
-<h1>User Profiles</h1>
-
-<div class="messages_side_bar">
-    Messages
-    <div class="search-container">
-        <i class="glyphicon glyphicon-search"></i>
-        <input type="text" class="search-input" placeholder="Search">
+        <div class="messages">Messages</div>
     </div>
 
-    <a href="" class="requests">Requests</a>
-    <hr style="margin-top: 30px;">
 
-    <div class="users">
-        {% for utilisateur in utilisateurs %}
-        <div class="user">
-            <a href="{% url 'conversation_messages' utilisateur.user_id %}" class="user-profile-link">
-                {% if utilisateur.photo_profil %}
-                <img src="{{ utilisateur.photo_profil.url }}" class="user-avatar" alt="Avatar">
-                {% else %}
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4MJsV58xh-vFYz3u4WMpS65vCvnGwBYc54SfmKToORTHdZALkZNGvpBlt4dc45A0M-y0&usqp=CAU"
-                    class="user-avatar" alt="Placeholder Avatar">
-                {% endif %}
-                <span>{{ utilisateur.nom }} {{ utilisateur.prenom }}</span>
-            </a>
-        </div>
-        {% endfor %}
-    </div>
-    
+</body>
 
-    <a href="" class="view_all_chat">View All</a>
-</div>
+</html>

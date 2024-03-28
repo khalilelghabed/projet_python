@@ -535,12 +535,11 @@ body {
     border-radius: 28px 28px 0 0;
     padding: 25px 16px 0px 18px;
     cursor: pointer;
-    position: fixed; /* Change to fixed */
-    right: 1px; /* Adjust position */
+    position: absolute; /* Change to absolute positioning */
+    right: 1px;
     bottom: 1px;
-    z-index: 2; /* Ensure it's above other elements */
+    z-index: 2;
 }
-
 
 
 .search-container {
