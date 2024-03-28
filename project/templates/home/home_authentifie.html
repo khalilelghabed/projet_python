@@ -174,11 +174,22 @@
                     
                     </ul>
                 </div>
-            </div>
-            {% endfor %}
+                 {% endfor %}
             {% endif %}
+                <div class='ajouterCommentaire'  id="user_{{publication.id}}" data-username="{{ user.username }}" data-user-id="{{ user.utilisateur.id }}"> 
+                    <textarea id="commentaire_{{ publication.id }}" class="comment-input" placeholder="Ajouter un commentaire"></textarea>
+                    
+                    <button  class="send-button"  onclick="creerCommentaire({{publication.id}})"><i class="fas fa-paper-plane"></i></button>
+                    <script>
+                        var creer_commentaire_url = "{% url 'creer_commentaire' %}";
+                    </script>
+                    
+                </div>
+            </div>
+            
+           
             {% endfor %}
-
+           
             <div class="mt-4 text-center">
                 <span class="h6 mb-0">Loading.. <i class="mdi mdi-loading mdi-spin h4 mb-0 align-middle"></i></span>
             </div>

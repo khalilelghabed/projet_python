@@ -88,3 +88,43 @@ function updatePublicationUI(publicationData) {
     }
 }
 
+function creerCommentaire(publicationId) {
+    // Récupérer le contenu du commentaire
+    var contenu = document.getElementById('commentaire_' + publicationId).value;
+    console.log(contenu)
+    var utilisateurId = document.getElementById('user_' + publicationId).dataset.userId;
+    console.log(utilisateurId);
+    $.ajax({
+        type: 'POST',
+        url: creer_commentaire_url, // Assurez-vous de remplacer par l'URL de votre vue Django
+        data: {
+            'contenu': contenu,
+            'utilisateur':utilisateurId,
+            'publication_id': publicationId,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            
+        },
+    
+        success: function(response) {
+            // Mettre à jour l'interface utilisateur pour afficher le commentaire nouvellement ajouté
+            var nouveauCommentaire = '<div class="comment">' +
+                                        '<p>' + contenu + '</p>' +
+                                        '<span>Par: ' + utilisateur + '</span>' +
+                                    '</div>';
+            $('#commentaires_' + publicationId).append(nouveauCommentaire);
+            // Réinitialiser le champ de commentaire
+            document.getElementById('commentaire_' + publicationId).value = '';
+            // Mettre à jour le nombre de commentaires
+            var nombreCommentaires = parseInt($('#nombre_commentaires_' + publicationId).text());
+            $('#nombre_commentaires_' + publicationId).text(nombreCommentaires + 1);
+        },
+        error: function(xhr, status, error) {
+            // Gérer les erreurs
+            console.error(error);
+        }
+    });
+
+    }
+    
+    // Récupérer l'utilisateur
+

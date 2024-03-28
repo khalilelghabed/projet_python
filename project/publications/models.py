@@ -11,6 +11,7 @@ class Publication(models.Model):
     media=models.FileField(upload_to='publications/publications_medias',null=True,blank=True)
     fichier=models.FileField(upload_to='publications/publications_fichiers',null=True,blank=True)
     interacteurs = models.ManyToManyField(Utilisateur, related_name='publications_aimées', blank=True)
+    
 
 
 class Commentaire(models.Model):
