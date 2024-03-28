@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns =[
 
-    path('users/', views.users, name='users'),
+    path('chat/', views.users, name='users'),
     path('conversation_messages/<int:profile_user_id>/', views.conversation_messages, name='conversation_messages')
 
 ]

@@ -16,7 +16,7 @@ from django.db.models import Max
 def users(request):
     # Retrieve all utilisateur objects
     utilisateurs = Utilisateur.objects.all()
-    return render(request, 'chat/users.html', {'utilisateurs': utilisateurs})
+    return render(request, 'home/chat.html', {'utilisateurs': utilisateurs})
 
 
 @login_required

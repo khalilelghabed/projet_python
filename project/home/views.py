@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from Utilisateurs.models import Utilisateur
+
 
 def home(request):
     
@@ -19,7 +21,7 @@ def home_authentifie(request):
 
                     print(publication)
             
-            
+        utilisateurs = Utilisateur.objects.all()
            
         
     else:
@@ -27,5 +29,5 @@ def home_authentifie(request):
         following = None
         print("L'utilisateur n'a pas d'objet Utilisateur associé.")
 
-    return render(request, "home/home_authentifie.html")
+    return render(request, "home/home_authentifie.html", {'utilisateurs': utilisateurs})
 
