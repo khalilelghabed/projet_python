@@ -1,12 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
 from Utilisateurs.models import Utilisateur
 
 
-=======
 from publications.models import Publication
->>>>>>> 7d89c699b9e5fb1c7768b3de119341fc7c53f887
 def home(request):
     
     return render(request, 'home/home.html')
@@ -14,6 +11,8 @@ def home(request):
 def home_authentifie(request):
     publication_suivies=[]
     utilisateur = request.user.utilisateur
+    utilisateurs = Utilisateur.objects.all()
+
     if utilisateur is not None:
         # L'utilisateur a un objet Utilisateur associé
         following = utilisateur.following.all()
@@ -22,10 +21,9 @@ def home_authentifie(request):
                 print(utilisateur)
                 publication_suivies.extend(utilisateur.publier.all())
                 print(publication_suivies)
-                return render(request, "home/home_authentifie.html",{'publications':publication_suivies})
+        return render(request, "home/home_authentifie.html",{'publications':publication_suivies,'utilisateurs': utilisateurs})
               
             
-        utilisateurs = Utilisateur.objects.all()
            
         
     else:
