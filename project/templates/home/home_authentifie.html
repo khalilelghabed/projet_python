@@ -48,13 +48,13 @@
                                 <i id="uploadIcon" class="fas fa-image" style="font-size: 30px !important;"></i>
 
                                 <!-- Input de type "file" caché -->
-                             <input type="file" id="mediaInput" accept="image/*,video/*" style="display: none;">
+                             <input type="file" id="mediaInput" accept="image/,video/" style="display: none;" name="media">
                                                         <!-- Ajoutez ici l'icône de média -->
                                           </div>
                                 <div class="fichier">
                                                                        
                               <i  id ='uploadIcon2' class="fa fa-file" style="font-size:24px ; margin-top: 10%; margin-left: 10%;"></i>
-                             <input type="file" id="fileInput" style="display: none;">
+                             <input type="file" id="fileInput" style="display: none;" name="fichier">
                             </div>
                         </div>
                             <div class="publish">
@@ -62,8 +62,10 @@
                                 <i class="fas fa-paper-plane" id="submitForm" onclick='creerPublicaion()'></i>
                             </div>
                         </div>
+                    </form>
+                    <div id="fileList"></div>
                     </div>
-                    
+                 
                 {% for message in messages %}
                 <script>
                 
@@ -73,14 +75,17 @@
                 </script>
                 {% endfor %}
                     {% endif %}
-                   
+
+
+
+            {% for publication in publications %}
             <div class="card border-0 shadow rounded p-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
-                        <img src="assets/images/client/05.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                        <img src="{{publication.auteur.photo_profil.url}}" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
                         <div class="flex-1 ms-2">
-                            <h6 class="mb-0">Cristina Julia</h6>
-                            <small class="text-muted">13th Sept 2021 at 11:04AM</small>
+                            <h6 class="mb-0">{{publication.auteur.nom}}  {{publication.auteur.prenom}}</h6>
+                            <small class="text-muted">{{publication.date_publication}}</small>
                         </div>
                     </div>
 
@@ -92,157 +97,118 @@
                         </div>
                     </div>
                 </div>
+                
 
                 <div class="mt-4">
-                    <a href="javascript:void(0)">
-                        <img src="assets/images/blog/bg1.jpg" class="img-fluid rounded" alt="">
-                    </a>
+                    {{publication.contenu}}
+                    {% if publication.media %}
+                    {% if publication.media.url|lower %}
+                        {% with extension=publication.media.url|lower|slice:'-4:' %}
+                            {% if extension == '.jpg' or extension == 'jpeg' or extension == '.png' or extension == '.gif' %}
+                                <a href="javascript:void(0)"><img src="{{ publication.media.url }}" alt="image de publication" class="img-fluid rounded"></a>
+                            {% elif extension == '.mp4' or extension == '.webm' or extension == '.ogg' %}
+                                <a href="javascript:void(0)">
+                                    <video width="100%" controls>
+                                        <source src="{{ publication.media.url }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </a>
+                            {% else %}
+                                <p>Le média n'est ni une image ni une vidéo</p>
+                            {% endif %}
+                        {% endwith %}
+                    {% else %}
+                        <p>URL de média invalide</p>
+                    {% endif %}
+                {% else %}
+                    <p>Aucun média disponible pour cette publication.</p>
+                {% endif %}
+                
+                        
+                    
+                    
                 </div>
-
+               
                 <div class="mt-4">
+                    
                     <div class="post-meta d-flex justify-content-between">
                         <ul class="list-unstyled mb-0">
-                            <li class="list-inline-item me-2 mb-0"><a href="javascript:void(0)" class="text-muted like"><i class="ti ti-heart me-1"></i>33</a></li>
-                            <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="ti ti-message-circle me-1"></i>08</a></li>
+                            <li class="list-inline-item me-2 mb-0"><a href="javascript:void(0)" class="text-muted like">
+                                <i class="ti ti-heart me-1" data-publication-id="{{ publication.id }}" onclick="add_like({{ publication.id }})"></i>
+                                <span id="nombre-likes-{{ publication.id }}">{{ publication.nombre_react }}</span>
+                            </a></li>
+                            <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments">
+                                <i class="ti ti-message-circle me-1" onclick="afficher_commentaires()"></i>
+                                <span>{{publication.nombre_commentaires}}<span>
+
+                                </a></li>
+                            
+                            
                         </ul>
-                        <a href="javascript:void(0)" class="text-muted"><i class="ti ti-share"></i></a>
+                        <a href="javascript:void(0)" class="text-muted">
+                            <i class="ti ti-share"></i></a>
                     </div>
-
-                    <ul class="media-list list-unstyled mb-0 border-top mt-4">
-                        <li class="mt-4">
+                     
+                    {% comment "debut de comantaires" %}{% endcomment %}
+                    {% if publication.commentaires.all  %}
+                      {% for commentaire in publication.commentaires.all %}
+                    <ul class="media-list list-unstyled mb-0 border-top mt-4" style="display:none" >
+                        <li class="mt-4" style='display:none'>
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex align-items-center">
                                     <a class="pe-3" href="#">
-                                        <img src="assets/images/client/01.jpg" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
+                                        <img src="{{commentaire.auteur.photo_profil.url}}" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
                                     </a>
                                     <div class="commentor-detail">
-                                        <h6 class="mb-0"><a href="javascript:void(0)" class="text-dark media-heading">Lorenzo Peterson</a></h6>
-                                        <small class="text-muted">15th September, 2021 at 01:25 pm</small>
+                                        <h6 class="mb-0"><a href="javascript:void(0)" class="text-dark media-heading">{{commentaire.auteur}}</a></h6>
+                                        <small class="text-muted">{{commentaire.date}}</small>
                                     </div>
                                 </div>
                                 <a href="#" class="text-muted"><i class="mdi mdi-reply"></i> Reply</a>
                             </div>
                             <div class="mt-3">
-                                <p class="text-muted fst-italic p-3 bg-light rounded">" There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour "</p>
+                                <p class="text-muted fst-italic p-3 bg-light rounded">{{commentaire.contenu}}</p>
                             </div>
                         </li>
 
-                        <li class="mt-4">
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <a class="pe-3" href="#">
-                                        <img src="assets/images/client/02.jpg" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
-                                    </a>
-                                    <div class="commentor-detail">
-                                        <h6 class="mb-0"><a href="javascript:void(0)" class="media-heading text-dark">Tammy Camacho</a></h6>
-                                        <small class="text-muted">15th September, 2021 at 05:44 pm</small>
-                                    </div>
-                                </div>
-                                <a href="#" class="text-muted"><i class="mdi mdi-reply"></i> Reply</a>
-                            </div>
-                            <div class="mt-3">
-                                <p class="text-muted fst-italic p-3 bg-light rounded">" There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour "</p>
-                            </div>
-                        </li>
+                    
                     </ul>
                 </div>
-            </div>
-
-            <div class="card border-0 shadow rounded p-4 mt-4">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <img src="assets/images/client/05.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
-                        <div class="flex-1 ms-2">
-                            <h6 class="mb-0">Cristina Julia</h6>
-                            <small class="text-muted">13th Sept 2021 at 11:04AM</small>
-                        </div>
-                    </div>
-
-                    <div class="dropdown dropdown-primary">
-                        <button type="button" class="btn btn-icon btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti ti-dots-vertical"></i></button>
-                        <div class="dropdown-menu dd-menu dropdown-menu-end shadow border-0 mt-3 py-3">
-                            <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="ti ti-settings"></i></span> Edit</a>
-                            <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="ti ti-trash"></i></span> Delete</a>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="text-muted mb-0 mt-4">Business metting 🤑</p>
-
-                <div class="mt-4">
-                    <a href="javascript:void(0)">
-                        <img src="assets/images/blog/bg2.jpg" class="img-fluid rounded" alt="">
-                    </a>
-                </div>
-
-                <div class="mt-4">
-                    <div class="post-meta d-flex justify-content-between">
-                        <ul class="list-unstyled mb-0">
-                            <li class="list-inline-item me-2 mb-0"><a href="javascript:void(0)" class="text-muted like"><i class="ti ti-heart me-1"></i>33</a></li>
-                            <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="ti ti-message-circle me-1"></i>08</a></li>
-                        </ul>
-                        <a href="javascript:void(0)" class="text-muted"><i class="ti ti-share"></i></a>
-                    </div>
+                 {% endfor %}
+            {% endif %}
+                <div class='ajouterCommentaire'  id="user_{{publication.id}}" data-username="{{ user.username }}" data-user-id="{{ user.utilisateur.id }}"> 
+                    <textarea id="commentaire_{{ publication.id }}" class="comment-input" placeholder="Ajouter un commentaire"></textarea>
+                    
+                    <button  class="send-button"  onclick="creerCommentaire({{publication.id}})"><i class="fas fa-paper-plane"></i></button>
+                    <script>
+                        var creer_commentaire_url = "{% url 'creer_commentaire' %}";
+                    </script>
+                    
                 </div>
             </div>
             
-            <div class="card border-0 shadow rounded p-4 mt-4">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <img src="assets/images/client/05.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
-                        <div class="flex-1 ms-2">
-                            <h6 class="mb-0">Cristina Julia</h6>
-                            <small class="text-muted">13th Sept 2021 at 11:04AM</small>
-                        </div>
-                    </div>
-
-                    <div class="dropdown dropdown-primary">
-                        <button type="button" class="btn btn-icon btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti ti-dots-vertical"></i></button>
-                        <div class="dropdown-menu dd-menu dropdown-menu-end shadow border-0 mt-3 py-3">
-                            <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="ti ti-settings"></i></span> Edit</a>
-                            <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="ti ti-trash"></i></span> Delete</a>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="text-muted mb-0 mt-4">Fresh vegetables and fruits 🤑</p>
-
-                <div class="mt-4">
-                    <a href="javascript:void(0)">
-                        <img src="assets/images/blog/bg3.jpg" class="img-fluid rounded" alt="">
-                    </a>
-                </div>
-
-                <div class="mt-4">
-                    <div class="post-meta d-flex justify-content-between">
-                        <ul class="list-unstyled mb-0">
-                            <li class="list-inline-item me-2 mb-0"><a href="javascript:void(0)" class="text-muted like"><i class="ti ti-heart me-1"></i>33</a></li>
-                            <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="ti ti-message-circle me-1"></i>08</a></li>
-                        </ul>
-                        <a href="javascript:void(0)" class="text-muted"><i class="ti ti-share"></i></a>
-                    </div>
-                </div>
-            </div>
-
+           
+            {% endfor %}
+           
             <div class="mt-4 text-center">
                 <span class="h6 mb-0">Loading.. <i class="mdi mdi-loading mdi-spin h4 mb-0 align-middle"></i></span>
             </div>
         </div><!--end col-->
 
 
-
+  
 </section>
-<aside> 
+<aside>  
     <div class="messages_side_bar">
         Messages
         <div class="search-container">
             <i class="glyphicon glyphicon-search"></i>
             <input type="text" class="search-input" placeholder="Search">
         </div>
-    
+
         <a href="" class="requests">Requests</a>
         <hr style="margin-top: 30px;">
-    
+
         <div class="users">
             {% for utilisateur in utilisateurs %}
             <div class="user">
@@ -259,10 +225,12 @@
             {% endfor %}
         </div>
 
+
+        <a href="" class="view_all_chat">View All</a>
+    </div>
 </aside>
 
 
 
  
 {% endblock content %}
-
