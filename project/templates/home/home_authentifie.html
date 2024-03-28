@@ -152,7 +152,7 @@
                     {% comment "debut de comantaires" %}{% endcomment %}
                     {% if publication.commentaires.all  %}
                       {% for commentaire in publication.commentaires.all %}
-                    <ul class="media-list list-unstyled mb-0 border-top mt-4" >
+                    <ul class="media-list list-unstyled mb-0 border-top mt-4" style="display:none" >
                         <li class="mt-4" style='display:none'>
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex align-items-center">
@@ -196,7 +196,7 @@
         </div><!--end col-->
 
 
-
+  
 </section>
 <aside>  <div class="messages_side_bar">
     Messages
