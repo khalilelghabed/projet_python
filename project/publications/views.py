@@ -36,7 +36,8 @@ def creer_commentaire(request):
         try:
             # Récupérer l'objet Publication
             publication = Publication.objects.get(id=publication_id)
-
+            publication.nombre_commentaires=publication.nombre_commentaires+1
+            publication.save()
             # Créer un nouveau commentaire associé à la publication
             nouveau_commentaire = Commentaire.objects.create(
                 contenu=contenu,
@@ -44,12 +45,15 @@ def creer_commentaire(request):
                 publication=publication
             )
             nouveau_commentaire.save()
-            
+            publication_data={
+                'id':publication.id,
+                'nombre_commentaire':publication.nombre_commentaires
+            }
             # Retourner une réponse JSON avec un message de confirmation
-            return JsonResponse({'message': 'Le commentaire a été créé avec succès.'})
+            return JsonResponse({'message': 'Le commentaire a été créé avec succès.','pufblication':publication_data})
         
         except Publication.DoesNotExist:
-            # Si la publication avec l'ID spécifié n'existe pas, renvoyer une erreur
+            # Si la publication avec l'ID spécifié n'existe kpas, renvoyer une erreur
             return JsonResponse({'error': 'La publication spécifiée n\'existe pas.'}, status=404)
     else:
         # Si la méthode n'est pas POST, renvoyer une erreur

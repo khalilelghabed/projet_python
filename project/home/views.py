@@ -46,7 +46,7 @@ def ajouter_like(request, publication_id):
             publication.nombre_react += 1
             publication.interacteurs.add(request.user.utilisateur)
 
-        
+            
         publication.save()
 
         # Sérialiser les données de la publication mises à jour
