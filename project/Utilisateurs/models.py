@@ -29,7 +29,8 @@ class Utilisateur(models.Model):
     date_naissenc=models.DateField(null=True)       
     PROFIL_CHOICES = [
         ('etu', 'Etudiant'),
-        ('ens', 'Enseignant')
+        ('ens', 'Enseignant'),
+        ('ent','entreprise'),   #just added
     ]
     is_public = models.BooleanField(default=True)  # Attribute for public/private profile
 
@@ -37,13 +38,28 @@ class Utilisateur(models.Model):
     following = models.ManyToManyField('self', symmetrical=False, related_name='followers_users', blank=True)
 
     type_profil = models.CharField(choices=PROFIL_CHOICES, max_length=3, default='etu')
+    email = models.EmailField(null=True, blank=True)
+    
+    tele = models.CharField(max_length=20, null=True, blank=True) #just added
+    GENDER_CHOICES = [  #just added
+        ('M', 'Male'),
+        ('F', 'Female'),
+    ]
     def __str__(self):
         
         return f"{self.nom} {self.prenom}"
     
+    
 
 class Etudiant(Utilisateur):
     filiere=models.CharField(max_length=255)
+    #just added
+    institution = models.CharField(max_length=255, default='Université XYZ')
+    major = models.CharField(max_length=255, default='Génie logiciel')
+    year_of_study = models.IntegerField(default=1)
+    degree = models.CharField(max_length=255, default='Licence')
+    top_skills = models.CharField(max_length=255, default='Python, Django, HTML')
+    experiences = models.TextField(default='Aucune expérience')
 
     def __str__(self):
         return super().__str__()
@@ -92,8 +108,7 @@ class Enseignant(Utilisateur):
         ('GC','GENIE CHIMIQUE'),
         ('SDT','SIENCES DE LA TERRE'),
         ('SDV','SIECES DE LA VIE'),
-        ('GE','GENIE ELECTRIQUE'),
-        
+        ('GE','GENIE ELECTRIQUE'),   
     ]
     departement=models.CharField(choices=departement_choices,max_length=50)
     
