@@ -28,40 +28,44 @@ def createPublication(request):
 def creer_commentaire(request):
     if request.method == 'POST':
         contenu = request.POST.get('contenu')
-        utilisateurid = request.POST.get('utilisateur')
+        utilisateur_id = request.POST.get('utilisateur')
         publication_id = request.POST.get('publication_id')
 
-        utilisateur=Utilisateur.objects.get(id=utilisateurid)
-        print(utilisateur)
+        utilisateur = Utilisateur.objects.get(id=utilisateur_id)
+        
         try:
             # Récupérer l'objet Publication
             publication = Publication.objects.get(id=publication_id)
-            publication.nombre_commentaires=publication.nombre_commentaires+1
+            publication.nombre_commentaires += 1
             publication.save()
+            
             # Créer un nouveau commentaire associé à la publication
             nouveau_commentaire = Commentaire.objects.create(
                 contenu=contenu,
                 auteur=utilisateur,
                 publication=publication
             )
-            nouveau_commentaire.save()
-            publication_data={
-                'id':publication.id,
-                'nombre_commentaire':publication.nombre_commentaires
+            
+            publication_data = {
+                'id': publication.id,
+                'nombre_commentaires': publication.nombre_commentaires
             }
-            # Retourner une réponse JSON avec un message de confirmation
-            return JsonResponse({'message': 'Le commentaire a été créé avec succès.','pufblication':publication_data})
+            
+            # Retourner une réponse JSON avec les données du commentaire nouvellement ajouté
+            return JsonResponse({
+                'message': 'Le commentaire a été créé avec succès.',
+                'publication': publication_data,
+                'commentaire': {
+                    'photo_profil': utilisateur.photo_profil.url,
+                    'auteur': utilisateur.nom + ' ' + utilisateur.prenom,
+                    'date': nouveau_commentaire.date,  # Assurez-vous de récupérer la date correcte
+                    'contenu': nouveau_commentaire.contenu
+                }
+            })
         
         except Publication.DoesNotExist:
-            # Si la publication avec l'ID spécifié n'existe kpas, renvoyer une erreur
+            # Si la publication avec l'ID spécifié n'existe pas, renvoyer une erreur
             return JsonResponse({'error': 'La publication spécifiée n\'existe pas.'}, status=404)
     else:
         # Si la méthode n'est pas POST, renvoyer une erreur
         return JsonResponse({'error': 'Méthode non autorisée'}, status=405)
-
-# Create your views here.
-        
-
-
-
-

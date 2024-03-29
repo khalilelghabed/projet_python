@@ -151,6 +151,7 @@ function creerCommentaire(publicationId) {
     console.log(contenu)
     var utilisateurId = document.getElementById('user_' + publicationId).dataset.userId;
     console.log(utilisateurId);
+
     $.ajax({
         type: 'POST',
         url: creer_commentaire_url, // Assurez-vous de remplacer par l'URL de votre vue Django
@@ -163,39 +164,35 @@ function creerCommentaire(publicationId) {
         },
     
         success: function(response) {
-            var nombreCommentaires = parseInt($('#nombre_commentaires_' + publicationId).text());
+            var commentaire = response.commentaire;
             
-            $('#nombre_commentaires_' + publicationId).text(nombreCommentaires + 1);
-          
+        
             var nouveauCommentaire = '<ul class="media-list list-unstyled mb-0 border-top mt-4">' +
-            '<li class="mt-4">' +
+                '<li class="mt-4">' +
                 '<div class="d-flex justify-content-between">' +
-                    '<div class="d-flex align-items-center">' +
-                        '<a class="pe-3" href="#">' +
-                            '<img src="' + response.photo_profil + '" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">' +
-                        '</a>' +
-                        '<div class="commentor-detail">' +
-                            '<h6 class="mb-0"><a href="javascript:void(0)" class="text-dark media-heading">' + response.auteur + '</a></h6>' +
-                            '<small class="text-muted">' + response.date + '</small>' +
-                        '</div>' +
-                    '</div>' +
-                    '<a href="#" class="text-muted"><i class="mdi mdi-reply"></i> Reply</a>' +
+                '<div class="d-flex align-items-center">' +
+                '<a class="pe-3" href="#">' +
+                '<img src="' + commentaire.photo_profil + '" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">' +
+                '</a>' +
+                '<div class="commentor-detail">' +
+                '<h6 class="mb-0"><a href="javascript:void(0)" class="text-dark media-heading">' + commentaire.auteur + '</a></h6>' +
+                '<small class="text-muted">' + commentaire.date + '</small>' +
+                '</div>' +
+                '</div>' +
+                '<a href="#" class="text-muted"><i class="mdi mdi-reply"></i> Reply</a>' +
                 '</div>' +
                 '<div class="mt-3">' +
-                    '<p class="text-muted fst-italic p-3 bg-light rounded">' + response.contenu + '</p>' +
+                '<p class="text-muted fst-italic p-3 bg-light rounded">' + commentaire.contenu + '</p>' +
                 '</div>' +
-            '</li>' +
-        '</ul>';
-
-// Ajouter le nouveau commentaire au début de la liste des commentaires
-$('#publication-' + publicationId).find('.post-meta').after(nouveauCommentaire);
-console.log(nouveauCommentaire)
-// Réinitialiser le champ de commentaire
-document.getElementById('commentaire_' + publicationId).value = '';
-
-// Réinitialiser le champ de commentaire
-
-            
+                '</li>' +
+                '</ul>';
+        
+            // Ajouter le nouveau commentaire au début de la liste des commentaires
+            $('#publication-' + publicationId).find('.post-meta').after(nouveauCommentaire);
+        
+            // Réinitialiser le champ de commentaire
+            document.getElementById('commentaire_' + publicationId).value = '';
+            $('#nombre_commentaires_' + publicationId).text(response.publication.nombre_commentaires);
         },
         error: function(xhr, status, error) {
             // Gérer les erreurs

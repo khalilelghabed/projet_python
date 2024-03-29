@@ -23,4 +23,5 @@ class Profil(models.Model):
         super(Profil, self).save(*args, **kwargs)
 
 
+
 # Create your models here.
