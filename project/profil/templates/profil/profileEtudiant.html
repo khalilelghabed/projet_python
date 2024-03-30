@@ -94,7 +94,7 @@
         <div class="cover-photo">
                 <div class="cover-pic border-1 rounded shadow"></div>
             <label for="profile-upload" class="profile-upload-label">
-                <img src="{{utilisateur.photo_profil}}" alt="Profile Picture" class="profile-pic" id="profile-preview">
+                <img src="{{utilisateur.photo_profil.url}}" alt="Profile Picture" class="profile-pic" id="profile-preview">
             </label>
             {% if is_own_profile %}
             <input type="file" id="profile-upload" accept="image/*" onchange="previewProfile(event)" style="display: none;">
