@@ -1,26 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-
-{% comment %} <!-- profil/templates/profil/profil_page.html -->
-
-<!-- profil/templates/profil/profileEtudiant.html -->
-
-<h1>{{ user.utilisateur.nom }}'s Profile</h1>
-{{ utilisateur.nom}}
-
-<!-- Public elements visible to any user -->
-<!-- Include elements visible to any user -->
-
-{% if is_own_profile %}
-    i am same person {{ utilisateur.nom}}
-{% endif %}
-
-{% if not is_own_profile %}
-    <!-- Private elements visible only when the current user is not the owner of the profile -->
-    <!-- Include elements visible only when the current user is not the owner of the profile -->
-{% endif %} {% endcomment %}
-
 {% block content  %}
 <head>
     <meta charset="utf-8" />
@@ -81,7 +61,7 @@
         
     </aside>
     
-    <nav >
+    <nav>
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
             <h5 class="mb-0">Top Skills</h5>
             <p>{{utilisateur.etudiant.top_skills}}<br>
@@ -96,7 +76,7 @@
        
     </nav>
 
-    <section>
+    <section> 
     <div class="firstprf">
         <div class="cover-photo">
             <div class="cover-pic border-1 rounded shadow"></div>
@@ -123,6 +103,7 @@
         </div>
     </div>
 
+
     <div class="text-center mt-4 op1">
         {% if is_own_profile %}
         <button id="about-button" class="btn btn-outline primary">Settings</button>
@@ -143,10 +124,7 @@
     <div id="about-section" class="about-section" style="display: none;">
         <div id="student-profile">
             <h2>Settings</h2>
-            <div class="info-item">
-                <label for="photo_profil">Profile Picture:</label>
-                <img src="{{ utilisateur.photo_profil.url }}" id="photo_profil" alt="Profile Picture" class="profile-pic" >
-            </div>
+            
             <div class="info-item">
                 <label for="full-name">Full Name:</label>
                 <span id="full-name">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
@@ -196,7 +174,7 @@
                 <span id="experiences">{{utilisateur.etudiant.experiences}}</span>
             </div>
             <button id="update-button" onclick="toggleUpdateWidget()">Update Information</button>
-            <form action="{% url 'update' user_id=utilisateur.id %}" method="post">
+            <form action="{% url 'update' user_id=utilisateur.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
             <div id="update-widget" class="update-widget" style="display: none; z-index: 10;">
                 <!-- Widget content -->
@@ -451,50 +429,61 @@
     </section>
 
     <script>
-        function toggleUpdateWidget() {
-            var updateWidget = document.getElementById('update-widget');
-            var overlay = document.getElementById('overlay');
-            if (updateWidget.style.display === 'none') {
-                updateWidget.style.display = 'block';
-                overlay.style.display = 'block';
-            } else {
-                updateWidget.style.display = 'none';
-                overlay.style.display = 'none';
-            }
-        }
-        function updateInformation() {
-            var photoProfilInput = document.getElementById('photo_profil-input');
-            var photoProfil = document.getElementById('photo_profil');
+        document.addEventListener('DOMContentLoaded', function() {
+            {% if is_own_profile %}
+            var aboutButton = document.getElementById('about-button');
+            var postsButton = document.getElementById('posts-button');
+            var resumeButton = document.getElementById('resume-button');
         
-            // Check if a file is selected
-            if (photoProfilInput.files && photoProfilInput.files[0]) {
-                var reader = new FileReader();
+            var aboutSection = document.getElementById('about-section');
+            var resumeSection = document.getElementById('resume-section');
+            var postsSection = document.getElementById('posts-section');
         
-                // Set the image source once it's loaded
-                reader.onload = function (e) {
-                    photoProfil.src = e.target.result;
-                };
+            aboutButton.addEventListener('click', function() {
+                aboutSection.style.display = 'block';
+                resumeSection.style.display = 'none';
+                postsSection.style.display = 'none';
+            });
         
-                // Read the image file as a data URL
-                reader.readAsDataURL(photoProfilInput.files[0]);
-            }
+            postsButton.addEventListener('click', function() {
+                aboutSection.style.display = 'none';
+                resumeSection.style.display = 'none';
+                postsSection.style.display = 'block';
+            });
         
-            document.getElementById('full-name').textContent = document.getElementById('full-name-input').value;
-            document.getElementById('bio').textContent = document.getElementById('bio-input').value;
-            document.getElementById('email').textContent = document.getElementById('email-input').value;
-            document.getElementById('phone-number').textContent = document.getElementById('phone-number-input').value;
-            document.getElementById('date-of-birth').textContent = document.getElementById('date-of-birth-input').value;
-            document.getElementById('gender').textContent = document.getElementById('gender-input').value;
-            document.getElementById('institution').textContent = document.getElementById('institution-input').value;
-            document.getElementById('major').textContent = document.getElementById('major-input').value;
-            document.getElementById('degree-program').textContent = document.getElementById('degree-program-input').value;
-            document.getElementById('year-of-study').textContent = document.getElementById('year-of-study-input').value;
-            document.getElementById('top-skills').textContent = document.getElementById('top-skills-input').value;
-            document.getElementById('experiences').textContent = document.getElementById('experiences-input').value;
+            resumeButton.addEventListener('click', function() {
+                aboutSection.style.display = 'none';
+                resumeSection.style.display = 'block';
+                postsSection.style.display = 'none';
+            });
         
-            toggleUpdateWidget(); // Hide the update widget after saving
-        }
+            // Ensure that only one section is shown on page load
+            aboutSection.style.display = 'block';
+            resumeSection.style.display = 'none';
+            postsSection.style.display = 'none';
+            {% else %}
+            var postsButton = document.getElementById('posts-button');
+            var resumeButton = document.getElementById('resume-button');
         
+            var resumeSection = document.getElementById('resume-section');
+            var postsSection = document.getElementById('posts-section');
+        
+            postsSection.style.display = 'block'; // Display posts section by default
+        
+            postsButton.addEventListener('click', function() {
+                resumeSection.style.display = 'none';
+                postsSection.style.display = 'block';
+            });
+        
+            resumeButton.addEventListener('click', function() {
+                resumeSection.style.display = 'block';
+                postsSection.style.display = 'none';
+            });
+        
+            // Ensure that only one section is shown on page load
+            resumeSection.style.display = 'none';
+            {% endif %}
+        });        
     </script>
     
     
