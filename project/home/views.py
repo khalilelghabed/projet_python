@@ -5,10 +5,12 @@ from Utilisateurs.models import Utilisateur
 
 from publications.models import Publication
 def home(request):
-    
+   
     return render(request, 'home/home.html')
 @login_required
 def home_authentifie(request):
+    print(request.user.utilisateur.id)
+    print(request.user.utilisateur.nom)
     publication_suivies=[]
     utilisateur = request.user.utilisateur
     utilisateurs = Utilisateur.objects.all()
@@ -46,7 +48,7 @@ def ajouter_like(request, publication_id):
             publication.nombre_react += 1
             publication.interacteurs.add(request.user.utilisateur)
 
-        
+            
         publication.save()
 
         # Sérialiser les données de la publication mises à jour

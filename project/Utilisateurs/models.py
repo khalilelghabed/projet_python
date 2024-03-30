@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from multiselectfield import MultiSelectField
 from multiselectfield.validators import MaxValueMultiFieldValidator
-
+    
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Utilisateur(models.Model):
@@ -49,7 +51,13 @@ class Utilisateur(models.Model):
    
     
     
+@receiver(post_save, sender=User)
+def create_utilisateur(sender, instance, created, **kwargs):
+    if created and instance.is_superuser:
+        Utilisateur.objects.create(user=instance)
 
+
+    
 class Etudiant(Utilisateur):
     filiere=models.CharField(max_length=255)
     #just added
@@ -59,6 +67,7 @@ class Etudiant(Utilisateur):
     degree = models.CharField(max_length=255, default='Licence')
     top_skills = models.CharField(max_length=255, default='Python, Django, HTML')
     experiences = models.TextField(default='Aucune expérience')
+
 
     def __str__(self):
         return super().__str__()

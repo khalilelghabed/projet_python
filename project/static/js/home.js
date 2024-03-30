@@ -1,13 +1,20 @@
-function afficher_commentaires() {
-    // Sélectionnez les cinq premiers éléments de la liste des commentaires
-    const commentaires = document.querySelectorAll('.media-list li');
-    const premiersCommentaires = Array.from(commentaires).slice(0, 5);
+function afficher_commentaires(publicationId) {
+    console.log("button ");
+    // Sélectionnez les commentaires de la publication correspondante
+    const commentaires = document.querySelectorAll('#publication-' + publicationId + ' .media-list li');
 
-    // Affichez les cinq premiers commentaires
-    premiersCommentaires.forEach(commentaire => {
-        commentaire.style.display = 'block'; // Assurez-vous que le commentaire est visible
+    // Parcourez chaque commentaire
+    commentaires.forEach(commentaire => {
+        // Vérifiez l'état actuel d'affichage du commentaire
+        const isDisplayed = window.getComputedStyle(commentaire).display !== 'none';
+
+        // Si le commentaire est actuellement affiché, cachez-le; sinon, affichez-le
+        commentaire.style.display = isDisplayed ? 'none' : 'block';
     });
 }
+
+
+
 
 function handleFileSelect(event) {
     const fileListDiv = document.getElementById('fileList');
@@ -82,4 +89,44 @@ function updatePublicationUI(publicationData) {
         numberOfLikesElement.innerText = publicationData.nombre_react;
     }
 }
+
+function creerCommentaire(publicationId) {
+    // Récupérer le contenu du commentaire
+    var contenu = document.getElementById('commentaire_' + publicationId).value;
+    console.log(contenu)
+    var utilisateurId = document.getElementById('user_' + publicationId).dataset.userId;
+    console.log(utilisateurId);
+    $.ajax({
+        type: 'POST',
+        url: creer_commentaire_url, // Assurez-vous de remplacer par l'URL de votre vue Django
+        data: {
+            'contenu': contenu,
+            'utilisateur':utilisateurId,
+            'publication_id': publicationId,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            
+        },
+    
+        success: function(response) {
+            // Mettre à jour l'interface utilisateur pour afficher le commentaire nouvellement ajouté
+            var nouveauCommentaire = '<div class="comment">' +
+                                        '<p>' + contenu + '</p>' +
+                                        '<span>Par: ' + utilisateur + '</span>' +
+                                    '</div>';
+            $('#commentaires_' + publicationId).append(nouveauCommentaire);
+            // Réinitialiser le champ de commentaire
+            document.getElementById('commentaire_' + publicationId).value = '';
+            // Mettre à jour le nombre de commentaires
+            var nombreCommentaires = parseInt($('#nombre_commentaires_' + publicationId).text());
+            $('#nombre_commentaires_' + publicationId).text(nombreCommentaires + 1);
+        },
+        error: function(xhr, status, error) {
+            // Gérer les erreurs
+            console.error(error);
+        }
+    });
+
+    }
+    
+    // Récupérer l'utilisateur
 
