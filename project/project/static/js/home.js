@@ -201,6 +201,76 @@ function creerCommentaire(publicationId) {
     });
 
     }
-    
-    // Récupérer l'utilisateur
+    var nextPage = 2; // Page suivante à charger
+    var loadMoreButton = document.getElementById('loadMoreButton');
+    var container = document.getElementById('publicationContainer');
 
+    // Écouter l'événement de clic sur le bouton "Charger plus"
+    loadMoreButton.addEventListener('click', function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/load-more-publications?page=' + nextPage);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var newPublications = JSON.parse(xhr.responseText);
+                newPublications.forEach(function(publication) {
+                    var publicationElement = document.createElement('div');
+                    publicationElement.classList.add('card', 'border-0', 'shadow', 'rounded', 'p-4');
+                    publicationElement.id = 'publication-' + publication.id;
+                    publicationElement.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="/media/photos/photos_Profil/user_image.png" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                <div class="flex-1 ms-2">
+                                    <h6 class="mb-0">${publication.auteur.nom} ${publication.auteur.prenom} </h6>
+                                    <small class="text-muted">${publication.date}</small>
+                                </div>
+                            </div>
+                            <div class="dropdown dropdown-primary">
+                                <button type="button" class="btn btn-icon btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti ti-dots-vertical"></i></button>
+                                <div class="dropdown-menu dd-menu dropdown-menu-end shadow border-0 mt-3 py-3">
+                                    <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="ti ti-settings"></i></span> Edit</a>
+                                    <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="ti ti-trash"></i></span> Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            ${publication.content}
+                        </div>
+                        <div class="mt-4">
+                            <div class="post-meta d-flex justify-content-between">
+                                <ul class="list-unstyled mb-0">
+                                    <li class="list-inline-item me-2 mb-0"><a href="javascript:void(0)" class="text-muted like">
+                                        <i class="ti ti-heart me-1" data-publication-id="${publication.id}" onclick="add_like(${publication.id})"></i>
+                                        <span id="nombre-likes-${publication.id}">${publication.likes}</span>
+                                    </a></li>
+                                    <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments">
+                                        <i class="ti ti-message-circle me-1" onclick="afficher_commentaires(${publication.id})"></i>
+                                        <span id="nombre_commentaires_${publication.id}">${publication.comments}</span>
+                                    </a></li>
+                                </ul>
+                                <a href="javascript:void(0)" class="text-muted">
+                                    <i class="ti ti-share"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="VoirPlus">
+                            <button class="btn btn-sm btn-secondary" onclick="afficherPlusCommentaire(${publication.id})" style="display:none" id="voirPlus_${publication.id}">Voir plus</button>
+                        </div>
+                        <div class="ajouterCommentaire" id="user_${publication.id}" data-username="${publication.username}" data-user-id="${publication.user_id}"> 
+                            <textarea id="commentaire_${publication.id}" class="comment-input" placeholder="Ajouter un commentaire"></textarea>
+                            <button id class="send-button"  onclick="creerCommentaire(${publication.id})"><i class="fas fa-paper-plane"></i></button>
+                            <script>
+                                var creer_commentaire_url = "/publications/creer_commentaire/";
+                            </script>
+                        </div>
+                    `;
+                    container.append(publicationElement);
+                });
+                nextPage++;
+            } else {
+                console.error('Une erreur s\'est produite lors du chargement des publications.');
+            }
+        };
+        xhr.send();
+    });
+    

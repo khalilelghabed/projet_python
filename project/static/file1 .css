@@ -37,6 +37,13 @@ section {
 background: #c1bdbd79;
 grid-area: section;    
 }
+.publication-title {
+    color: #333333; /* Couleur du texte */
+    font-size: 1.2em; /* Taille de la police */
+    font-weight: bold; /* Graisse de la police */
+    margin-bottom: 10px; /* Marge inférieure */
+}
+
 
 aside {
     background: #c1bdbd79;
@@ -513,10 +520,16 @@ header {
 }
 
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    font-family: segoe-ui_normal, Segoe UI, Segoe, Segoe WP, Helvetica Neue, Helvetica, sans-serif;
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "nav section aside"
+        "footer footer footer";
+    grid-template-rows: 14% 1fr 5%;
+    grid-template-columns: 19% 1fr 22%;
+    height: 100vh;
+    background-color: #e8e2e2; /* Une teinte légèrement plus claire que le gris */
 }
 .row{
     align-items: center;
