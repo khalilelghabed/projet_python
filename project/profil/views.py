@@ -7,11 +7,69 @@
 
 # profil/views.py
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from Utilisateurs.models import Utilisateur
+from Utilisateurs.models import Utilisateur,Etudiant
 
 def profil_page(request, user_id):
+    print(request.user)
     utilisateur = Utilisateur.objects.get(id=user_id)
-    is_own_profile = request.user == utilisateur.user  # Assuming you have a 'user' field in your Utilisateur model
+    print(utilisateur)
+    is_own_profile = request.user == utilisateur.user  
+    print(is_own_profile)# Assuming you have a 'user' field in your Utilisateur model
     return render(request, 'profil/profileEtudiant.html', {'utilisateur': utilisateur, 'is_own_profile': is_own_profile})
+
+from datetime import datetime
+@login_required
+def update_information(request, user_id):
+    if request.method == 'POST':
+        # Récupérer les données du formulaire
+        name = request.POST.get('name')
+        prenom = request.POST.get('prenom')
+        email = request.POST.get('email')
+        tel = request.POST.get('tel')
+        date_birthay = request.POST.get('date_birthay')
+        gender = request.POST.get('gender')
+        institution = request.POST.get('institution')
+        major = request.POST.get('major')
+        year_study = request.POST.get('year_study')
+        degree = request.POST.get('degree')
+        top_skills = request.POST.get('top_skills')
+        experiences = request.POST.get('experiences')
+        
+        # Récupérer l'étudiant associé à l'utilisateur actuel
+        etudiant = Etudiant.objects.get(user=request.user)
+        
+        # Vérifier chaque champ avant de l'affecter à l'objet Etudiant
+        if name:
+            etudiant.nom = name
+        if prenom:
+            etudiant.prenom = prenom
+        if email:
+            etudiant.email = email
+        if tel:
+            etudiant.tele = tel
+        if date_birthay:
+            etudiant.date_naissenc = date_birthay
+        if gender:
+            etudiant.GENDER_CHOICES = gender
+        if institution:
+            etudiant.institution = institution
+        if year_study:
+            etudiant.year_of_study = year_study
+        if degree:
+            etudiant.degree = degree
+        if top_skills:
+            etudiant.top_skills = top_skills
+        if experiences:
+            etudiant.experiences = experiences
+        
+        etudiant.save()  # Sauvegarder les modifications
+        
+        print(major)  # Vous pouvez imprimer ou effectuer d'autres actions avec major si nécessaire
+        
+        # Rediriger vers la page de profil avec l'ID de l'utilisateur
+        return redirect('profil_page', user_id=user_id)
+    else:
+        # Rediriger vers la page de profil si la méthode de la requête n'est pas POST
+        return redirect('profil_page', user_id=user_id)
