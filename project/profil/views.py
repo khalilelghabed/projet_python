@@ -9,7 +9,9 @@
 
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from Utilisateurs.models import Utilisateur,Etudiant
+from django.core.files.storage import FileSystemStorage
 
 def profil_page(request, user_id):
     print(request.user)
@@ -24,9 +26,11 @@ from datetime import datetime
 def update_information(request, user_id):
     if request.method == 'POST':
         # Récupérer les données du formulaire
+        photo_profil = request.FILES.get('photo_profil')
         name = request.POST.get('name')
         prenom = request.POST.get('prenom')
         email = request.POST.get('email')
+        bio = request.POST.get('bio')
         tel = request.POST.get('tel')
         date_birthay = request.POST.get('date_birthay')
         gender = request.POST.get('gender')
@@ -41,10 +45,19 @@ def update_information(request, user_id):
         etudiant = Etudiant.objects.get(user=request.user)
         
         # Vérifier chaque champ avant de l'affecter à l'objet Etudiant
+        if photo_profil:
+            folder = 'photos/photos_Profil/'
+            img = request.FILES["photo_profil"]
+            fs = FileSystemStorage(location=folder)
+            fs.save(img.name, img)
+            etudiant.photo_profil = photo_profil
+
         if name:
             etudiant.nom = name
         if prenom:
-            etudiant.prenom = prenom
+            etudiant.prenom = prenom 
+        if bio:
+            etudiant.bio = bio 
         if email:
             etudiant.email = email
         if tel:
@@ -64,6 +77,7 @@ def update_information(request, user_id):
         if experiences:
             etudiant.experiences = experiences
         
+        
         etudiant.save()  # Sauvegarder les modifications
         
         print(major)  # Vous pouvez imprimer ou effectuer d'autres actions avec major si nécessaire
@@ -73,3 +87,16 @@ def update_information(request, user_id):
     else:
         # Rediriger vers la page de profil si la méthode de la requête n'est pas POST
         return redirect('profil_page', user_id=user_id)
+
+
+
+
+
+
+
+
+
+
+
+
+

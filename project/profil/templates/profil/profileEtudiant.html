@@ -1,26 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-
-{% comment %} <!-- profil/templates/profil/profil_page.html -->
-
-<!-- profil/templates/profil/profileEtudiant.html -->
-
-<h1>{{ user.utilisateur.nom }}'s Profile</h1>
-{{ utilisateur.nom}}
-
-<!-- Public elements visible to any user -->
-<!-- Include elements visible to any user -->
-
-{% if is_own_profile %}
-    i am same person {{ utilisateur.nom}}
-{% endif %}
-
-{% if not is_own_profile %}
-    <!-- Private elements visible only when the current user is not the owner of the profile -->
-    <!-- Include elements visible only when the current user is not the owner of the profile -->
-{% endif %} {% endcomment %}
-
 {% block content  %}
 <head>
     <meta charset="utf-8" />
@@ -65,16 +45,23 @@
             <h5 class="mb-0">Establishment</h5>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6BDrN94JE98-dgMteAv-P3MuzsXQrDx6rYg&usqp=CAU" alt="">
         </div>
-        
+        {% if is_own_profile %}
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
             <h5 class="mb-0">Classrooms</h5>
             <p>HTML <br>CSS <br>JS <br>Python</p>
             <a href="#" class="stretched-link position-absolute bottom-0 end-0 p-2">View All</a>
         </div>
+        {% endif %}
+
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">About Us</h5>
+            <p>{{utilisateur.bio}}</p>
+        </div>
+
         
     </aside>
     
-    <nav >
+    <nav>
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
             <h5 class="mb-0">Top Skills</h5>
             <p>{{utilisateur.etudiant.top_skills}}<br>
@@ -89,16 +76,15 @@
        
     </nav>
 
-    <section>
+    <section> 
     <div class="firstprf">
         <div class="cover-photo">
-                <div class="cover-pic border-1 rounded shadow"></div>
+            <div class="cover-pic border-1 rounded shadow"></div>
             <label for="profile-upload" class="profile-upload-label">
-                <img src="{{utilisateur.photo_profil.url}}" alt="Profile Picture" class="profile-pic" id="profile-preview">
+                <img src="{{ utilisateur.photo_profil.url }}" alt="Profile Picture" class="profile-pic" id="profile-preview">
             </label>
-            {% if is_own_profile %}
             <input type="file" id="profile-upload" accept="image/*" onchange="previewProfile(event)" style="display: none;">
-            {% endif %}
+            
 
             <h1 class="user-name">{{utilisateur.nom}} {{utilisateur.prenom}}</h1>
             <h2 class="user-role">Etudiant</h2>
@@ -117,22 +103,35 @@
         </div>
     </div>
 
+
     <div class="text-center mt-4 op1">
         {% if is_own_profile %}
         <button id="about-button" class="btn btn-outline primary">Settings</button>
-        {% endif %}
-
         <button id="posts-button" class="btn btn-outline primary ">Posts</button>
+        {% if not utilisateur.type_profil == 'ent' %}
         <button id="resume-button" class="btn btn-outline primary">Resume</button>
+        {% endif %}
+        {% endif %}
+        {% if not is_own_profile %}
+        <button id="posts-button" class="btn btn-outline primary ">Posts</button>
+        {% if not utilisateur.type_profil == 'ent' %}
+        <button id="resume-button" class="btn btn-outline primary">Resume</button>
+        {% endif %}
+        {% endif %}
     </div>
     {% if is_own_profile %}
 
     <div id="about-section" class="about-section" style="display: none;">
         <div id="student-profile">
-            <h2>About Us</h2>
+            <h2>Settings</h2>
+            
             <div class="info-item">
                 <label for="full-name">Full Name:</label>
                 <span id="full-name">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
+            </div>
+            <div class="info-item">
+                <label for="bio">My Bio:</label>
+                <span id="bio">{{utilisateur.bio}}</span>
             </div>
             <div class="info-item">
                 <label for="email">Email:</label>
@@ -175,14 +174,18 @@
                 <span id="experiences">{{utilisateur.etudiant.experiences}}</span>
             </div>
             <button id="update-button" onclick="toggleUpdateWidget()">Update Information</button>
-            <form action="{% url 'update' user_id=utilisateur.id %}" method="post">
+            <form action="{% url 'update' user_id=utilisateur.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
             <div id="update-widget" class="update-widget" style="display: none; z-index: 10;">
                 <!-- Widget content -->
+                <label for="photo_profil-input">Profile Picture:</label>
+                <input type="file" id="photo_profil-input" accept="image/*" name="photo_profil" ><br>
                 <label for="full-name-input">Name:</label>
                 <input type="text" id="full-name-input" name="name"><br>
                 <label for="full-name-input">prenom:</label>
-                <input type="text" id="full-name-input" name="prenom"><br>
+                <input type="text" id="bio-input" name="prenom"><br>
+                <label for="bio-input">Bio :</label>
+                <input type="text" id="full-bio-input" name="bio"><br>
                 <label for="email-input">Email:</label>
                 <input type="email" id="email-input" name="email"><br>
                 <label for="phone-number-input">Phone Number:</label>
@@ -426,34 +429,61 @@
     </section>
 
     <script>
-        function toggleUpdateWidget() {
-            var updateWidget = document.getElementById('update-widget');
-            var overlay = document.getElementById('overlay');
-            if (updateWidget.style.display === 'none') {
-                updateWidget.style.display = 'block';
-                overlay.style.display = 'block';
-            } else {
-                updateWidget.style.display = 'none';
-                overlay.style.display = 'none';
-            }
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            {% if is_own_profile %}
+            var aboutButton = document.getElementById('about-button');
+            var postsButton = document.getElementById('posts-button');
+            var resumeButton = document.getElementById('resume-button');
         
-    
-        function updateInformation() {
-            document.getElementById('full-name').textContent =   document.getElementById('full-name-input').value;
-            document.getElementById('email').textContent = document.getElementById('email-input').value;
-            document.getElementById('phone-number').textContent =  document.getElementById('phone-number-input').value;
-            document.getElementById('date-of-birth').textContent = document.getElementById('date-of-birth-input').value;
-            document.getElementById('gender').textContent = document.getElementById('gender-input').value;
-            document.getElementById('institution').textContent =  document.getElementById('institution-input').value;
-            document.getElementById('major').textContent = document.getElementById('major-input').value;
-            document.getElementById('degree-program').textContent =  document.getElementById('degree-program-input').value;
-            document.getElementById('year-of-study').textContent =  document.getElementById('year-of-study-input').value;
-            document.getElementById('top-skills').textContent =  document.getElementById('top-skills-input').value;
-            document.getElementById('experiences').textContent =  document.getElementById('experiences-input').value;
-    
-            toggleUpdateWidget(); // Hide the update widget after saving
-        }
+            var aboutSection = document.getElementById('about-section');
+            var resumeSection = document.getElementById('resume-section');
+            var postsSection = document.getElementById('posts-section');
+        
+            aboutButton.addEventListener('click', function() {
+                aboutSection.style.display = 'block';
+                resumeSection.style.display = 'none';
+                postsSection.style.display = 'none';
+            });
+        
+            postsButton.addEventListener('click', function() {
+                aboutSection.style.display = 'none';
+                resumeSection.style.display = 'none';
+                postsSection.style.display = 'block';
+            });
+        
+            resumeButton.addEventListener('click', function() {
+                aboutSection.style.display = 'none';
+                resumeSection.style.display = 'block';
+                postsSection.style.display = 'none';
+            });
+        
+            // Ensure that only one section is shown on page load
+            aboutSection.style.display = 'block';
+            resumeSection.style.display = 'none';
+            postsSection.style.display = 'none';
+            {% else %}
+            var postsButton = document.getElementById('posts-button');
+            var resumeButton = document.getElementById('resume-button');
+        
+            var resumeSection = document.getElementById('resume-section');
+            var postsSection = document.getElementById('posts-section');
+        
+            postsSection.style.display = 'block'; // Display posts section by default
+        
+            postsButton.addEventListener('click', function() {
+                resumeSection.style.display = 'none';
+                postsSection.style.display = 'block';
+            });
+        
+            resumeButton.addEventListener('click', function() {
+                resumeSection.style.display = 'block';
+                postsSection.style.display = 'none';
+            });
+        
+            // Ensure that only one section is shown on page load
+            resumeSection.style.display = 'none';
+            {% endif %}
+        });        
     </script>
     
     
@@ -502,7 +532,3 @@
     
 </body>
 {% endblock content %}
-
-
-
-

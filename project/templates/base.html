@@ -166,7 +166,7 @@
     </script>
     {% if user.is_authenticated %}
     <div class="profile">
-        <button class="dropdown-btn" onclick="toggleDropdown()"><img src="https://community.adobe.com/t5/image/serverpage/image-id/145201iE0ECF5C6ECBD959E/image-size/large/is-moderation-mode/true?v=v2&px=999" alt="Profile Image"></button>
+        <button class="dropdown-btn" onclick="toggleDropdown()"><img src="{{ user.utilisateur.photo_profil.url }}" alt="Profile Image"></button>
         <div class="dropdown-content" id="dropdown-content">
             <a href="{% url 'profil_page' user.id %}">Profile</a>
             <a href="#">Settings</a>
