@@ -24,7 +24,7 @@ class Utilisateur(models.Model):
     ('LAÂYOUNE-SAKIA EL HAMRA', 'Laâyoune-Sakia El Hamra'),
     ('DAKHLA-OUED ED-DAHAB', 'Dakhla-Oued Ed-Dahab'),
 ]
-    region=models.CharField(choices=REGIONS_CHOICES,max_length=255,default='TANGER-TÉTOUAN-AL HOCEIMA')
+    region=models.TextField(choices=REGIONS_CHOICES,max_length=255,default='TANGER-TÉTOUAN-AL HOCEIMA')
     photo_profil=models.ImageField(upload_to='photos/photos_Profil',null=True,blank=False, default='photos/photos_Profil/user_image.png')
     nom = models.CharField(max_length=50,default='&&')
     prenom = models.CharField(max_length=50, default='&&')
@@ -47,6 +47,7 @@ class Utilisateur(models.Model):
         ('M', 'Male'),
         ('F', 'Female'),
     ]
+    bio = models.TextField(max_length=255, null=True, blank=True)
     
    
     
@@ -57,6 +58,8 @@ def create_utilisateur(sender, instance, created, **kwargs):
         Utilisateur.objects.create(user=instance)
 
 
+class MyModel(models.Model):
+    my_field = MultiSelectField(choices=[('value1', 'Value 1'), ('value2', 'Value 2')], max_length=100)
     
 class Etudiant(Utilisateur):
     filiere=models.CharField(max_length=255)

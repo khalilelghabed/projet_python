@@ -1,11 +1,4 @@
-# from django.shortcuts import render
-# from Utilisateurs.models import Utilisateur
 
-# def profil_page(request):
-#     utilisateurs = Utilisateur.objects.all()  # Query the utilisateur models
-#     return render(request, 'profil/profileEtudiant.html', {'utilisateurs': utilisateurs})
-
-# profil/views.py
 
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
@@ -24,9 +17,11 @@ from datetime import datetime
 def update_information(request, user_id):
     if request.method == 'POST':
         # Récupérer les données du formulaire
+        photo_profil = request.POST.get('photo_profil')
         name = request.POST.get('name')
         prenom = request.POST.get('prenom')
         email = request.POST.get('email')
+        bio = request.POST.get('bio')
         tel = request.POST.get('tel')
         date_birthay = request.POST.get('date_birthay')
         gender = request.POST.get('gender')
@@ -41,10 +36,14 @@ def update_information(request, user_id):
         etudiant = Etudiant.objects.get(user=request.user)
         
         # Vérifier chaque champ avant de l'affecter à l'objet Etudiant
+        if photo_profil:
+            etudiant.photo_profil = photo_profil
         if name:
             etudiant.nom = name
         if prenom:
-            etudiant.prenom = prenom
+            etudiant.prenom = prenom 
+        if bio:
+            etudiant.bio = bio 
         if email:
             etudiant.email = email
         if tel:
@@ -63,6 +62,7 @@ def update_information(request, user_id):
             etudiant.top_skills = top_skills
         if experiences:
             etudiant.experiences = experiences
+        
         
         etudiant.save()  # Sauvegarder les modifications
         
