@@ -15,3 +15,4 @@ def profil_page(request, user_id):
     utilisateur = Utilisateur.objects.get(id=user_id)
     is_own_profile = request.user == utilisateur.user  # Assuming you have a 'user' field in your Utilisateur model
     return render(request, 'profil/profileEtudiant.html', {'utilisateur': utilisateur, 'is_own_profile': is_own_profile})
+

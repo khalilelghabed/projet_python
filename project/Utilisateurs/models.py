@@ -30,7 +30,7 @@ class Utilisateur(models.Model):
     PROFIL_CHOICES = [
         ('etu', 'Etudiant'),
         ('ens', 'Enseignant'),
-        ('ent','entreprise'),   #just added
+        ('ent','entreprise'),  
     ]
     is_public = models.BooleanField(default=True)  # Attribute for public/private profile
 
@@ -45,9 +45,8 @@ class Utilisateur(models.Model):
         ('M', 'Male'),
         ('F', 'Female'),
     ]
-    def __str__(self):
-        
-        return f"{self.nom} {self.prenom}"
+    
+   
     
     
 
