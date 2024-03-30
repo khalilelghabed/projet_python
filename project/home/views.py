@@ -9,8 +9,7 @@ def home(request):
     return render(request, 'home/home.html')
 @login_required
 def home_authentifie(request):
-    print(request.user.utilisateur.id)
-    print(request.user.utilisateur.nom)
+    
     
     utilisateur = request.user.utilisateur
     utilisateurs = Utilisateur.objects.all()
