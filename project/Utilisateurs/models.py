@@ -76,6 +76,8 @@ class Etudiant(Utilisateur):
 
     def __str__(self):
         return super().__str__()
+class Entreprise(models.Model):
+    Industry=models.CharField(max_length=255)
     
 
 

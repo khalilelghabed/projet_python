@@ -1,5 +1,5 @@
 from django.db import models
-from Utilisateurs.models import Enseignant, Etudiant
+from Utilisateurs.models import Enseignant,Etudiant,Utilisateur
 
 class Profil(models.Model):
     etudiant = models.OneToOneField(Etudiant, on_delete=models.CASCADE, blank=True, null=True)
