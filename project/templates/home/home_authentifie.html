@@ -23,7 +23,7 @@
 <section>
     <div class="row justify-content-center">
         <div class="col-lg-8 mt-4 order-md-1 order-lg-2 order-1">
-            <div class="publication" id="publicationContainer2" style="margin: 7%">
+            <div class="publication" id="publicationContainer2" style="margin-left: 7% ;margin-bottom:7%">
                 {% if user.is_authenticated %}
                     <div class="profile">
                         <img src="{{ user.utilisateur.photo_profil.url }}" alt="Photo de profil">
@@ -157,7 +157,10 @@
                 {% endfor %}
                 
             </div>
-            <button id="loadMoreButton" class="btn btn-primary mt-3" style="width:90%" >Charger plus</button>
+            <button id="loadMoreButton" class="btn btn-primary mt-3" style=" width: 90%;
+            align-self: center;
+            position: relative;
+            left: 8%;" >Charger plus</button>
         </div>
         
     </div>
