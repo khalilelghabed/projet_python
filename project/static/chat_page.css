@@ -1,0 +1,272 @@
+.container {
+    display: flex;
+}
+
+body {
+    background-color: #c1bdbd79;
+}
+
+.nav_chat,
+.side_chat,
+.messages {
+    flex: 1;
+    height: 100vh;
+}
+
+.nav_chat {
+    background-color: #c1bdbd79;
+    max-width: 100px;
+}
+
+
+/*             chat side           */
+.side_chat {
+    border-left: 0.2px solid #a3a2a2;
+    background-color: #c1bdbd79;
+    max-width: 350px;
+}
+
+.chat_list_header {
+    height: 80px;
+    background-color: #c1bdbd79;
+    padding-top: 10px;
+    display: flex; /* Use Flexbox */
+    align-items: center; /* Center items vertically */
+    padding-left: 30px;
+}
+
+.chat_search {
+    padding: 15px;
+    width: 320px;
+    height: 42px;
+    background-color: #c1bdbd79;
+}
+
+.chat_search input {
+    width: 270px; /* Adjust width as needed */
+    height: 42px;
+    background-color: #e0dfdf79;
+    border: 0.2px solid #a3a2a2;
+    border-radius: 4px;
+    padding-left: 10px;
+    outline: none; /* Remove the default focus outline */
+}
+
+
+.search_button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    align-content: center;
+    align-items: center;
+}
+.search_button {
+    color: black;
+    font-size: 20px; /* Increase the size of the icon */
+}
+
+#no_users{
+    padding-left: 40px;
+}
+
+.chat_search input:hover{
+    border-color: #007bff;
+}
+.send_message input:focus {
+    border-color: #007bff;
+    outline: none; /* Remove browser's default outline */
+}
+
+
+.users{
+
+    padding-top: 40px;
+    padding-left: 20px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+}
+
+.user img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.user-profile-link {
+    display: inline-block; /* Ensures the link behaves like inline content but allows for padding and margins */
+    text-decoration: none; /* Removes underline from the link */
+    color: black; /* Sets the color of the link to black */
+}
+
+
+.users{
+
+    padding-top: 40px;
+    padding-left: 20px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.user-image img  {
+    width: 50px; /* Adjust the width as needed */
+    height: 50px; /* Adjust the height as needed */
+    border-radius: 50%; /* To make the image circular */
+    margin-right: 10px; /* Adjust the margin as needed */
+    vertical-align: middle; /* Align the image vertically in the middle */
+}
+
+.user-info {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 4px;
+}
+.selected_user h2{
+    margin-bottom: 20px;
+}
+.selected_user img {
+    width: 50px; /* Adjust the width as needed */
+    height: 50px; /* Adjust the height as needed */
+    border-radius: 50%; /* To make the image circular */
+    margin-right: 10px; /* Adjust the margin as needed */
+    vertical-align: middle; /* Align the image vertically in the middle */
+    margin-left: 20px;
+}
+
+.user-info p {
+    margin: 0; /* To remove default margin */
+}
+.last_message{
+    margin-top: 4px;
+    padding-top: 4px;
+    width: 240px;
+}
+.last_message_content{
+    margin-left: 10px !important;
+    margin-bottom: 6px !important;
+}
+.user-name{
+    margin-left: 10px !important;
+
+}
+.last_message_time {
+    float: right;
+}
+
+
+
+
+
+
+
+
+.messages {
+    border-left: 0.2px solid #a3a2a2;
+    /* Add left border */
+    background-color: #c1bdbd79;
+    position: relative;
+}
+
+
+.user-name{
+    display: inline-block; /* or inline */
+}
+
+
+.messages_container{
+    margin-top: 40px;
+    max-height: 60%; /* Allow the container to expand as per its parent's height */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+}
+
+#no_messages {
+    background-color: lightgray;
+    padding: 20px; /* Example padding */
+    margin: auto; /* Center horizontally */
+    position: absolute; /* Positioning */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center vertically and horizontally */
+  }
+#message_yourself{
+    margin-left: 100px;
+    margin-top: -10px;
+}  
+
+.sent_message {
+    background-color: #4CAF50; /* Green background color for sent messages */
+    color: white; /* Text color for sent messages */
+    float: right; /* Align sent messages to the right */
+    clear: both; /* Ensure each message appears on a separate line */
+    margin-bottom: 10px; /* Add spacing between messages */
+    padding: 0px 6px 0px 6px; /* Add padding around the message content */
+    border-radius: 10px; /* Rounded corners for the message container */
+    margin-right: 40px;
+}
+
+.received_message {
+    background-color: #2196F3; /* Blue background color for received messages */
+    color: white; /* Text color for received messages */
+    float: left; /* Align received messages to the left */
+    clear: both; /* Ensure each message appears on a separate line */
+    margin-bottom: 10px; /* Add spacing between messages */
+    padding: 0px 6px 0px 6px; /* Add padding around the message content */
+    border-radius: 10px; /* Rounded corners for the message container */
+    margin-left: 40px;
+}
+
+
+.send_message {
+    position: absolute;
+    bottom: 0;
+    width: 100%; /* Ensure it spans the entire width of the container */
+    margin-bottom: 20px;
+}
+.send_message hr {
+    color: black !important;
+}
+.send_message form{
+    height: 60px;
+}
+.send_message input{
+    height: 50px;
+    width: 80%;
+    border-radius: 10px;
+    border-color: white;
+    padding-left: 20px;
+    margin-left: 40px;
+}
+.send_message input:hover{
+    border-color: #007bff;
+}
+.send_message input:focus {
+    border-color: #007bff;
+    outline: none; /* Remove browser's default outline */
+}
+/* Add this CSS to your existing stylesheet or create a new one */
+.icon-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.icon-button .icon {
+    font-size: 1.5em; /* Adjust the size as needed */
+}
+#no_chat_message{
+    background-color: lightgray;
+    padding: 20px; /* Example padding */
+    margin: auto; /* Center horizontally */
+    position: absolute; /* Positioning */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center vertically and horizontally */    
+}

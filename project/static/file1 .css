@@ -49,8 +49,6 @@ aside {
     background: #c1bdbd79;
     grid-area: aside;
     display: flex;
-    align-items: end;
-    /* align-content: center; */
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -544,16 +542,15 @@ body {
 .messages_side_bar {
     background-color: #FFFFFF;
     width: 23%;
-    height: 450px; 
-    border-radius: 28px 28px 0 0;
+    height: 70%; 
+    border-radius: 28px 28px 4px 4px;
     padding: 25px 16px 0px 18px;
+    margin-top: 50px;
     cursor: pointer;
     position: absolute; /* Change to absolute positioning */
     right: 1px;
-    bottom: 1px;
     z-index: 2;
 }
-
 
 .search-container {
     display: flex;
@@ -562,23 +559,29 @@ body {
     border-radius: 10px;
     padding: 4px;
     background: #F7F5F2;
-    width: 250px;
+    width: 85%;
     margin-top: 18px;
     margin-bottom: 5px;
-}
-
-.glyphicon-search {
-    color: #C8C6C6;
-    padding: 4px;
+    margin-left: 20px;
 }
 
 .search-input {
+    flex: 1; /* Take remaining space */
     background-color: #F7F5F2;
-    flex-grow: 1;
     border: none;
     outline: none;
-    padding: 4px;
+    margin-left: 4px;
+    width: 80%;
 }
+
+.search-button {
+    margin-left: 10px;
+    float: right;
+    border: none;
+    background: transparent; /* Remove default button background */
+}
+
+
 
 .requests {
     float: right;
@@ -674,7 +677,7 @@ body {
     bottom: 1vh;
 }
 
-.send-button i {
+ i .send-button{
     font-size: 28px; /* Ajustez la taille de l'icône selon vos besoins */
     color: #007bff; /* Couleur de l'icône */
 }

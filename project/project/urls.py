@@ -29,5 +29,6 @@ urlpatterns = [
     path('update-profile/<int:user_id>/', include('profil.urls')),
     path('notificatons/',include('notification.urls')),
     path('home/',include('chat.urls')),
+    path('home/',include('Utilisateurs.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
