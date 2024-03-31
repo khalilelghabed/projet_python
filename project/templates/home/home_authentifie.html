@@ -166,27 +166,35 @@
 <aside>  
     <div class="messages_side_bar">
         Messages
-        <div class="search-container">
-            <i class="glyphicon glyphicon-search"></i>
-            <input type="text" class="search-input" placeholder="Search">
-        </div>
+    <div class="search-container">
+        <form method="get" action="">
+            <div class="search-container-inner">
+                <input type="text" class="search-input" name="q" placeholder="Search" autocomplete="off">
+                <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
+            </div>
+        </form>
+    </div>
+
         <a href="" class="requests">Requests</a>
         <hr style="margin-top: 30px;">
+
         <div class="users">
             {% for utilisateur in utilisateurs %}
-                <div class="user">
-                    <a href="{% url 'conversation_messages' utilisateur.user_id %}" class="user-profile-link">
-                        {% if utilisateur.photo_profil %}
-                            <img src="{{ utilisateur.photo_profil.url }}" class="user-avatar" alt="Avatar">
-                        {% else %}
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4MJsV58xh-vFYz3u4WMpS65vCvnGwBYc54SfmKToORTHdZALkZNGvpBlt4dc45A0M-y0&usqp=CAU"
-                                class="user-avatar" alt="Placeholder Avatar">
-                        {% endif %}
-                        <span>{{ utilisateur.nom }} {{ utilisateur.prenom }}</span>
-                    </a>
-                </div>
+            <div class="user">
+                <a href="{% url 'conversation_messages' utilisateur.user_id %}" class="user-profile-link">
+                    {% if utilisateur.photo_profil %}
+                    <img src="{{ utilisateur.photo_profil.url }}" class="user-avatar" alt="Avatar">
+                    {% else %}
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4MJsV58xh-vFYz3u4WMpS65vCvnGwBYc54SfmKToORTHdZALkZNGvpBlt4dc45A0M-y0&usqp=CAU"
+                        class="user-avatar" alt="Placeholder Avatar">
+                    {% endif %}
+                    <span>{{ utilisateur.nom }} {{ utilisateur.prenom }}</span>
+                </a>
+            </div>
             {% endfor %}
         </div>
+
+
         <a href="" class="view_all_chat">View All</a>
     </div>
 </aside>

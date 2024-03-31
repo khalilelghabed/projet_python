@@ -48,7 +48,9 @@ class Utilisateur(models.Model):
         ('F', 'Female'),
     ]
     bio = models.TextField(max_length=255, null=True, blank=True)
-    
+    def __str__(self):
+        return f"{self.prenom} {self.nom}"
+   
    
     
     
