@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from Utilisateurs.models import Utilisateur
+from notification.models import Notification
 
 @login_required
 def createPublication(request):
@@ -45,7 +46,11 @@ def creer_commentaire(request):
                 auteur=utilisateur,
                 publication=publication
             )
-            
+            message = f"{request.user.utilisateur.nom} {request.user.utilisateur.prenom} a commenté votre publication."
+
+            new_notification=Notification(utilisateur=publication.auteur,message=message)
+            new_notification.save()
+
             publication_data = {
                 'id': publication.id,
                 'nombre_commentaires': publication.nombre_commentaires

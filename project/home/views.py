@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from Utilisateurs.models import Utilisateur
 from django.db.models import Q  
-
+from notification.models import Notification
 from publications.models import Publication
 def home(request):
    
@@ -13,13 +13,20 @@ def home_authentifie(request):
     
     utilisateur = request.user.utilisateur
     utilisateurs = Utilisateur.objects.all()
+    allNotifications=utilisateur.notifier.all()
+    count=0
+    for notification in allNotifications:
+        if notification.is_read==False:
+            count=count+1
+    print(count)
+    
 
     if utilisateur is not None:
         # L'utilisateur a un objet Utilisateur associé
         following = utilisateur.following.all()
         publication_suivies = Publication.objects.filter(Q(auteur__in=following) | Q(auteur=utilisateur)).order_by('-date_publication')
         
-        return render(request, "home/home_authentifie.html", {'publications': publication_suivies, 'utilisateurs': utilisateurs})
+        return render(request, "home/home_authentifie.html", {'publications': publication_suivies, 'utilisateurs': utilisateurs,'nombre_notifications_non_lues':count})
               
     else:
         # L'utilisateur n'a pas d'objet Utilisateur associé
@@ -39,10 +46,13 @@ def ajouter_like(request, publication_id):
         else: 
             publication.nombre_react += 1
             publication.interacteurs.add(request.user.utilisateur)
+            message = f"{request.user.utilisateur.nom} {request.user.utilisateur.prenom} a réagi à votre publication."
+            new_notification=Notification(utilisateur=publication.auteur,message=message)
+            new_notification.save()
 
             
         publication.save()
-
+        
         # Sérialiser les données de la publication mises à jour
         publication_data = {
             'id': publication.id,

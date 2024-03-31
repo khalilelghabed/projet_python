@@ -215,9 +215,7 @@ header {
 }
 
 /* Show the dropdown menu when the dropdown button is hovered over */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
+
 
 /* Adjust the position of the dropdown menu based on the height of the profile box */
 .dropdown-content {
@@ -252,10 +250,9 @@ header {
     width: 300px;
 }
 
-.notification-container:hover .notifications-dropdown {
+/*.notification-container:hover .notifications-dropdown {
     display: block;
-}
-
+}*/
 .notifications-dropdown ul {
     list-style-type: none;
     padding: 0;

@@ -274,3 +274,64 @@ function creerCommentaire(publicationId) {
         xhr.send();
     });
     
+        
+    function toggleNotifications(){
+        var countElement = document.querySelector('.notifications-count');
+        var dropdown = document.getElementById("notificationsDropdown");
+        if (dropdown.style.display === "none") {
+            dropdown.style.display = "block";
+        } else {
+            dropdown.style.display = "none";
+            countElement.style.display ="none"
+
+        }
+        $.ajax({
+            url: 'notificatons/',  // Remplacez "/votre-url-de-vue/" par l'URL de votre vue Django
+            type: 'POST',  // Utilisez GET ou POST selon votre vue Django
+            dataType: 'json',
+          data: {
+    csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+    // Autres données à envoyer
+},// Spécifiez le type de données que vous attendez de la réponse
+            success: function(data) {
+                // Cette fonction sera appelée si la requête réussit
+                // Utilisez les données renvoyées par la vue Django
+               
+                     // Supprimez toutes les notifications existantes
+    var notificationsContainer = document.getElementById('notificationsDropdown');
+    notificationsContainer.innerHTML = '';
+
+    // Parcourez les données JSON pour chaque notification
+    data.notifications.forEach(function(notification) {
+      
+     
+        
+        // Créez les éléments HTML pour la notification
+        var notificationItem = document.createElement('li');
+        var notificationClass = notification.is_read ? 'read-notification' : 'unread-notification';
+
+        notificationItem.innerHTML = `
+            <div class="notification-item ${notificationClass}">
+                <img class="profile-picture" src= "${notification.image}" alt="Profile Picture">
+                <div class="notification-content">
+                    <div class="author-name">${notification.message}</div>
+                    <div class="notification-details">
+                        <span class="notification-date">${notification.date_notification}</span>
+                    </div>
+                </div>
+                <button class="close-button" onclick="removeNotification(event)">X</button>
+            </div>
+        `;
+        
+
+        // Ajoutez la notification à la liste des notifications
+        notificationsContainer.appendChild(notificationItem);
+    });
+
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                // Cette fonction sera appelée en cas d'erreur lors de la requête
+                console.log('Erreur lors de la requête Ajax:', errorThrown);
+            }
+        });
+    }

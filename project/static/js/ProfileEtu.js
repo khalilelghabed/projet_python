@@ -19,6 +19,29 @@ function previewProfile(event) {
     reader.readAsDataURL(event.target.files[0]);
 }
 
+function uploadProfilePicture(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const formData = new FormData();
+        formData.append('profile_picture', file);
+
+        fetch('/upload_profile_picture/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => {
+            // Handle response
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+}
+
+
 
 function toggleFollow(button) {
     if (button.textContent === 'Follow') {
@@ -31,6 +54,9 @@ function toggleFollow(button) {
         button.classList.add('unfollowed');
     }
 }
+
+//---------
+
 
 profile.js
 
