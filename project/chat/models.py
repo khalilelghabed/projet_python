@@ -22,6 +22,19 @@ class Conversation(models.Model):
             if existing_conversation:
                 raise ValidationError('Conversation already exists between these users.')
         super().save(*args, **kwargs)
+
+    @staticmethod
+    def get_or_create_conversation(user1, user2):
+        conversation = Conversation.objects.filter(
+            (models.Q(user1=user1) & models.Q(user2=user2)) |
+            (models.Q(user1=user2) & models.Q(user2=user1))
+        ).first()
+
+        if conversation:
+            return conversation
+        else:
+            return Conversation.objects.create(user1=user1, user2=user2)
+
 class Message(models.Model):
     conversation = models.ForeignKey('Conversation', on_delete=models.CASCADE, related_name='messages')
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
@@ -33,6 +46,11 @@ class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     seen = models.BooleanField(default=False)  # New field to track message seen status
 
-    def mark_as_seen(self):
-        self.seen = True
-        self.save()
+    def save(self, *args, **kwargs):
+        if self.sender != self.conversation.user1 and self.sender != self.conversation.user2:
+            raise ValidationError('Sender must be one of the conversation users.')
+
+        if self.receiver != self.conversation.user1 and self.receiver != self.conversation.user2:
+            raise ValidationError('Receiver must be one of the conversation users.')
+
+        super().save(*args, **kwargs)

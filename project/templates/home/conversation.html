@@ -1,0 +1,100 @@
+{% extends 'home/chat.html' %}
+{% load static %}
+
+{% block no_chat_message %}
+    {% comment %} Empty block to override the message {% endcomment %}
+{% endblock %}
+
+{% block chat_messages %}
+
+<div class="messages">
+    <div class="messages_side_header">
+        {% if selected_user %}
+            <div class="selected_user">
+                <img src="{{ selected_user.photo_profil.url }}" alt="Avatar">
+                <h2 class="user-name">{{ selected_user.nom }} {{ selected_user.prenom }}</h2>
+                {% if selected_user.user == request.user %}
+                    <p id="message_yourself">Message yourself</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <p>Select a chat</p>
+        {% endif %}
+    </div>
+    
+    <hr>
+    <div class="messages_container" style="height: 60%;">
+        {% for message in messages %}
+        {% if message.sender == request.user %}
+        {% if message.content %}
+        <div class="sent_message">
+            <p>{{ message.content }}</p>
+            <!-- Add more fields as needed -->
+        </div>
+        {% elif message.image %}
+        <div class="sent_message">
+            <img src="{{ message.image.url }}" alt="Image">
+            <!-- Add more fields as needed -->
+        </div>
+        {% elif message.file %}
+        <div class="sent_message">
+            <a href="{{ message.file.url }}">Download File</a>
+            <!-- Add more fields as needed -->
+        </div>
+        {% elif message.video %}
+        <div class="sent_message">
+            <video controls>
+                <source src="{{ message.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <!-- Add more fields as needed -->
+        </div>
+        {% endif %}
+        {% else %}
+        {% if message.content %}
+        <div class="received_message">
+            <p>{{ message.content }}</p>
+            <!-- Add more fields as needed -->
+        </div>
+        {% elif message.image %}
+        <div class="received_message">
+            <img src="{{ message.image.url }}" alt="Image">
+            <!-- Add more fields as needed -->
+        </div>
+        {% elif message.file %}
+        <div class="received_message">
+            <a href="{{ message.file.url }}">Download File</a>
+            <!-- Add more fields as needed -->
+        </div>
+        {% elif message.video %}
+        <div class="received_message">
+            <video controls>
+                <source src="{{ message.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <!-- Add more fields as needed -->
+        </div>
+        {% endif %}
+        {% endif %}
+        {% empty %}
+        <p id="no_messages">No messages yet</p>
+        {% endfor %}
+    </div>
+
+    <div class="send_message">
+        <hr>
+        <form action="{% if selected_user %}{% url 'send_message' selected_user.id %}{% endif %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="content" placeholder="write a message...." autocomplete="off">
+            <button class="icon-button" type="button" id="file-upload-button"><i class="bi bi-paperclip icon"></i></button>
+            <input id="file-upload" type="file" name="file" style="display: none;">
+            <span id="selected-file-name"></span> <!-- Span to display selected file name -->
+            <button class="icon-button" type="submit"><i class="bi bi-send icon"></i></button>
+        </form>
+                   
+        <hr>
+    </div>
+    
+</div>
+
+{% endblock %}

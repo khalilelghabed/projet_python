@@ -736,6 +736,33 @@
     </script>
 
     <script>
+        function toggleUpdateWidget() {
+            var updateWidget = document.getElementById('update-widget');
+            var overlay = document.getElementById('overlay');
+            if (updateWidget.style.display === 'none') {
+                updateWidget.style.display = 'block';
+                overlay.style.display = 'block';
+            } else {
+                updateWidget.style.display = 'none';
+                overlay.style.display = 'none';
+            }
+        }
+        
+    
+        function updateInformation() {
+            document.getElementById('full-name').textContent =   document.getElementById('full-name-input').value;
+            document.getElementById('email').textContent = document.getElementById('email-input').value;
+            document.getElementById('phone-number').textContent =  document.getElementById('phone-number-input').value;
+            document.getElementById('date-of-birth').textContent = document.getElementById('date-of-birth-input').value;
+            document.getElementById('institution').textContent =  document.getElementById('institution-input').value;
+            document.getElementById('major').textContent = document.getElementById('major-input').value;
+            document.getElementById('degree-program').textContent =  document.getElementById('degree-program-input').value;
+            document.getElementById('year-of-study').textContent =  document.getElementById('year-of-study-input').value;
+            document.getElementById('top-skills').textContent =  document.getElementById('top-skills-input').value;
+            document.getElementById('experiences').textContent =  document.getElementById('experiences-input').value;
+    
+            toggleUpdateWidget(); // Hide the update widget after saving
+        }
         document.addEventListener('DOMContentLoaded', function() {
             {% if is_own_profile %}
             var aboutButton = document.getElementById('about-button');

@@ -53,7 +53,8 @@ def creer_compte(request):
                     )
                     enseignant.save()
                 messages.success(request, "compte a été crée avec succes")
-                return redirect('home')
+                return redirect('authentificate')
+                
         else:
             messages.error(request, 'les deux mots de passe sont différents')
             return redirect('creerCompte')

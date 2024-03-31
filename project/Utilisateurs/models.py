@@ -109,8 +109,7 @@ class Cv(models.Model):
     ]
     langues=MultiSelectField(choices=langues_choices,max_choices=4, validators=[MaxValueMultiFieldValidator(4)])
     centre_interet=models.TextField(max_length=255)
-    utilisateur=models.OneToOneField(Utilisateur,on_delete=models.CASCADE,null=True)
-
+    utilisateur = models.OneToOneField(Utilisateur, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f"{self.utilisateur.nom} {self.utilisateur.prenom}"
