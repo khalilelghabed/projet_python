@@ -1,0 +1,269 @@
+
+section {
+    grid-area: section;    
+    }
+.firstprf {
+    display: fixed;
+    position: relative;
+    width: 100%;
+
+}
+
+.cover-photo {
+    width: 85%;
+    height: 150px;
+    background-size: center;
+    background-position: center;
+    background-color: transparent;
+    position: relative;
+    margin-left: 8%;
+    margin-top: 30px;
+}
+.cover-pic {
+    width: 100%;
+    height: 150px;
+    background-color: #4C54BE ;
+}
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -50px;
+    left: 20px;
+    border: 3px solid #fff;
+    background-image: url('https://via.placeholder.com/100');
+    background-size: cover;
+    background-position: center;
+}
+.user-name {
+    margin-left: 30%;
+    margin-top: -95px;
+    font-weight: bold; /* Make user name bold */
+    color: white;
+    font-size: xx-large; /* Make user name font color black */
+}
+
+.user-role {
+    margin-left: 30%;
+    margin-top: -10px;
+    font-size: larger; /* Make user role smaller */
+    color: rgba(255, 255, 255, 0.667); /* Make user role font color slightly lighter than black */
+    font-family: Arial, sans-serif; /* Use a different font for user role */
+}
+.profile-details {
+    position: relative;
+    display: flex;
+    left: 83%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+
+}
+
+.follow-info span {
+    font-weight: bold;
+    margin-right: 30px;
+}
+.follow-button {
+    padding: 5px 5px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: #6c757d; /* Gray color */
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.follow-button.unfollowed {
+    background-color: #4C54BE ; /* Blue color */
+}
+
+.follow-button.followed {
+    background-color: #6c757d; /* Gray color */
+}
+.op1{
+    z-index: 1;
+    position: relative;
+    top: 0px;
+}
+.about-section{
+    background-color: rgb(255, 255, 255);
+  border-radius: 1%;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 20px;
+  height: auto;
+  min-height: 700px;
+  margin-bottom: 10%;
+
+
+}
+.posts-section{
+    position: relative;
+    top: -23px;
+    margin-left: 20px;
+    margin-right: 0px;
+    height: auto;
+    min-height: 700px;
+    margin-bottom: 10%;
+
+    
+}
+.resume-section {
+    position: relative;
+    top: 0; /* Change this value to adjust the vertical position of the resume section */
+    /* margin-top: 20px; Add some margin to separate it from the sec1 section */
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px; /* Add padding for better visibility */
+    background-color: rgb(255, 255, 255);
+    border-radius: 1%;
+    height: auto;
+    min-height: 700px;
+    margin-bottom: 10%;
+
+    
+    
+}
+
+.resume-section h2{
+    text-align: center;
+}
+.btn-outline-primary {
+    color: #4C54BE ;
+    background-color: transparent;
+    background-image: none;
+    border-color: #4C54BE ;
+  }
+  
+  .btn-outline-primary:hover {
+    color: #fff;
+    background-color: #4C54BE ;
+    border-color: #4C54BE ;
+  }
+  .btn-outline {
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+.about-section {
+    padding: 20px;
+    border: 1px solid #eaeaea;
+    background-color: #f9f9f9;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.about-section p {
+    margin: 0 0 10px;
+}
+
+.about-section button {
+    background-color: #4C54BE ;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.about-section hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+.about-section .update-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.about-section .info-item {
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black color */
+    z-index: 5; /* Ensure the overlay is above other content */
+}
+
+
+.about-section .info-item label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.about-section .info-item span {
+    color: #666;
+}
+
+
+
+#update-widget {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    overflow: scroll;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    z-index: 10;
+    display: none;
+}
+.about-section h2{
+    text-align: center;
+}
+
+
+#update-widget input {
+    width: calc(100% - 12px); /* Adjust for padding and border */
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+#update-widget button {
+    background-color: #4C54BE ;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.yellow-star {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: rgb(255, 208, 0);
+}
+
+
+.sm{
+    min-height: 150px;
+}

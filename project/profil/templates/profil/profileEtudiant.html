@@ -1,0 +1,534 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content  %}
+<head>
+    <meta charset="utf-8" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Premium Bootstrap 5 Landing Page Template" />
+        <meta name="keywords" content="Saas, Software, multi-uses, HTML, Clean, Modern" />
+        <meta name="author" content="Shreethemes" />
+        <meta name="email" content="support@shreethemes.in" />
+        <meta name="website" content="https://shreethemes.in" />
+        <meta name="Version" content="v4.7.0" />
+        <title>Etudiant Profile</title>
+
+        <!-- favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico" />
+        <!-- Css -->
+        <link href="{% static 'assets/libs/simplebar/simplebar.min.css'%}" rel="stylesheet">
+        <!-- Bootstrap Css -->
+        <link href="{% static 'assets/css/bootstrap.min.css'%}" class="theme-opt" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-vZ1+TL2AB6+1MWNoJzQKnvLr+TgD7GlGlkF9hOL+sPf4a7Nz9p1Anz+VCNXLGGfKARc+44LpMJxy5okWfwYDdA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="{% static 'assets/libs/@mdi/font/css/materialdesignicons.min.css'%}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/icons.min.css'%}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/libs/@iconscout/unicons/css/line.css'%}" type="text/css" rel="stylesheet" />
+        <!-- Style Css-->
+        <link href="{% static 'assets/css/style.min.css'%}" class="theme-opt" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{% static 'profile-student.css' %}">
+        <link rel="stylesheet" href="{% static 'file1.css'%}">
+
+        <script src="{% static 'js/ProfileEtu.js'%}"></script>
+        
+    
+</head>
+<body>
+    <div id="overlay" class="overlay"></div>
+    
+   
+    
+    <aside >
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">Establishment</h5>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6BDrN94JE98-dgMteAv-P3MuzsXQrDx6rYg&usqp=CAU" alt="">
+        </div>
+        {% if is_own_profile %}
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">Classrooms</h5>
+            <p>HTML <br>CSS <br>JS <br>Python</p>
+            <a href="#" class="stretched-link position-absolute bottom-0 end-0 p-2">View All</a>
+        </div>
+        {% endif %}
+
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">About Us</h5>
+            <p>{{utilisateur.bio}}</p>
+        </div>
+
+        
+    </aside>
+    
+    <nav>
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">Top Skills</h5>
+            <p>{{utilisateur.etudiant.top_skills}}<br>
+            <span class="yellow-star"><i class="fas fa-star fa-2x"></i></span>
+        </div>
+        
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">Contact</h5>
+            <p>email: {{utilisateur.email}}<br>phone :{{utilisateur.tele}}</p>
+            
+        </div>
+       
+    </nav>
+
+    <section> 
+    <div class="firstprf">
+        <div class="cover-photo">
+            <div class="cover-pic border-1 rounded shadow"></div>
+            <label for="profile-upload" class="profile-upload-label">
+                <img src="{{ utilisateur.photo_profil.url }}" alt="Profile Picture" class="profile-pic" id="profile-preview">
+            </label>
+            <input type="file" id="profile-upload" accept="image/*" onchange="previewProfile(event)" style="display: none;">
+            
+
+            <h1 class="user-name">{{utilisateur.nom}} {{utilisateur.prenom}}</h1>
+            <h2 class="user-role">Etudiant</h2>
+        </div>      
+        
+        <div class="profile-details">
+                
+            <div class="follow-info">
+                
+                <span>{{utilisateur.following.count}}</span>
+                <span>{{utilisateur.followers.count}}</span>
+                {% if not is_own_profile %}
+                <button class="follow-button unfollowed" onclick="toggleFollow(this)">Follow</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="text-center mt-4 op1">
+        {% if is_own_profile %}
+        <button id="about-button" class="btn btn-outline primary">Settings</button>
+        <button id="posts-button" class="btn btn-outline primary ">Posts</button>
+        {% if not utilisateur.type_profil == 'ent' %}
+        <button id="resume-button" class="btn btn-outline primary">Resume</button>
+        {% endif %}
+        {% endif %}
+        {% if not is_own_profile %}
+        <button id="posts-button" class="btn btn-outline primary ">Posts</button>
+        {% if not utilisateur.type_profil == 'ent' %}
+        <button id="resume-button" class="btn btn-outline primary">Resume</button>
+        {% endif %}
+        {% endif %}
+    </div>
+    {% if is_own_profile %}
+
+    <div id="about-section" class="about-section" style="display: none;">
+        <div id="student-profile">
+            <h2>Settings</h2>
+            
+            <div class="info-item">
+                <label for="full-name">Full Name:</label>
+                <span id="full-name">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
+            </div>
+            <div class="info-item">
+                <label for="bio">My Bio:</label>
+                <span id="bio">{{utilisateur.bio}}</span>
+            </div>
+            <div class="info-item">
+                <label for="email">Email:</label>
+                <span id="email">{{utilisateur.email}}</span>
+            </div>
+            <div class="info-item">
+                <label for="phone-number">Phone Number:</label>
+                <span id="phone-number">{{utilisateur.tele}}</span>
+            </div>
+            <div class="info-item">
+                <label for="date-of-birth">Date of Birth:</label>
+                <span id="date-of-birth">{{utilisateur.date_naissenc}}</span>
+            </div>
+            <div class="info-item">
+                <label for="gender">Gender:</label>
+                <span id="gender">{{utilisateur.GENDER_CHOICES}}</span>
+            </div>
+            <div class="info-item">
+                <label for="institution">Institution:</label>
+                <span id="institution">{{utilisateur.etudiant.institution}}</span>
+            </div>
+            <div class="info-item">
+                <label for="major">Major/Field of Study:</label>
+                <span id="major">{{utilisateur.etudiant.major}}</span>
+            </div>
+            <div class="info-item">
+                <label for="year-of-study">Year of Study:</label>
+                <span id="year-of-study">{{utilisateur.etudiant.year_of_study}}</span>
+            </div>
+            <div class="info-item">
+                <label for="degree-program">Degree:</label>
+                <span id="degree-program">{{utilisateur.etudiant.degree}}</span>
+            </div>
+            <div class="info-item">
+                <label for="top-skills">Top Skills:</label>
+                <span id="top-skills">{{utilisateur.etudiant.top_skills}}</span>
+            </div>
+            <div class="info-item">
+                <label for="experiences">Experiences:</label>
+                <span id="experiences">{{utilisateur.etudiant.experiences}}</span>
+            </div>
+            <button id="update-button" onclick="toggleUpdateWidget()">Update Information</button>
+            <form action="{% url 'update' user_id=utilisateur.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+            <div id="update-widget" class="update-widget" style="display: none; z-index: 10;">
+                <!-- Widget content -->
+                <label for="photo_profil-input">Profile Picture:</label>
+                <input type="file" id="photo_profil-input" accept="image/*" name="photo_profil" ><br>
+                <label for="full-name-input">Name:</label>
+                <input type="text" id="full-name-input" name="name"><br>
+                <label for="full-name-input">prenom:</label>
+                <input type="text" id="bio-input" name="prenom"><br>
+                <label for="bio-input">Bio :</label>
+                <input type="text" id="full-bio-input" name="bio"><br>
+                <label for="email-input">Email:</label>
+                <input type="email" id="email-input" name="email"><br>
+                <label for="phone-number-input">Phone Number:</label>
+                <input type="tel" id="phone-number-input" name="tel"><br>
+                <label for="date-of-birth-input">Date of Birth:</label>
+                <input type="date" id="date-of-birth-input" name="date_birthay"><br>
+                <label for="gender-input">Gender:</label>
+                <select id="gender-input" name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select><br>
+                <label for="institution-input">Institution:</label>
+                <input type="text" id="institution-input" name="institution"><br>
+                <label for="major-input">Major/Field of Study:</label>
+                <input type="text" id="major-input" name="major"><br>
+                <label for="year-of-study-input">Year of Study:</label>
+                <input type="number" id="year-of-study-input" name="year_study"><br>
+                <label for="degree-program-input">Degree:</label>
+                <input type="text" id="degree-program-input" name="degree"><br>
+                <label for="top-skills-input">Top Skills:</label>
+                <input type="text" id="top-skills-input" name="top_skills"><br>
+                <label for="experiences-input">Experiences:</label>
+                <input type="text" id="experiences-input" name="experiences"><br>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+        </div>
+        
+        
+    </div>
+    {% endif %}
+
+    <div id="resume-section" class="resume-section" style="display: none;">
+        <!-- Your resume content here -->
+        <h2>User Resume</h2>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+
+        <p>Resume content goes here...</p>
+
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+        <p>Resume content goes here...</p>
+
+    </div>
+    <div class="posts-section" id="posts-section">
+
+        <div class="row justify-content-center ">
+            
+            <div class="col-lg-8 mt-4 order-md-1 order-lg-2 order-1 ">
+                
+                <div class="card border-0 shadow rounded p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <img src="{% static 'assets/images/client/05.jpg'%}" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                            <div class="flex-1 ms-2">
+                                <h6 class="mb-0">Cristina Julia</h6>
+                                <small class="text-muted">13th Sept 2021 at 11:04AM</small>
+                            </div>
+                        </div>
+    
+                        <div class="dropdown dropdown-primary">
+                            <button type="button" class="btn btn-icon btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti ti-dots-vertical"></i></button>
+                            <div class="dropdown-menu dd-menu dropdown-menu-end shadow border-0 mt-3 py-3">
+                                <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="ti ti-settings"></i></span> Edit</a>
+                                <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="ti ti-trash"></i></span> Delete</a>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="javascript:void(0)">
+                            <img src="{% static 'assets/images/blog/bg1.jpg'%}" class="img-fluid rounded" alt="">
+                        </a>
+                    </div>
+    
+                    <div class="mt-4">
+                        <div class="post-meta d-flex justify-content-between">
+                            <ul class="list-unstyled mb-0">
+                                <li class="list-inline-item me-2 mb-0"><a href="javascript:void(0)" class="text-muted like"><i class="ti ti-heart me-1"></i>33</a></li>
+                                <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="ti ti-message-circle me-1"></i>08</a></li>
+                            </ul>
+                            <a href="javascript:void(0)" class="text-muted"><i class="ti ti-share"></i></a>
+                        </div>
+    
+                        <ul class="media-list list-unstyled mb-0 border-top mt-4">
+                            <li class="mt-4">
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <a class="pe-3" href="#">
+                                            <img src="assets/images/client/01.jpg" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
+                                        </a>
+                                        <div class="commentor-detail">
+                                            <h6 class="mb-0"><a href="javascript:void(0)" class="text-dark media-heading">Lorenzo Peterson</a></h6>
+                                            <small class="text-muted">15th September, 2021 at 01:25 pm</small>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="text-muted"><i class="mdi mdi-reply"></i> Reply</a>
+                                </div>
+                                <div class="mt-3">
+                                    <p class="text-muted fst-italic p-3 bg-light rounded">" There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour "</p>
+                                </div>
+                            </li>
+    
+                            <li class="mt-4">
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <a class="pe-3" href="#">
+                                            <img src="assets/images/client/02.jpg" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
+                                        </a>
+                                        <div class="commentor-detail">
+                                            <h6 class="mb-0"><a href="javascript:void(0)" class="media-heading text-dark">Tammy Camacho</a></h6>
+                                            <small class="text-muted">15th September, 2021 at 05:44 pm</small>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="text-muted"><i class="mdi mdi-reply"></i> Reply</a>
+                                </div>
+                                <div class="mt-3">
+                                    <p class="text-muted fst-italic p-3 bg-light rounded">" There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour "</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+    
+                <div class="card border-0 shadow rounded p-4 mt-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <img src="assets/images/client/05.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                            <div class="flex-1 ms-2">
+                                <h6 class="mb-0">Cristina Julia</h6>
+                                <small class="text-muted">13th Sept 2021 at 11:04AM</small>
+                            </div>
+                        </div>
+    
+                        <div class="dropdown dropdown-primary">
+                            <button type="button" class="btn btn-icon btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti ti-dots-vertical"></i></button>
+                            <div class="dropdown-menu dd-menu dropdown-menu-end shadow border-0 mt-3 py-3">
+                                <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="ti ti-settings"></i></span> Edit</a>
+                                <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="ti ti-trash"></i></span> Delete</a>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <p class="text-muted mb-0 mt-4">Business metting 🤑</p>
+    
+                    <div class="mt-4">
+                        <a href="javascript:void(0)">
+                            <img src="assets/images/blog/bg2.jpg" class="img-fluid rounded" alt="">
+                        </a>
+                    </div>
+    
+                    <div class="mt-4">
+                        <div class="post-meta d-flex justify-content-between">
+                            <ul class="list-unstyled mb-0">
+                                <li class="list-inline-item me-2 mb-0"><a href="javascript:void(0)" class="text-muted like"><i class="ti ti-heart me-1"></i>33</a></li>
+                                <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="ti ti-message-circle me-1"></i>08</a></li>
+                            </ul>
+                            <a href="javascript:void(0)" class="text-muted"><i class="ti ti-share"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card border-0 shadow rounded p-4 mt-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <img src="assets/images/client/05.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                            <div class="flex-1 ms-2">
+                                <h6 class="mb-0">Cristina Julia</h6>
+                                <small class="text-muted">13th Sept 2021 at 11:04AM</small>
+                            </div>
+                        </div>
+    
+                        <div class="dropdown dropdown-primary">
+                            <button type="button" class="btn btn-icon btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti ti-dots-vertical"></i></button>
+                            <div class="dropdown-menu dd-menu dropdown-menu-end shadow border-0 mt-3 py-3">
+                                <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="ti ti-settings"></i></span> Edit</a>
+                                <a class="dropdown-item text-dark" href="#"><span class="mb-0 d-inline-block me-1"><i class="ti ti-trash"></i></span> Delete</a>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <p class="text-muted mb-0 mt-4">Fresh vegetables and fruits 🤑</p>
+    
+                    <div class="mt-4">
+                        <a href="javascript:void(0)">
+                            <img src="assets/images/blog/bg3.jpg" class="img-fluid rounded" alt="">
+                        </a>
+                    </div>
+    
+                    <div class="mt-4">
+                        <div class="post-meta d-flex justify-content-between">
+                            <ul class="list-unstyled mb-0">
+                                <li class="list-inline-item me-2 mb-0"><a href="javascript:void(0)" class="text-muted like"><i class="ti ti-heart me-1"></i>33</a></li>
+                                <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="ti ti-message-circle me-1"></i>08</a></li>
+                            </ul>
+                            <a href="javascript:void(0)" class="text-muted"><i class="ti ti-share"></i></a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="mt-4 text-center">
+                    <span class="h6 mb-0">Loading.. <i class="mdi mdi-loading mdi-spin h4 mb-0 align-middle"></i></span>
+                </div>
+            </div><!--end col-->
+    </div>
+</div>  
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            {% if is_own_profile %}
+            var aboutButton = document.getElementById('about-button');
+            var postsButton = document.getElementById('posts-button');
+            var resumeButton = document.getElementById('resume-button');
+        
+            var aboutSection = document.getElementById('about-section');
+            var resumeSection = document.getElementById('resume-section');
+            var postsSection = document.getElementById('posts-section');
+        
+            aboutButton.addEventListener('click', function() {
+                aboutSection.style.display = 'block';
+                resumeSection.style.display = 'none';
+                postsSection.style.display = 'none';
+            });
+        
+            postsButton.addEventListener('click', function() {
+                aboutSection.style.display = 'none';
+                resumeSection.style.display = 'none';
+                postsSection.style.display = 'block';
+            });
+        
+            resumeButton.addEventListener('click', function() {
+                aboutSection.style.display = 'none';
+                resumeSection.style.display = 'block';
+                postsSection.style.display = 'none';
+            });
+        
+            // Ensure that only one section is shown on page load
+            aboutSection.style.display = 'block';
+            resumeSection.style.display = 'none';
+            postsSection.style.display = 'none';
+            {% else %}
+            var postsButton = document.getElementById('posts-button');
+            var resumeButton = document.getElementById('resume-button');
+        
+            var resumeSection = document.getElementById('resume-section');
+            var postsSection = document.getElementById('posts-section');
+        
+            postsSection.style.display = 'block'; // Display posts section by default
+        
+            postsButton.addEventListener('click', function() {
+                resumeSection.style.display = 'none';
+                postsSection.style.display = 'block';
+            });
+        
+            resumeButton.addEventListener('click', function() {
+                resumeSection.style.display = 'block';
+                postsSection.style.display = 'none';
+            });
+        
+            // Ensure that only one section is shown on page load
+            resumeSection.style.display = 'none';
+            {% endif %}
+        });        
+    </script>
+    
+    
+    
+    
+    
+     
+
+   
+
+   
+
+   <script>
+        
+        const postsButton = document.getElementById('posts-button');
+        const resumeButton = document.getElementById('resume-button');
+        const postsSection = document.getElementById('posts-section');
+        const resumeSection = document.getElementById('resume-section');
+        const aboutButton = document.getElementById('about-button');
+        const aboutSection = document.getElementById('about-section');
+    
+        aboutButton.addEventListener('click', () => {
+            aboutSection.style.display = 'block';
+            resumeSection.style.display = 'none';
+            postsSection.style.display = 'none';
+
+          });
+
+        postsButton.addEventListener('click', () => {
+          postsSection.style.display = 'block';
+          resumeSection.style.display = 'none';
+          aboutSection.style.display = 'none';
+
+        });
+    
+        resumeButton.addEventListener('click', () => {
+          postsSection.style.display = 'none';
+          resumeSection.style.display = 'block';
+          aboutSection.style.display = 'none';
+
+        });
+    </script> 
+    
+    
+    
+    
+</body>
+{% endblock content %}

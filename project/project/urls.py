@@ -25,8 +25,9 @@ urlpatterns = [
     path('publications/',include('publications.urls')),
     path('classe privé/',include('ClassePrive.urls')),
     path('utilisateurs/',include('Utilisateurs.urls')),
-    path('profil/',include('profil.urls')),
-
+    path('profil/<int:user_id>/', include('profil.urls')),
+    path('update-profile/<int:user_id>/', include('profil.urls')),
+    path('notificatons/',include('notification.urls')),
     path('home/',include('chat.urls')),
     path('home/',include('Utilisateurs.urls')),
 

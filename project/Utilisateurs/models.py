@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from multiselectfield import MultiSelectField
 from multiselectfield.validators import MaxValueMultiFieldValidator
-
+    
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Utilisateur(models.Model):
@@ -22,14 +24,15 @@ class Utilisateur(models.Model):
     ('LAÂYOUNE-SAKIA EL HAMRA', 'Laâyoune-Sakia El Hamra'),
     ('DAKHLA-OUED ED-DAHAB', 'Dakhla-Oued Ed-Dahab'),
 ]
-    region=models.CharField(choices=REGIONS_CHOICES,max_length=255,default='TANGER-TÉTOUAN-AL HOCEIMA')
+    region=models.TextField(choices=REGIONS_CHOICES,max_length=255,default='TANGER-TÉTOUAN-AL HOCEIMA')
     photo_profil=models.ImageField(upload_to='photos/photos_Profil',null=True,blank=False, default='photos/photos_Profil/user_image.png')
     nom = models.CharField(max_length=50,default='&&')
     prenom = models.CharField(max_length=50, default='&&')
     date_naissenc=models.DateField(null=True)       
     PROFIL_CHOICES = [
         ('etu', 'Etudiant'),
-        ('ens', 'Enseignant')
+        ('ens', 'Enseignant'),
+        ('ent','entreprise'),  
     ]
     is_public = models.BooleanField(default=True)  # Attribute for public/private profile
 
@@ -37,13 +40,39 @@ class Utilisateur(models.Model):
     following = models.ManyToManyField('self', symmetrical=False, related_name='followers_users', blank=True)
 
     type_profil = models.CharField(choices=PROFIL_CHOICES, max_length=3, default='etu')
-    def __str__(self):
-        
-        return f"{self.nom} {self.prenom}"
+    email = models.EmailField(null=True, blank=True)
     
+    tele = models.CharField(max_length=20, null=True, blank=True) #just added
+    GENDER_CHOICES = [  #just added
+        ('M', 'Male'),
+        ('F', 'Female'),
+    ]
+    bio = models.TextField(max_length=255, null=True, blank=True)
+    def __str__(self):
+        return f"{self.prenom} {self.nom}"
+   
+   
+    
+    
+@receiver(post_save, sender=User)
+def create_utilisateur(sender, instance, created, **kwargs):
+    if created and instance.is_superuser:
+        Utilisateur.objects.create(user=instance)
 
+
+class MyModel(models.Model):
+    my_field = MultiSelectField(choices=[('value1', 'Value 1'), ('value2', 'Value 2')], max_length=100)
+    
 class Etudiant(Utilisateur):
     filiere=models.CharField(max_length=255)
+    #just added
+    institution = models.CharField(max_length=255, default='Université XYZ')
+    major = models.CharField(max_length=255, default='Génie logiciel')
+    year_of_study = models.IntegerField(default=1)
+    degree = models.CharField(max_length=255, default='Licence')
+    top_skills = models.CharField(max_length=255, default='Python, Django, HTML')
+    experiences = models.TextField(default='Aucune expérience')
+
 
     def __str__(self):
         return super().__str__()
@@ -91,8 +120,7 @@ class Enseignant(Utilisateur):
         ('GC','GENIE CHIMIQUE'),
         ('SDT','SIENCES DE LA TERRE'),
         ('SDV','SIECES DE LA VIE'),
-        ('GE','GENIE ELECTRIQUE'),
-        
+        ('GE','GENIE ELECTRIQUE'),   
     ]
     departement=models.CharField(choices=departement_choices,max_length=50)
     

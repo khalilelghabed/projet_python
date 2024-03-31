@@ -37,6 +37,13 @@ section {
 background: #c1bdbd79;
 grid-area: section;    
 }
+.publication-title {
+    color: #333333; /* Couleur du texte */
+    font-size: 1.2em; /* Taille de la police */
+    font-weight: bold; /* Graisse de la police */
+    margin-bottom: 10px; /* Marge inférieure */
+}
+
 
 aside {
     background: #c1bdbd79;
@@ -511,10 +518,16 @@ header {
 }
 
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    font-family: segoe-ui_normal, Segoe UI, Segoe, Segoe WP, Helvetica Neue, Helvetica, sans-serif;
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "nav section aside"
+        "footer footer footer";
+    grid-template-rows: 14% 1fr 5%;
+    grid-template-columns: 19% 1fr 22%;
+    height: 100vh;
+    background-color: #e8e2e2; /* Une teinte légèrement plus claire que le gris */
 }
 .row{
     align-items: center;
@@ -536,9 +549,17 @@ body {
     cursor: pointer;
     position: absolute; /* Change to absolute positioning */
     right: 1px;
+<<<<<<< HEAD
     z-index: 2;
 }
 
+=======
+    bottom: 1px;
+    z-index: 2;
+}
+
+
+>>>>>>> d30b293f2c7e4c7ba0b8067fe2d4bdd85d61ced9
 .search-container {
     display: flex;
     align-items: center;
@@ -663,7 +684,11 @@ body {
     bottom: 1vh;
 }
 
+<<<<<<< HEAD
  i .send-button{
+=======
+.send-button i {
+>>>>>>> d30b293f2c7e4c7ba0b8067fe2d4bdd85d61ced9
     font-size: 28px; /* Ajustez la taille de l'icône selon vos besoins */
     color: #007bff; /* Couleur de l'icône */
 }
