@@ -12,7 +12,7 @@
         <meta name="email" content="support@shreethemes.in" />
         <meta name="website" content="https://shreethemes.in" />
         <meta name="Version" content="v4.7.0" />
-        <title>Etudiant Profile</title>
+        <title>{{utilisateur.prenom}}</title>
 
         <!-- favicon -->
         <link rel="shortcut icon" href="assets/images/favicon.ico" />
@@ -31,15 +31,62 @@
         <link rel="stylesheet" href="{% static 'profile-student.css' %}">
         <link rel="stylesheet" href="{% static 'file1.css'%}">
 
-        <script src="{% static 'js/ProfileEtu.js'%}"></script>
-        
-    
+        <script src="{% static 'js/ProfileEtu.js'%}"></script> 
 </head>
 <body>
     <div id="overlay" class="overlay"></div>
+
     
-   
     
+    {% if utilisateur.type_profil == 'etu' %}
+    <nav>
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">Top Skills</h5>
+            <p>{{utilisateur.etudiant.top_skills}}<br>
+            <span class="yellow-star"><i class="fas fa-star fa-2x"></i></span>
+        </div>
+        
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">Contact</h5>
+            <p>Email: {{utilisateur.email}}<br>Phone :{{utilisateur.tele}} <br>Portfolio :{{utilisateur.etudiant.portfolio}}</p>
+        </div>
+       
+    </nav>
+    <aside >
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">Establishment</h5>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6BDrN94JE98-dgMteAv-P3MuzsXQrDx6rYg&usqp=CAU" alt="">
+        </div>
+
+
+    {% if is_own_profile %}
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">Classrooms</h5>
+            <p>HTML <br>CSS <br>JS <br>Python</p>
+            <a href="#" class="stretched-link position-absolute bottom-0 end-0 p-2">View All</a>
+        </div>
+        {% endif %}
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">About Us</h5>
+            <p>{{utilisateur.bio}}</p>
+        </div>
+
+        
+    </aside>
+    {% endif %}
+    {% if utilisateur.type_profil == 'ens' %}
+    <nav>
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">Specialties</h5>
+            <p>{{utilisateur.enseignant.specialty}}<br>
+            <span class="blue-book" style="position: absolute; top: 5px; right: 5px; color:#4C54BE"><i class="fas fa-book fa-2x "></i></span>        </div>
+        
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">I am here!</h5>
+            <p>email: {{utilisateur.email}}<br>phone :{{utilisateur.tele}} <br>Portfolio :{{utilisateur.enseignant.portfolio}}<br>
+            </p>
+        </div>
+    </nav>
     <aside >
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
             <h5 class="mb-0">Establishment</h5>
@@ -52,29 +99,40 @@
             <a href="#" class="stretched-link position-absolute bottom-0 end-0 p-2">View All</a>
         </div>
         {% endif %}
-
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
             <h5 class="mb-0">About Us</h5>
             <p>{{utilisateur.bio}}</p>
-        </div>
-
-        
+        </div>  
     </aside>
-    
+    {% endif %}
+
+    {% if utilisateur.type_profil == 'ent' %}
     <nav>
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
-            <h5 class="mb-0">Top Skills</h5>
-            <p>{{utilisateur.etudiant.top_skills}}<br>
-            <span class="yellow-star"><i class="fas fa-star fa-2x"></i></span>
+            <h5 class="mb-0"></h5>
+            <img src="https://faithdean.co.uk/wp-content/uploads/2022/10/hiring_feature1.jpg" alt="">
         </div>
         
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
-            <h5 class="mb-0">Contact</h5>
-            <p>email: {{utilisateur.email}}<br>phone :{{utilisateur.tele}}</p>
-            
+            <h5 class="mb-0">Contact Us!</h5>
+            <p>email: {{utilisateur.email}}<br>phone: {{utilisateur.tele}} <br>Website: {{utilisateur.entreprise.website}}</p>
         </div>
-       
     </nav>
+    <aside >
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">About</h5>
+            <p>{{utilisateur.bio}}</br>
+        </div>
+        <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
+            <h5 class="mb-0">Industry</h5>
+            <p>{{entreprise.Specialties}}</p>
+        </div>  
+    </aside>
+    {% endif %}
+
+
+
+
 
     <section> 
     <div class="firstprf">
@@ -85,9 +143,19 @@
             </label>
             <input type="file" id="profile-upload" accept="image/*" onchange="previewProfile(event)" style="display: none;">
             
-
+            {% if utilisateur.type_profil == 'etu' %}
             <h1 class="user-name">{{utilisateur.nom}} {{utilisateur.prenom}}</h1>
             <h2 class="user-role">Etudiant</h2>
+            {% endif %}
+            {% if utilisateur.type_profil == 'ens' %}
+            <h1 class="user-name">{{utilisateur.nom}} {{utilisateur.prenom}}</h1>
+            <h2 class="user-role">Teacher</h2>
+            {% endif %}
+            {% if utilisateur.type_profil == 'ent' %}
+            <h1 class="user-name">{{utilisateur.prenom}}</h1>
+            <h2 class="user-role">Comapany</h2>
+            {% endif %}
+
         </div>      
         
         <div class="profile-details">
@@ -102,7 +170,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="text-center mt-4 op1">
         {% if is_own_profile %}
@@ -120,11 +187,10 @@
         {% endif %}
     </div>
     {% if is_own_profile %}
-
+    {% if utilisateur.type_profil == 'etu' %}
     <div id="about-section" class="about-section" style="display: none;">
         <div id="student-profile">
             <h2>Settings</h2>
-            
             <div class="info-item">
                 <label for="full-name">Full Name:</label>
                 <span id="full-name">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
@@ -146,8 +212,8 @@
                 <span id="date-of-birth">{{utilisateur.date_naissenc}}</span>
             </div>
             <div class="info-item">
-                <label for="gender">Gender:</label>
-                <span id="gender">{{utilisateur.GENDER_CHOICES}}</span>
+                <label for="portfolio">Portfolio:</label>
+                <span id="portfolio">{{utilisateur.etudiant.portfolio}}</span>
             </div>
             <div class="info-item">
                 <label for="institution">Institution:</label>
@@ -173,7 +239,7 @@
                 <label for="experiences">Experiences:</label>
                 <span id="experiences">{{utilisateur.etudiant.experiences}}</span>
             </div>
-            <button id="update-button" onclick="toggleUpdateWidget()">Update Information</button>
+          <button id="update-button" onclick="toggleUpdateWidget()">Update Information</button>
             <form action="{% url 'update' user_id=utilisateur.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
             <div id="update-widget" class="update-widget" style="display: none; z-index: 10;">
@@ -182,21 +248,16 @@
                 <input type="file" id="photo_profil-input" accept="image/*" name="photo_profil" ><br>
                 <label for="full-name-input">Name:</label>
                 <input type="text" id="full-name-input" name="name"><br>
-                <label for="full-name-input">prenom:</label>
+              <label for="full-name-input">prenom:</label>
                 <input type="text" id="bio-input" name="prenom"><br>
                 <label for="bio-input">Bio :</label>
                 <input type="text" id="full-bio-input" name="bio"><br>
                 <label for="email-input">Email:</label>
                 <input type="email" id="email-input" name="email"><br>
                 <label for="phone-number-input">Phone Number:</label>
-                <input type="tel" id="phone-number-input" name="tel"><br>
+                <input type="tel" id="phone-number-input" name="tel"><br>                
                 <label for="date-of-birth-input">Date of Birth:</label>
-                <input type="date" id="date-of-birth-input" name="date_birthay"><br>
-                <label for="gender-input">Gender:</label>
-                <select id="gender-input" name="gender">
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select><br>
+                <input type="date" id="date-of-birth-input" name="date_birthay"><br>   
                 <label for="institution-input">Institution:</label>
                 <input type="text" id="institution-input" name="institution"><br>
                 <label for="major-input">Major/Field of Study:</label>
@@ -213,9 +274,226 @@
             </div>
         </form>
         </div>
-        
-        
     </div>
+    {% endif %}
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% if is_own_profile %}
+    {% if utilisateur.type_profil == 'ens' %}
+    <div id="about-section" class="about-section" style="display: none;">
+        <div id="student-profile">
+            <h2>Settings</h2>
+            <div class="info-item">
+                <label for="full-name">Full Name:</label>
+                <span id="full-name">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
+            </div>
+            <div class="info-item">
+                <label for="bio">My Bio:</label>
+                <span id="bio">{{utilisateur.bio}}</span>
+            </div>
+            <div class="info-item">
+                <label for="email">Email:</label>
+                <span id="email">{{utilisateur.email}}</span>
+            </div>
+            <div class="info-item">
+                <label for="phone-number">Phone Number:</label>
+                <span id="phone-number">{{utilisateur.tele}}</span>
+            </div>
+            <div class="info-item">
+                <label for="date-of-birth">Date of Birth:</label>
+                <span id="date-of-birth">{{utilisateur.date_naissenc}}</span>
+            </div>
+            <div class="info-item">
+                <label for="portfolio">Portfolio:</label>
+                <span id="portfolio">{{utilisateur.etudiant.portfolio}}</span>
+            </div>
+            <div class="info-item">
+                <label for="institution">Institution:</label>
+                <span id="institution">{{utilisateur.etudiant.institution}}</span>
+            </div>
+            <div class="info-item">
+                <label for="major">Major/Field of Study:</label>
+                <span id="major">{{utilisateur.etudiant.major}}</span>
+            </div>
+            <div class="info-item">
+                <label for="year-of-study">Year of Study:</label>
+                <span id="year-of-study">{{utilisateur.etudiant.year_of_study}}</span>
+            </div>
+            <div class="info-item">
+                <label for="degree-program">Degree:</label>
+                <span id="degree-program">{{utilisateur.etudiant.degree}}</span>
+            </div>
+            <div class="info-item">
+                <label for="top-skills">Top Skills:</label>
+                <span id="top-skills">{{utilisateur.etudiant.top_skills}}</span>
+            </div>
+            <div class="info-item">
+                <label for="experiences">Experiences:</label>
+                <span id="experiences">{{utilisateur.etudiant.experiences}}</span>
+            </div>
+          <button id="update-button" onclick="toggleUpdateWidget()">Update Information</button>
+            <form action="{% url 'update' user_id=utilisateur.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+            <div id="update-widget" class="update-widget" style="display: none; z-index: 10;">
+                <!-- Widget content -->
+                <label for="photo_profil-input">Profile Picture:</label>
+                <input type="file" id="photo_profil-input" accept="image/*" name="photo_profil" ><br>
+                <label for="full-name-input">Name:</label>
+                <input type="text" id="full-name-input" name="name"><br>
+              <label for="full-name-input">prenom:</label>
+                <input type="text" id="bio-input" name="prenom"><br>
+                <label for="bio-input">Bio :</label>
+                <input type="text" id="full-bio-input" name="bio"><br>
+                <label for="email-input">Email:</label>
+                <input type="email" id="email-input" name="email"><br>
+                <label for="phone-number-input">Phone Number:</label>
+                <input type="tel" id="phone-number-input" name="tel"><br>                
+                <label for="date-of-birth-input">Date of Birth:</label>
+                <input type="date" id="date-of-birth-input" name="date_birthay"><br>   
+                <label for="institution-input">Institution:</label>
+                <input type="text" id="institution-input" name="institution"><br>
+                <label for="major-input">Major/Field of Study:</label>
+                <input type="text" id="major-input" name="major"><br>
+                <label for="year-of-study-input">Year of Study:</label>
+                <input type="number" id="year-of-study-input" name="year_study"><br>
+                <label for="degree-program-input">Degree:</label>
+                <input type="text" id="degree-program-input" name="degree"><br>
+                <label for="top-skills-input">Top Skills:</label>
+                <input type="text" id="top-skills-input" name="top_skills"><br>
+                <label for="experiences-input">Experiences:</label>
+                <input type="text" id="experiences-input" name="experiences"><br>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+        
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    {% if is_own_profile %}
+    {% if utilisateur.type_profil == 'ent' %}
+    <div id="about-section" class="about-section" style="display: none;">
+        <div id="student-profile">
+            <h2>Settings</h2>
+            <div class="info-item">
+                <label for="full-name">Full Name:</label>
+                <span id="full-name">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
+            </div>
+            <div class="info-item">
+                <label for="bio">My Bio:</label>
+                <span id="bio">{{utilisateur.bio}}</span>
+            </div>
+            <div class="info-item">
+                <label for="email">Email:</label>
+                <span id="email">{{utilisateur.email}}</span>
+            </div>
+            <div class="info-item">
+                <label for="phone-number">Phone Number:</label>
+                <span id="phone-number">{{utilisateur.tele}}</span>
+            </div>
+            <div class="info-item">
+                <label for="date-of-birth">Date of Birth:</label>
+                <span id="date-of-birth">{{utilisateur.date_naissenc}}</span>
+            </div>
+            <div class="info-item">
+                <label for="portfolio">Portfolio:</label>
+                <span id="portfolio">{{utilisateur.etudiant.portfolio}}</span>
+            </div>
+            <div class="info-item">
+                <label for="institution">Institution:</label>
+                <span id="institution">{{utilisateur.etudiant.institution}}</span>
+            </div>
+            <div class="info-item">
+                <label for="major">Major/Field of Study:</label>
+                <span id="major">{{utilisateur.etudiant.major}}</span>
+            </div>
+            <div class="info-item">
+                <label for="year-of-study">Year of Study:</label>
+                <span id="year-of-study">{{utilisateur.etudiant.year_of_study}}</span>
+            </div>
+            <div class="info-item">
+                <label for="degree-program">Degree:</label>
+                <span id="degree-program">{{utilisateur.etudiant.degree}}</span>
+            </div>
+            <div class="info-item">
+                <label for="top-skills">Top Skills:</label>
+                <span id="top-skills">{{utilisateur.etudiant.top_skills}}</span>
+            </div>
+            <div class="info-item">
+                <label for="experiences">Experiences:</label>
+                <span id="experiences">{{utilisateur.etudiant.experiences}}</span>
+            </div>
+          <button id="update-button" onclick="toggleUpdateWidget()">Update Information</button>
+            <form action="{% url 'update' user_id=utilisateur.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+            <div id="update-widget" class="update-widget" style="display: none; z-index: 10;">
+                <!-- Widget content -->
+                <label for="photo_profil-input">Profile Picture:</label>
+                <input type="file" id="photo_profil-input" accept="image/*" name="photo_profil" ><br>
+                <label for="full-name-input">Name:</label>
+                <input type="text" id="full-name-input" name="name"><br>
+              <label for="full-name-input">prenom:</label>
+                <input type="text" id="bio-input" name="prenom"><br>
+                <label for="bio-input">Bio :</label>
+                <input type="text" id="full-bio-input" name="bio"><br>
+                <label for="email-input">Email:</label>
+                <input type="email" id="email-input" name="email"><br>
+                <label for="phone-number-input">Phone Number:</label>
+                <input type="tel" id="phone-number-input" name="tel"><br>                
+                <label for="date-of-birth-input">Date of Birth:</label>
+                <input type="date" id="date-of-birth-input" name="date_birthay"><br>   
+                <label for="institution-input">Institution:</label>
+                <input type="text" id="institution-input" name="institution"><br>
+                <label for="major-input">Major/Field of Study:</label>
+                <input type="text" id="major-input" name="major"><br>
+                <label for="year-of-study-input">Year of Study:</label>
+                <input type="number" id="year-of-study-input" name="year_study"><br>
+                <label for="degree-program-input">Degree:</label>
+                <input type="text" id="degree-program-input" name="degree"><br>
+                <label for="top-skills-input">Top Skills:</label>
+                <input type="text" id="top-skills-input" name="top_skills"><br>
+                <label for="experiences-input">Experiences:</label>
+                <input type="text" id="experiences-input" name="experiences"><br>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+        
+        </div>
+        
+
+     
+    </div>
+    {% endif %}
     {% endif %}
 
     <div id="resume-section" class="resume-section" style="display: none;">
@@ -426,7 +704,36 @@
             </div><!--end col-->
     </div>
 </div>  
-    </section>
+
+    <script>
+        function toggleUpdateWidget() {
+            var updateWidget = document.getElementById('update-widget');
+            var overlay = document.getElementById('overlay');
+            if (updateWidget.style.display === 'none') {
+                updateWidget.style.display = 'block';
+                overlay.style.display = 'block';
+            } else {
+                updateWidget.style.display = 'none';
+                overlay.style.display = 'none';
+            }
+        }
+        
+    
+        function updateInformation() {
+            document.getElementById('full-name').textContent =   document.getElementById('full-name-input').value;
+            document.getElementById('email').textContent = document.getElementById('email-input').value;
+            document.getElementById('phone-number').textContent =  document.getElementById('phone-number-input').value;
+            document.getElementById('date-of-birth').textContent = document.getElementById('date-of-birth-input').value;
+            document.getElementById('institution').textContent =  document.getElementById('institution-input').value;
+            document.getElementById('major').textContent = document.getElementById('major-input').value;
+            document.getElementById('degree-program').textContent =  document.getElementById('degree-program-input').value;
+            document.getElementById('year-of-study').textContent =  document.getElementById('year-of-study-input').value;
+            document.getElementById('top-skills').textContent =  document.getElementById('top-skills-input').value;
+            document.getElementById('experiences').textContent =  document.getElementById('experiences-input').value;
+    
+            toggleUpdateWidget(); // Hide the update widget after saving
+        }
+    </script>
 
     <script>
         function toggleUpdateWidget() {
@@ -512,50 +819,7 @@
             {% endif %}
         });        
     </script>
-    
-    
-    
-    
-    
-     
-
    
-
-   
-
-   <script>
-        
-        const postsButton = document.getElementById('posts-button');
-        const resumeButton = document.getElementById('resume-button');
-        const postsSection = document.getElementById('posts-section');
-        const resumeSection = document.getElementById('resume-section');
-        const aboutButton = document.getElementById('about-button');
-        const aboutSection = document.getElementById('about-section');
-    
-        aboutButton.addEventListener('click', () => {
-            aboutSection.style.display = 'block';
-            resumeSection.style.display = 'none';
-            postsSection.style.display = 'none';
-
-          });
-
-        postsButton.addEventListener('click', () => {
-          postsSection.style.display = 'block';
-          resumeSection.style.display = 'none';
-          aboutSection.style.display = 'none';
-
-        });
-    
-        resumeButton.addEventListener('click', () => {
-          postsSection.style.display = 'none';
-          resumeSection.style.display = 'block';
-          aboutSection.style.display = 'none';
-
-        });
-    </script> 
-    
-    
-    
     
 </body>
 {% endblock content %}

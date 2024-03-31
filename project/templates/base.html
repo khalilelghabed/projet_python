@@ -39,7 +39,7 @@
         
     <style>
         /* Style pour les notifications lues */
-.read-notification {
+    .read-notification {
     background-color: #f2f2f2; /* Couleur de fond pour les notifications lues */
     color: #888; /* Couleur de texte pour les notifications lues */
 }
@@ -64,8 +64,7 @@ li  {
     
 </style>
 </head>
-<body
->
+<body>
     
 <header>
     <div class="logo"><img src="logo.jpg" alt="logo"></div>
@@ -86,12 +85,30 @@ li  {
         }
     </script>
     
+
+
+    
     <div class="search">
-       <input type="text" class="searchTerm" placeholder="What are you looking for?">
-       <button type="submit" class="searchButton1">
-            <i class="fa fa-search"></i>
-        </button>
+        <form action="{% url 'profil_search' %}" method="Post">
+            {% csrf_token %}
+                <input name= 'search' type="text" class="searchTerm" placeholder="What are you looking for?">
+                <button type="submit" class="searchButton1">
+                    <i class="fa fa-search"></i>
+                </button>
+        </form>
     </div>
+   
+
+
+
+
+
+
+
+
+
+
+
 {% if user.is_authenticated %}
     <div class="hed4">
         <div class="notification-container" >

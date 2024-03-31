@@ -1,16 +1,7 @@
-# from django.shortcuts import render
-# from Utilisateurs.models import Utilisateur
-
-# def profil_page(request):
-#     utilisateurs = Utilisateur.objects.all()  # Query the utilisateur models
-#     return render(request, 'profil/profileEtudiant.html', {'utilisateurs': utilisateurs})
-
-# profil/views.py
-
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from Utilisateurs.models import Utilisateur,Etudiant
+from Utilisateurs.models import Utilisateur,Etudiant,User
 from django.core.files.storage import FileSystemStorage
 
 def profil_page(request, user_id):
@@ -87,16 +78,16 @@ def update_information(request, user_id):
     else:
         # Rediriger vers la page de profil si la méthode de la requête n'est pas POST
         return redirect('profil_page', user_id=user_id)
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    
+def profil_search(request):
+    
+    email = request.POST.get('search')
+    print(request.user)
+    utilisateur = User.objects.get(username=email)
+    utilisateur = Utilisateur.objects.get(user=utilisateur)
+    print(utilisateur)
+    is_own_profile = request.user == utilisateur.user  
+    print(is_own_profile)# Assuming you have a 'user' field in your Utilisateur model
+    return render(request, 'profil/profileEtudiant.html', {'utilisateur': utilisateur, 'is_own_profile': is_own_profile})
+    
