@@ -38,9 +38,34 @@
         <link href="{% static 'assets/css/style.min.css' %}" class="theme-opt" rel="stylesheet" type="text/css" />
         
     <style>
-    </style>
+        /* Style pour les notifications lues */
+.read-notification {
+    background-color: #f2f2f2; /* Couleur de fond pour les notifications lues */
+    color: #888; /* Couleur de texte pour les notifications lues */
+}
+
+/* Style pour les notifications non lues */
+.unread-notification {
+    background-color: #ffc; /* Couleur de fond pour les notifications non lues */
+    color: #333; /* Couleur de texte pour les notifications non lues */
+}
+li  {
+    list-style-type: none;
+}
+    body {
+        background-color: #e8e2e2; /* Couleur de fond que vous avez choisie */
+    }
+    .publication-title {
+        color: #333333; /* Couleur du texte */
+        font-size: 1.2em; /* Taille de la police */
+        font-weight: bold; /* Graisse de la police */
+        margin-bottom: 10px; /* Marge inférieure */
+    }
+    
+</style>
 </head>
-<body>
+<body
+>
     
 <header>
     <div class="logo"><img src="logo.jpg" alt="logo"></div>
@@ -67,58 +92,24 @@
             <i class="fa fa-search"></i>
         </button>
     </div>
+{% if user.is_authenticated %}
     <div class="hed4">
-        <div class="notification-container">
+        <div class="notification-container" >
             <button class="notification-icon" onclick="toggleNotifications()">
                 <i class="fas fa-bell"></i>
-                <div class="notifications-count js-count">0</div>
+                <div class="notifications-count js-count" id="notification_nolues">{{nombre_notifications_non_lues}}</div>
             </button>
-            <div class="notifications-dropdown" id="notificationsDropdown">
+            <div class="notifications-dropdown" id="notificationsDropdown" style="display: none;">
                 <ul>
-                    <li><div class="notification-item">
-                        <img class="profile-picture" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="Profile Picture">
-                        <div class="notification-content">
-                            <div class="author-name">Author Name</div>
-                            <div class="notification-details">
-                                <span class="notification-type">Type</span>
-                                <span class="notification-date">Date</span>
-                            </div>
-                            <div class="notification-text">Notification Content</div>
-                        </div>
-                        <button class="close-button" onclick="removeNotification(event)">X</button>
-                    </div>
-                    </li>
-                    <li><div class="notification-item">
-                        <img class="profile-picture" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="Profile Picture">
-                        <div class="notification-content">
-                            <div class="author-name">Author Name</div>
-                            <div class="notification-details">
-                                <span class="notification-type">Type</span>
-                                <span class="notification-date">Date</span>
-                            </div>
-                            <div class="notification-text">Notification Content</div>
-                        </div>
-                        <button class="close-button" onclick="removeNotification(event)">X</button>
-                    </div>
-                    </li>
-                    <li><div class="notification-item">
-                        <img class="profile-picture" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="Profile Picture">
-                        <div class="notification-content">
-                            <div class="author-name">Author Name</div>
-                            <div class="notification-details">
-                                <span class="notification-type">Type</span>
-                                <span class="notification-date">Date</span>
-                            </div>
-                            <div class="notification-text">Notification Content</div>
-                        </div>
-                        <button class="close-button" onclick="removeNotification(event)">X</button>
-                    </div>
-                    </li>
+                    
+                    
+                   
                 </ul>
             </div>
         </div>
         
     </div>
+    {% endif %}
     <script>
     // Call updateNotificationCount on page load
         updateNotificationCount();
@@ -134,7 +125,10 @@
         function updateNotificationCount() {
             var countElement = document.querySelector('.notifications-count');
             var dropdown = document.getElementById("notificationsDropdown");
-            var notificationCount = dropdown.querySelectorAll('.notification-item').length;
+            var Count = document.getElementById('notification_nolues');
+            nouveauCount=Count.innerText
+            notificationCount=parseInt(nouveauCount)
+            
         
             countElement.textContent = notificationCount;
             countElement.style.display = notificationCount > 0 ? 'inline' : 'none';
