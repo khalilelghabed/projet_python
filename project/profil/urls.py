@@ -16,5 +16,7 @@ from . import views
 urlpatterns = [
     path('', views.profil_page, name='profil_page'),
     path('update_donnes/',views.update_information,name='update'),
+   
+   
     
 ]

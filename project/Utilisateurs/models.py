@@ -48,10 +48,7 @@ class Utilisateur(models.Model):
         ('F', 'Female'),
     ]
     bio = models.TextField(max_length=255, null=True, blank=True)
-    
-   
-    
-    
+       
 @receiver(post_save, sender=User)
 def create_utilisateur(sender, instance, created, **kwargs):
     if created and instance.is_superuser:
@@ -122,7 +119,12 @@ class Enseignant(Utilisateur):
         ('GE','GENIE ELECTRIQUE'),   
     ]
     departement=models.CharField(choices=departement_choices,max_length=50)
-    
+    specialty = models.TextField(max_length=255, default='IT')
+    portfolio = models.TextField(max_length=255, default='www.portfolio.com')
+    experiences=models.TextField(max_length=255, default='None')
+    institution = models.CharField(max_length=255, default='Université XYZ')
+
+
     def __str__(self):
         return super().__str__()
     
@@ -146,14 +148,4 @@ class ActivitePedarogique(models.Model):
         return self.titre
 
 
-
-
-
 # class Etudiant(Utilisateur):
-
-
-
-
-
-
-# Create your models here.
