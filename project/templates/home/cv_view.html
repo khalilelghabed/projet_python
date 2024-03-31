@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Your CV</h2>
+    {% if cv %}
+    <p>Name: {{ cv.nom }}</p>
+    <p>First Name: {{ cv.prenom }}</p>
+    <!-- Display other CV fields as needed -->
+    {% else %}
+    <p>No CV found.</p>
+    <a href="{% url 'create_cv' %}" class="text-decoration-none">Create CV</a>
+    {% endif %}
+</div>
+{% endblock %}

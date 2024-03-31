@@ -9,29 +9,22 @@ def home(request):
     return render(request, 'home/home.html')
 @login_required
 def home_authentifie(request):
-    publication_suivies=[]
-    utilisateur = request.user.utilisateur
+    publication_suivies = []
     utilisateurs = Utilisateur.objects.all()
 
-    if utilisateur is not None:
-        # L'utilisateur a un objet Utilisateur associé
-        following = utilisateur.following.all()
-        if following.count() > 0 :
-            for utilisateur in following:
-                print(utilisateur)
-                publication_suivies.extend(utilisateur.publier.all())
-                print(publication_suivies)
-        return render(request, "home/home_authentifie.html",{'publications':publication_suivies,'utilisateurs': utilisateurs})
-              
-            
-           
-        
-    else:
-        # L'utilisateur n'a pas d'objet Utilisateur associé
-        following = None
-        print("L'utilisateur n'a pas d'objet Utilisateur associé.")
+    # Check if there's a search query
+    search_query = request.GET.get('q')
+    if search_query:
+        utilisateurs = utilisateurs.filter(nom__icontains=search_query) | utilisateurs.filter(prenom__icontains=search_query)
 
-    return render(request, "home/home_authentifie.html", {'utilisateurs': utilisateurs})
+    if request.user.utilisateur:
+        following = request.user.utilisateur.following.all()
+        if following.count() > 0:
+            for utilisateur in following:
+                publication_suivies.extend(utilisateur.publier.all())
+
+    return render(request, "home/home_authentifie.html", {'publications': publication_suivies, 'utilisateurs': utilisateurs, 'search_query': search_query})
+
 
 from django.http import JsonResponse
 
