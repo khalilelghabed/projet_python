@@ -28,14 +28,7 @@
                     <div class="profile">
                         <img src="{{ user.utilisateur.photo_profil.url }}" alt="Photo de profil">
                         <div class="user-info">
-                            {% if not  utilisateur.type_profil == 'ent' %}
-
-                            <p>{{ user.utilisateur.nom}} {{user.utilisateur.prenom}}</p>
-                            {% endif %}
-                            {% if utilisateur.type_profil == 'ent' %}
-                            <p>{{user.utilisateur.prenom}}</p>
-                            {% endif %}
-
+                            <p>{{ user.utilisateur.nom}}        {{user.utilisateur.prenom}}</p>
                         </div>
                     </div>
                     <div class="content">

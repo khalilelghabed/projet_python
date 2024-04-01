@@ -131,7 +131,7 @@
             Certifications: {{utilisateur.entreprise.certifications}} <br>
             Comapany size: {{utilisateur.entreprise.size}} <br>
         </p>
-        </div>  
+        </div>
     </aside>
     {% endif %}
 
@@ -193,7 +193,7 @@
     </div>
     {% if is_own_profile %}
     {% if utilisateur.type_profil == 'etu' %}
-    <div id="about-section" class="about-section" style="display: none;">
+    <div id="about-section" class="about-section " style="display: none;">
         <div id="student-profile">
             <h2>Settings</h2>
             <div class="info-item">
@@ -519,9 +519,9 @@
 
         <section>
             {% if is_own_profile %}
-            <div class="row justify-content-center">
-                <div class="col-lg-8 mt-4 order-md-1 order-lg-2 order-1">
-                    <div class="publication" id="publicationContainer2" style="margin-left: 7% ;margin-bottom:7%">
+            <div class="row justify-content-center w-100">
+                <div class="col-lg-8 mt-4 order-md-1 order-lg-2 order-1 w-100">
+                    <div class="publication" id="publicationContainer2" style="margin-left: -17%; margin-bottom:7% ; width:200%">
                         {% if user.is_authenticated %}
                             <div class="profile">
                                 <img src="{{ user.utilisateur.photo_profil.url }}" alt="Photo de profil">
@@ -535,7 +535,7 @@
                                     {% endif %}
                                 </div>
                             </div>
-                            <div class="content">
+                            <div class="content" >
                                 <form method='post' id="publicationForm" action="{% url "creatPublication" %}" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <textarea placeholder="Créer une publication..." name="contenu"></textarea>
@@ -568,7 +568,7 @@
                             {% endif %}
 
                             
-                            <div class="publication" id="publicationContainer" style="margin-left: 7%">
+                            <div class="publication" id="publicationContainer"style="margin-left: -17%; margin-bottom:7% ; width:200%">
                                 <h6 class="publication-title">Publications</h6>
                         <!-- Affichage des publications -->
                         {% for publication in publications|slice:":10"  %}

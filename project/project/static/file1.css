@@ -34,10 +34,11 @@ grid-area: header;
 
 nav {
 grid-area: nav; 
+margin-left: 3%;
+
 }
 
 section {
-
 grid-area: section;    
 }
 
