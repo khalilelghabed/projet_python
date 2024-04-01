@@ -6,7 +6,8 @@ from notification.models import Notification
 from publications.models import Publication
 def home(request):
    
-    return render(request, 'home/home.html')
+    return render(request, 'premierPage.html')
+
 @login_required
 def home_authentifie(request):
     

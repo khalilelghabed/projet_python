@@ -1,52 +1,93 @@
 
-<h4>Créer un nouveau compte</h4>
-<div class="creerForm">
-    <form method="post" action='' class="creer">
-        {% csrf_token %}
-    
+{% extends "premierPage.html" %}
+{% block content %}
+  <div class="untree_co-section">
+    <div class="container">
 
-        <div>
-        <label for="firstname">first name</label>
-        <input type="text" name="firstname" id="firstname" required>
-    </div>
-    <div>
-        <label for="lastname">last name</label>
-        <input type="text" name="lastname" id="lastname" required>
-    </div>
-    <div>
-        <label for="email">email</label>
-        <input type="email" name="email" id="email" required>
-    </div>
-    <div>
-        <label for="password1">password</label>
-        <input type="password" name="password1" id="password1" required>
-    </div>
-    <div>
-        <label for="password2">confirmer</label>
-        <input type="password" name="password2" id="password2" required>
-    </div>
+      <div class="row mb-5 justify-content-center">
+        <div class="col-lg-5 mx-auto order-1" data-aos="fade-up" data-aos-delay="200">
+          <form action="#" class="form-box" method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-12 mb-3">
+                <input type="text" name="firstname" id="firstname" required class="form-control" placeholder="first name">
+                
+              </div>
+            
+              <div class="col-12 mb-3">
+                <input type="text" id="lastname" name="lastname" required placeholder="last name">
+              </div>
+              <div class="col-12 mb-3">
+                <input type="email" name="email" id="email" required class="form-control" placeholder="Email">
+              </div>
+              <div class="col-12 mb-3">
+                <input type="password" name="password1" id="password1" required class="form-control" placeholder="password">
+              </div>
+              <div class="col-12 mb-3">
+                <input type="password" name="password2" id="password2" required class="form-control" placeholder="Re-type Password">
+              </div>
+             
+              <div class="col-12 mb-3">
+                <input type="date" id="date_naissenc" name="date_naissenc"class="form-control" placeholder="birthay ">
+              </div>
+             
+              <div class="col-12 mb-3">
+                <label for="Region"> Region:  </label>
+                <select id="region" name="region">
+                <option value="TTH">TANGER-TÉTOUAN-AL HOCEIMA</option>
+                <option value="OR">ORIENTAL</option>
+                <option value="FM">FÈS-MEKNÈS</option>
+                <option value="RSK">RABAT-SALÉ-KÉNITRA</option>
+                <option value="BMK">BÉNI MELLAL-KHÉNIFRA</option>
+                <option value="CS">CASABLANCA-SETTAT</option>
+                <option value="MS">MARRAKECH-SAFI</option>
+                <option value="DT">DRÂA-TAFILALET</option>
+                <option value="SM">SOUSS-MASSA</option>
+                <option value="GS">GUELMIM-ES-SEMARA</option>
+                <option value="LSH">LAÂYOUNE-SAKIA EL HAMRA</option>
+                <option value="DE">DAKHLA-OUED ED-DAHAB</option>
+         
+                </select>
     
-    <label for="date_naissenc">Date de naissance:</label>
-    <input type="date" id="date_naissenc" name="date_naissenc">
-
-    <div>
-        <label for="Region"> Region:  </label>
-            <select id="region" name="region">
-            <option value="TTH">TANGER-TÉTOUAN-AL HOCEIMA</option>
-            <option value="OR">ORIENTAL</option>
-            <option value="FM">FÈS-MEKNÈS</option>
-            <option value="RSK">RABAT-SALÉ-KÉNITRA</option>
-            <option value="BMK">BÉNI MELLAL-KHÉNIFRA</option>
-            <option value="CS">CASABLANCA-SETTAT</option>
-            <option value="MS">MARRAKECH-SAFI</option>
-            <option value="DT">DRÂA-TAFILALET</option>
-            <option value="SM">SOUSS-MASSA</option>
-            <option value="GS">GUELMIM-ES-SEMARA</option>
-            <option value="LSH">LAÂYOUNE-SAKIA EL HAMRA</option>
-            <option value="DE">DAKHLA-OUED ED-DAHAB</option>
-     
+              </div>
+              <div class="col-12 mb-3">
+              <select name="type" id="type">
+                <option value="etu">etudiant</option>
+                <option value="ens">enseignant</option>
             </select>
+        </div>
+              <div class="col-12 mb-3">
+                <label class="control control--checkbox">
+                  <span class="caption">Accept our <a href="#">terms and conditions</a></span>
+                  <input type="checkbox" checked="checked" />
+                  <div class="control__indicator"></div>
+                </label>
+              </div>
+              
+      
+              <div class="col-12">
+                <input type="submit" value="Send Message" class="btn btn-primary">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
 
+      
+    </div>
+  </div> <!-- /.untree_co-section -->
+  {% endblock content %}
+<h4>Créer un nouveau compte</h4>
+
+   
+
+        
+   
+    
+    
+
+    <div>
+       
     </div>
              <div>
                 <label for="type">type de compte</label>
@@ -59,5 +100,4 @@
        
         
     </form>
-   
-</div>
+
