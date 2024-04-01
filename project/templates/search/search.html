@@ -7,37 +7,32 @@
     .content {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
-        display: flex;
-        height: 100vh;
-        justify-content: space-between;
-        width: 1400px;
+        width: 100%%
     }
-  nav{
-    display:none
-  }
   
+  
+ 
     .container {
-        width: 60%;
+        width: 100%;
     }
 
     /* Styles de la zone de recherche */
-    .search {
-        margin-top: 3%;
-        width: 30%;
+    .search6 > button {
+        width: 80px;
     }
 
-    .search_type {
+    .search6_type {
         display: flex;
-        justify-content: flex-start;
-        flex-direction: column;
-        min-width: 50%;
+        width: 50%;
+        margin-left: 10%;
+
+    
     }
 
-    .search_type > div {
-        margin: 5%;
-    }
+    .search6_type > div {
+        margin: 10%;    }
 
-    .search_option {
+    .search6_option {
         padding: 10px 20px;
         margin-right: 10px;
         border-radius: 5px;
@@ -47,18 +42,15 @@
         transition: background-color 0.3s ease;
     }
 
-    .search_option:hover {
+    .search6_option:hover {
         background-color: #0056b3;
     }
 
     /* Styles des résultats */
     .results {
-        display: flex;
-        flex-direction: column;
-        width: 60%;
-        margin-top: 3%;
-        margin-right: 3%;
-        min-height: 1500px;
+        padding: 0;
+        position: relative;
+        width: 100%;
     }
 
     .results > div {
@@ -79,7 +71,6 @@
 
     .results > div .result_box .info {
         display: flex;
-        align-items: center;
     }
 
     .results > div .result_box .info img {
@@ -120,11 +111,11 @@
     }
 </style>
 <div class="content"> 
-<div class="search">
-    <div class="search_type">
-        <div class="search_option etudiant" onclick="afficherEtudiant()">Étudiants</div>
-        <div class="search_option enseignant" onclick="afficherEnseignant()">Enseignants</div>
-        <div class="search_option publication" onclick="afficherPublications()">Publications</div>
+<div class="search6">
+    <div class="search6_type">
+        <div class="search6_option etudiant" onclick="afficherEtudiant()">Étudiants</div>
+        <div class="search6_option enseignant" onclick="afficherEnseignant()">Enseignants</div>
+        <div class="search6_option publication" onclick="afficherPublications()">Publications</div>
     </div>
 </div>
 <div class="results">
