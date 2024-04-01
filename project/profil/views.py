@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from Utilisateurs.models import Utilisateur,Etudiant,User,Enseignant,Entreprise
+from Utilisateurs.models import Utilisateur,Etudiant,User,Enseignant
 from django.core.files.storage import FileSystemStorage
 
 def profil_page(request, user_id):
@@ -154,70 +154,6 @@ def update_information_ens(request, user_id):
     
     
 
-@login_required
-def update_information_ent(request, user_id):
-    if request.method == 'POST':
-        # Récupérer les données du formulaire
-        photo_profil = request.FILES.get('photo_profil')
-        company_name = request.POST.get('company_name')
-        owner_name = request.POST.get('owner_name')
-        email = request.POST.get('email')
-        bio = request.POST.get('bio')
-        tel = request.POST.get('tel')
-        website3 = request.POST.get('website3')
-        size = request.POST.get('size')
-        specialties = request.POST.get('specialties')
-        certifications = request.POST.get('bio')
-        location = request.POST.get('location')
-        working_days = request.POST.get('working_days')
-       
-        
-        # Récupérer l'enseignant associé à l'utilisateur actuel
-        entreprise = Entreprise.objects.get(user=request.user)
-        
-        # Vérifier chaque champ avant de l'affecter à l'objet entreprise
-        if photo_profil:
-            folder = 'photos/photos_Profil/'
-            img = request.FILES["photo_profil"]
-            fs = FileSystemStorage(location=folder)
-            fs.save(img.name, img)
-            entreprise.photo_profil = photo_profil
-
-        if company_name:
-            entreprise.company_name = company_name
-        if owner_name:
-            entreprise.owner_name = owner_name 
-        if bio:
-            entreprise.bio = bio 
-        if email:
-            entreprise.email = email
-        if tel:
-            entreprise.tele = tel
-        if website3:
-            entreprise.website3 = website3
-        if size:
-            entreprise.size = size
-        if specialties:
-            entreprise.specialties = specialties
-        if certifications:
-            entreprise.certifications = certifications
-        if location:
-            entreprise.location = location
-        if working_days:
-            entreprise.working_days = working_days
-      
-       
-        
-        
-        entreprise.save()  # Sauvegarder les modifications
-        
-          # Vous pouvez imprimer ou effectuer d'autres actions avec major si nécessaire
-        
-        # Rediriger vers la page de profil avec l'ID de l'utilisateur
-        return redirect('profil_page', user_id=user_id)
-    else:
-        # Rediriger vers la page de profil si la méthode de la requête n'est pas POST
-        return redirect('profil_page', user_id=user_id)
 
 # def profil_search(request):
     
