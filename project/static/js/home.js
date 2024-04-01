@@ -83,9 +83,27 @@ function handleFileSelect(event) {
         fileListDiv.appendChild(fileName);
     }
 }
+function handleMediaSelect(event) {
+    const fileListDiv = document.getElementById('mediaList');
+    fileListDiv.innerHTML = ''; // Nettoyer la div des anciens fichiers
+
+    const files = event.target.files;
+    console.log("hi"); // Afficher les fichiers dans la console
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileName = document.createElement('p');
+        fileName.textContent = 'Selected Media: ' + file.name;
+        fileListDiv.appendChild(fileName);
+    }
+}
 
 // Écouteur d'événements pour le changement de fichier
+// Écouteur d'événements pour le changement de fichier pour le champ de fichier
 document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+
+// Écouteur d'événements pour le changement de fichier pour la liste des médias
+document.getElementById('mediaInput').addEventListener('change', handleMediaSelect);
+
 
 // Autres parties de votre script ici...
 
@@ -105,17 +123,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
 document.addEventListener('DOMContentLoaded', function() {
     const uploadIcon = document.getElementById('uploadIcon');
     const mediaInput = document.getElementById('mediaInput');
-    
+
     if (uploadIcon && mediaInput) {
         uploadIcon.addEventListener('click', function() {
             mediaInput.click();
         });
     }
 });
+
 function add_like(publicationId) {
     fetch('/ajouter-like/' + publicationId + '/', {
         method: 'POST',
@@ -276,11 +294,14 @@ function creerCommentaire(publicationId) {
     
         
     function toggleNotifications(){
-        var dropdown = document.getElementById("notificationsDropdown2");
+        var countElement = document.querySelector('.notifications-count');
+        var dropdown = document.getElementById("notificationsDropdown");
         if (dropdown.style.display === "none") {
             dropdown.style.display = "block";
         } else {
             dropdown.style.display = "none";
+            countElement.style.display ="none"
+
         }
         $.ajax({
             url: 'notificatons/',  // Remplacez "/votre-url-de-vue/" par l'URL de votre vue Django
@@ -300,7 +321,9 @@ function creerCommentaire(publicationId) {
 
     // Parcourez les données JSON pour chaque notification
     data.notifications.forEach(function(notification) {
-        console.log(notification)
+      
+     
+        
         // Créez les éléments HTML pour la notification
         var notificationItem = document.createElement('li');
         var notificationClass = notification.is_read ? 'read-notification' : 'unread-notification';
