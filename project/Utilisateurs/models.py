@@ -69,14 +69,22 @@ class Etudiant(Utilisateur):
     top_skills = models.CharField(max_length=255, default='Python, Django, HTML')
     experiences = models.TextField(default='Aucune expérience')
     portfolio = models.TextField(max_length=255, default='www.portfolio.com')
-    class Meta:
-        # Ne pas définir l'attribut 'metaclass' ici
-        pass
     def __str__(self):
         return super().__str__()
     
 
-
+class Entreprise(Utilisateur):
+    company_name = models.CharField(max_length=50, default='Company X')
+    owner_name = models.CharField(max_length=50, default='Sam smith')
+    website3 = models.TextField(max_length=255, default='www.website.com')
+    size = models.CharField(max_length=20, default='99')
+    specialties =  models.TextField(max_length=255,default='Specialties')
+    certifications = models.TextField(max_length=255,default='certifications')
+    location = models.TextField(max_length=255,default='locations')
+    working_days = models.TextField(max_length=255,default='everyday')
+    def __str__(self):
+        return super().__str__()
+    
 
 
 class projet(models.Model):
@@ -141,7 +149,6 @@ class formation(models.Model):
     etudiant=models.ManyToManyField(Etudiant)
     def __str__(self) :
         return self.titre
-
 
 class ActivitePedarogique(models.Model):
     titre=models.CharField(max_length=100)

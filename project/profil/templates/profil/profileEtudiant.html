@@ -47,7 +47,7 @@
         </div>
         
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
-            <h5 class="mb-0">Contact</h5>
+            <h5 class="mb-0">Contacts</h5>
             <p>Email: {{utilisateur.email}}<br>Phone :{{utilisateur.tele}} <br>Portfolio :{{utilisateur.etudiant.portfolio}}</p>
         </div>
        
@@ -67,7 +67,7 @@
         </div>
         {% endif %}
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
-            <h5 class="mb-0">About Us</h5>
+            <h5 class="mb-0">Biography</h5>
             <p>{{utilisateur.bio}}</p>
         </div>
 
@@ -82,7 +82,7 @@
             <span class="blue-book" style="position: absolute; top: 5px; right: 5px; color:#4C54BE"><i class="fas fa-book fa-2x "></i></span>        </div>
         
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
-            <h5 class="mb-0">I am here!</h5>
+            <h5 class="mb-0">Contacts</h5>
             <p>email: {{utilisateur.email}}<br>phone :{{utilisateur.tele}} <br>Portfolio :{{utilisateur.enseignant.portfolio2}}<br>
             </p>
         </div>
@@ -100,7 +100,7 @@
         </div>
         {% endif %}
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
-            <h5 class="mb-0">About Us</h5>
+            <h5 class="mb-0">Biography</h5>
             <p>{{utilisateur.bio}}</p>
         </div>  
     </aside>
@@ -114,7 +114,7 @@
         </div>
         
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
-            <h5 class="mb-0">Contact Us!</h5>
+            <h5 class="mb-0">Contacts</h5>
             <p>email: {{utilisateur.email}}<br>phone: {{utilisateur.tele}} <br>Website: {{utilisateur.entreprise.website3}} <br>
                 Location: {{utilisateur.entreprise.location}}
             </p>
@@ -122,7 +122,7 @@
     </nav>
     <aside >
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
-            <h5 class="mb-0">About</h5>
+            <h5 class="mb-0">About!</h5>
             <p>{{utilisateur.bio}}</br>
         </div>
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
@@ -518,10 +518,10 @@
     <div class="posts-section" id="posts-section">
 
         <section>
-            {% if is_own_profile %}
             <div class="row justify-content-center w-100">
                 <div class="col-lg-8 mt-4 order-md-1 order-lg-2 order-1 w-100">
                     <div class="publication" id="publicationContainer2" style="margin-left: -17%; margin-bottom:7% ; width:200%">
+                        {% if is_own_profile %}
                         {% if user.is_authenticated %}
                             <div class="profile">
                                 <img src="{{ user.utilisateur.photo_profil.url }}" alt="Photo de profil">
@@ -564,8 +564,9 @@
                                 </script>
                             {% endfor %}
                         {% endif %}
+                        {% endif %}
                             </div>   
-                            {% endif %}
+                           
 
                             
                             <div class="publication" id="publicationContainer"style="margin-left: -17%; margin-bottom:7% ; width:200%">

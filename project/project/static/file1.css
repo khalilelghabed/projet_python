@@ -34,11 +34,10 @@ grid-area: header;
 
 nav {
 grid-area: nav; 
-margin-left: 3%;
-
 }
 
 section {
+
 grid-area: section;    
 }
 
@@ -551,10 +550,10 @@ body {
     height: 70%; 
     border-radius: 28px 28px 4px 4px;
     padding: 25px 16px 0px 18px;
+    margin-top: 50px;
     cursor: pointer;
     position: fixed; /* Change to fixed positioning */
     right: 1px;
-    bottom: 0; /* Stick to the bottom of the page */
     z-index: 2;
 }
 
