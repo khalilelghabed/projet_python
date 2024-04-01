@@ -83,7 +83,7 @@
         
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
             <h5 class="mb-0">I am here!</h5>
-            <p>email: {{utilisateur.email}}<br>phone :{{utilisateur.tele}} <br>Portfolio :{{utilisateur.enseignant.portfolio}}<br>
+            <p>email: {{utilisateur.email}}<br>phone :{{utilisateur.tele}} <br>Portfolio :{{utilisateur.enseignant.portfolio2}}<br>
             </p>
         </div>
     </nav>
@@ -115,7 +115,7 @@
         
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
             <h5 class="mb-0">Contact Us!</h5>
-            <p>email: {{utilisateur.email}}<br>phone: {{utilisateur.tele}} <br>Website: {{utilisateur.entreprise.website}}</p>
+            <p>email: {{utilisateur.email}}<br>phone: {{utilisateur.tele}} <br>Website: {{utilisateur.entreprise.website3}}</p>
         </div>
     </nav>
     <aside >
@@ -232,7 +232,7 @@
                 <span id="degree-program">{{utilisateur.etudiant.degree}}</span>
             </div>
             <div class="info-item">
-                <label for="top-skills">Top Skills:</label>
+                <label for="location">Top Skills:</label>
                 <span id="top-skills">{{utilisateur.etudiant.top_skills}}</span>
             </div>
             <div class="info-item">
@@ -240,7 +240,7 @@
                 <span id="experiences">{{utilisateur.etudiant.experiences}}</span>
             </div>
           <button id="update-button" onclick="toggleUpdateWidget()">Update Information</button>
-            <form action="{% url 'update' user_id=utilisateur.id %}" method="post" enctype="multipart/form-data">
+            <form action="{% url 'update_etu' user_id=utilisateur.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
             <div id="update-widget" class="update-widget" style="display: none; z-index: 10;">
                 <!-- Widget content -->
@@ -264,6 +264,8 @@
                 <input type="text" id="major-input" name="major"><br>
                 <label for="year-of-study-input">Year of Study:</label>
                 <input type="number" id="year-of-study-input" name="year_study"><br>
+                <label for="portfolio-input">Portfolio:</label>
+                <input type="text" id="portfolio-input" name="portfolio"><br>
                 <label for="degree-program-input">Degree:</label>
                 <input type="text" id="degree-program-input" name="degree"><br>
                 <label for="top-skills-input">Top Skills:</label>
@@ -318,35 +320,23 @@
                 <span id="date-of-birth">{{utilisateur.date_naissenc}}</span>
             </div>
             <div class="info-item">
-                <label for="portfolio">Portfolio:</label>
-                <span id="portfolio">{{utilisateur.etudiant.portfolio}}</span>
+                <label for="portfolio2">Portfolio:</label>
+                <span id="portfolio2">{{utilisateur.enseignant.portfolio2}}</span>
             </div>
             <div class="info-item">
-                <label for="institution">Institution:</label>
-                <span id="institution">{{utilisateur.etudiant.institution}}</span>
+                <label for="institution2">Institution:</label>
+                <span id="institution2">{{utilisateur.enseignant.institution2}}</span>
             </div>
             <div class="info-item">
-                <label for="major">Major/Field of Study:</label>
-                <span id="major">{{utilisateur.etudiant.major}}</span>
+                <label for="specialty">Specialties:</label>
+                <span id="specialty">{{utilisateur.enseignant.specialty}}</span>
             </div>
             <div class="info-item">
-                <label for="year-of-study">Year of Study:</label>
-                <span id="year-of-study">{{utilisateur.etudiant.year_of_study}}</span>
+                <label for="experiences2">Experiences:</label>
+                <span id="experiences2">{{utilisateur.enseignant.experiences2}}</span>
             </div>
-            <div class="info-item">
-                <label for="degree-program">Degree:</label>
-                <span id="degree-program">{{utilisateur.etudiant.degree}}</span>
-            </div>
-            <div class="info-item">
-                <label for="top-skills">Top Skills:</label>
-                <span id="top-skills">{{utilisateur.etudiant.top_skills}}</span>
-            </div>
-            <div class="info-item">
-                <label for="experiences">Experiences:</label>
-                <span id="experiences">{{utilisateur.etudiant.experiences}}</span>
-            </div>
-          <button id="update-button" onclick="toggleUpdateWidget()">Update Information</button>
-            <form action="{% url 'update' user_id=utilisateur.id %}" method="post" enctype="multipart/form-data">
+          <button id="update-button" onclick="toggleUpdateWidget()">Update Informations</button>
+            <form action="{% url 'update_ens' user_id=utilisateur.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
             <div id="update-widget" class="update-widget" style="display: none; z-index: 10;">
                 <!-- Widget content -->
@@ -364,18 +354,14 @@
                 <input type="tel" id="phone-number-input" name="tel"><br>                
                 <label for="date-of-birth-input">Date of Birth:</label>
                 <input type="date" id="date-of-birth-input" name="date_birthay"><br>   
-                <label for="institution-input">Institution:</label>
-                <input type="text" id="institution-input" name="institution"><br>
-                <label for="major-input">Major/Field of Study:</label>
-                <input type="text" id="major-input" name="major"><br>
-                <label for="year-of-study-input">Year of Study:</label>
-                <input type="number" id="year-of-study-input" name="year_study"><br>
-                <label for="degree-program-input">Degree:</label>
-                <input type="text" id="degree-program-input" name="degree"><br>
-                <label for="top-skills-input">Top Skills:</label>
-                <input type="text" id="top-skills-input" name="top_skills"><br>
-                <label for="experiences-input">Experiences:</label>
-                <input type="text" id="experiences-input" name="experiences"><br>
+                <label for="institution2-input">Institution:</label>
+                <input type="text" id="institution2-input" name="institution2"><br>
+                <label for="portfolio2-input">Portfolio:</label>
+                <input type="text" id="portfolio2-input" name="portfolio2"><br>
+                <label for="specialty-input">Specialties:</label>
+                <input type="text" id="specialty-input" name="specialty"><br>
+                <label for="experiences2-input">Experiences:</label>
+                <input type="text" id="experiences2-input" name="experiences2"><br>
                 <button type="submit">Save</button>
             </div>
         </form>
@@ -386,31 +372,21 @@
     {% endif %}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
     {% if is_own_profile %}
     {% if utilisateur.type_profil == 'ent' %}
     <div id="about-section" class="about-section" style="display: none;">
         <div id="student-profile">
             <h2>Settings</h2>
             <div class="info-item">
-                <label for="full-name">Full Name:</label>
-                <span id="full-name">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
+                <label for="company_name">Comapany Name:</label>
+                <span id="company_name">{{utilisateur.entreprise.company_name}}</span>
             </div>
             <div class="info-item">
-                <label for="bio">My Bio:</label>
+                <label for="owner_name">Owner Name:</label>
+                <span id="owner_name">{{utilisateur.entreprise.owner_name}}</span>
+            </div>
+            <div class="info-item">
+                <label for="bio">About:</label>
                 <span id="bio">{{utilisateur.bio}}</span>
             </div>
             <div class="info-item">
@@ -421,69 +397,61 @@
                 <label for="phone-number">Phone Number:</label>
                 <span id="phone-number">{{utilisateur.tele}}</span>
             </div>
+            
             <div class="info-item">
-                <label for="date-of-birth">Date of Birth:</label>
-                <span id="date-of-birth">{{utilisateur.date_naissenc}}</span>
+                <label for="website3">Website:</label>
+                <span id="website3">{{utilisateur.entreprise.website3}}</span>
             </div>
             <div class="info-item">
-                <label for="portfolio">Portfolio:</label>
-                <span id="portfolio">{{utilisateur.etudiant.portfolio}}</span>
+                <label for="size">Comapany size:</label>
+                <span id="size">{{utilisateur.entreprise.size}}</span>
             </div>
             <div class="info-item">
-                <label for="institution">Institution:</label>
-                <span id="institution">{{utilisateur.etudiant.institution}}</span>
+                <label for="specialties">Specialties:</label>
+                <span id="specialties">{{utilisateur.entreprise.specialties}}</span>
             </div>
             <div class="info-item">
-                <label for="major">Major/Field of Study:</label>
-                <span id="major">{{utilisateur.etudiant.major}}</span>
+                <label for="certifications">Certifications:</label>
+                <span id="certifications">{{utilisateur.entreprise.certifications}}</span>
             </div>
             <div class="info-item">
-                <label for="year-of-study">Year of Study:</label>
-                <span id="year-of-study">{{utilisateur.etudiant.year_of_study}}</span>
+                <label for="location">Location:</label>
+                <span id="location">{{utilisateur.entreprise.location}}</span>
             </div>
             <div class="info-item">
-                <label for="degree-program">Degree:</label>
-                <span id="degree-program">{{utilisateur.etudiant.degree}}</span>
+                <label for="working_days">Working Days:</label>
+                <span id="working_days">{{utilisateur.entreprise.working_days}}</span>
             </div>
-            <div class="info-item">
-                <label for="top-skills">Top Skills:</label>
-                <span id="top-skills">{{utilisateur.etudiant.top_skills}}</span>
-            </div>
-            <div class="info-item">
-                <label for="experiences">Experiences:</label>
-                <span id="experiences">{{utilisateur.etudiant.experiences}}</span>
-            </div>
+           
           <button id="update-button" onclick="toggleUpdateWidget()">Update Information</button>
-            <form action="{% url 'update' user_id=utilisateur.id %}" method="post" enctype="multipart/form-data">
+            <form action="{% url 'update_ent' user_id=utilisateur.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
             <div id="update-widget" class="update-widget" style="display: none; z-index: 10;">
                 <!-- Widget content -->
                 <label for="photo_profil-input">Profile Picture:</label>
                 <input type="file" id="photo_profil-input" accept="image/*" name="photo_profil" ><br>
-                <label for="full-name-input">Name:</label>
-                <input type="text" id="full-name-input" name="name"><br>
-              <label for="full-name-input">prenom:</label>
-                <input type="text" id="bio-input" name="prenom"><br>
+                <label for="company_name-input">Company Name:</label>
+                <input type="text" id="company_name-input" name="company_name"><br>
+                <label for="owner_name-input">Owner Name:</label>
+                <input type="text" id="owner_name-input" name="owner_name"><br>
                 <label for="bio-input">Bio :</label>
                 <input type="text" id="full-bio-input" name="bio"><br>
                 <label for="email-input">Email:</label>
                 <input type="email" id="email-input" name="email"><br>
                 <label for="phone-number-input">Phone Number:</label>
                 <input type="tel" id="phone-number-input" name="tel"><br>                
-                <label for="date-of-birth-input">Date of Birth:</label>
-                <input type="date" id="date-of-birth-input" name="date_birthay"><br>   
-                <label for="institution-input">Institution:</label>
-                <input type="text" id="institution-input" name="institution"><br>
-                <label for="major-input">Major/Field of Study:</label>
-                <input type="text" id="major-input" name="major"><br>
-                <label for="year-of-study-input">Year of Study:</label>
-                <input type="number" id="year-of-study-input" name="year_study"><br>
-                <label for="degree-program-input">Degree:</label>
-                <input type="text" id="degree-program-input" name="degree"><br>
-                <label for="top-skills-input">Top Skills:</label>
-                <input type="text" id="top-skills-input" name="top_skills"><br>
-                <label for="experiences-input">Experiences:</label>
-                <input type="text" id="experiences-input" name="experiences"><br>
+                <label for="website3-input">Website:</label>
+                <input type="text" id="website3-input" name="website3"><br>
+                <label for="size-input">Company Size:</label>
+                <input type="text" id="size-input" name="size"><br>
+                <label for="specialties-input">Specialties :</label>
+                <input type="text" id="specialties-input" name="specialties"><br>
+                <label for="certifications-input">certifications:</label>
+                <input type="text" id="certifications-input" name="certifications"><br>
+                <label for="location-input">Location:</label>
+                <input type="text" id="location-input" name="location"><br>
+                <label for="working_days-input">Working Days:</label>
+                <input type="text" id="working_days-input" name="working_days"><br>
                 <button type="submit">Save</button>
             </div>
         </form>
@@ -728,8 +696,24 @@
             document.getElementById('major').textContent = document.getElementById('major-input').value;
             document.getElementById('degree-program').textContent =  document.getElementById('degree-program-input').value;
             document.getElementById('year-of-study').textContent =  document.getElementById('year-of-study-input').value;
-            document.getElementById('top-skills').textContent =  document.getElementById('top-skills-input').value;
+            document.getElementById('location').textContent =  document.getElementById('location-input').value;
             document.getElementById('experiences').textContent =  document.getElementById('experiences-input').value;
+
+            document.getElementById('portfolio2').textContent =  document.getElementById('portfolio2-input').value;
+            document.getElementById('experiences2').textContent =  document.getElementById('experiences2-input').value;
+            document.getElementById('specialty').textContent =  document.getElementById('specialty-input').value;
+            document.getElementById('institution2').textContent =  document.getElementById('institution2-input').value;
+
+            document.getElementById('company_name').textContent =  document.getElementById('company_name-input').value;
+            document.getElementById('owner_name').textContent =  document.getElementById('owner_name-input').value;
+            document.getElementById('website3').textContent =  document.getElementById('website3-input').value;
+            document.getElementById('size').textContent =  document.getElementById('size-input').value;
+            document.getElementById('specialties').textContent =  document.getElementById('specialties-input').value;
+            document.getElementById('certifications').textContent =  document.getElementById('certifications-input').value;
+            document.getElementById('location').textContent =  document.getElementById('location-input').value;
+            document.getElementById('working_days').textContent =  document.getElementById('working_days-input').value;
+
+
     
             toggleUpdateWidget(); // Hide the update widget after saving
         }
@@ -749,20 +733,7 @@
         }
         
     
-        function updateInformation() {
-            document.getElementById('full-name').textContent =   document.getElementById('full-name-input').value;
-            document.getElementById('email').textContent = document.getElementById('email-input').value;
-            document.getElementById('phone-number').textContent =  document.getElementById('phone-number-input').value;
-            document.getElementById('date-of-birth').textContent = document.getElementById('date-of-birth-input').value;
-            document.getElementById('institution').textContent =  document.getElementById('institution-input').value;
-            document.getElementById('major').textContent = document.getElementById('major-input').value;
-            document.getElementById('degree-program').textContent =  document.getElementById('degree-program-input').value;
-            document.getElementById('year-of-study').textContent =  document.getElementById('year-of-study-input').value;
-            document.getElementById('top-skills').textContent =  document.getElementById('top-skills-input').value;
-            document.getElementById('experiences').textContent =  document.getElementById('experiences-input').value;
-    
-            toggleUpdateWidget(); // Hide the update widget after saving
-        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             {% if is_own_profile %}
             var aboutButton = document.getElementById('about-button');

@@ -28,7 +28,7 @@ class Utilisateur(models.Model):
     photo_profil=models.ImageField(upload_to='photos/photos_Profil',null=True,blank=False, default='photos/photos_Profil/user_image.png')
     nom = models.CharField(max_length=50,default='&&')
     prenom = models.CharField(max_length=50, default='&&')
-    date_naissenc=models.DateField(null=True)       
+    date_naissenc=models.DateField(null=True,blank=False )       
     PROFIL_CHOICES = [
         ('etu', 'Etudiant'),
         ('ens', 'Enseignant'),
@@ -39,7 +39,7 @@ class Utilisateur(models.Model):
     followers = models.ManyToManyField('self', symmetrical=False, related_name='following_users', blank=True)
     following = models.ManyToManyField('self', symmetrical=False, related_name='followers_users', blank=True)
 
-    type_profil = models.CharField(choices=PROFIL_CHOICES, max_length=3, default='etu')
+    type_profil = models.CharField(choices=PROFIL_CHOICES, max_length=3, default='ent')
     email = models.EmailField(null=True, blank=True)
     
     tele = models.CharField(max_length=20, null=True, blank=True) #just added
@@ -54,10 +54,7 @@ class Utilisateur(models.Model):
    
     
     
-@receiver(post_save, sender=User)
-def create_utilisateur(sender, instance, created, **kwargs):
-    if created and instance.is_superuser:
-        Utilisateur.objects.create(user=instance)
+
 
 
 class MyModel(models.Model):
@@ -65,19 +62,28 @@ class MyModel(models.Model):
     
 class Etudiant(Utilisateur):
     filiere=models.CharField(max_length=255)
-    #just added
     institution = models.CharField(max_length=255, default='Université XYZ')
     major = models.CharField(max_length=255, default='Génie logiciel')
     year_of_study = models.IntegerField(default=1)
     degree = models.CharField(max_length=255, default='Licence')
     top_skills = models.CharField(max_length=255, default='Python, Django, HTML')
     experiences = models.TextField(default='Aucune expérience')
-
-
+    portfolio = models.TextField(max_length=255, default='www.portfolio.com')
     def __str__(self):
         return super().__str__()
-class Entreprise(models.Model):
-    Industry=models.CharField(max_length=255)
+    
+
+class Entreprise(Utilisateur):
+    company_name = models.CharField(max_length=50, default='Company X')
+    owner_name = models.CharField(max_length=50, default='Sam smith')
+    website3 = models.TextField(max_length=255, default='www.website.com')
+    size = models.CharField(max_length=20, default='99')
+    specialties =  models.TextField(max_length=255,default='Specialties')
+    certifications = models.TextField(max_length=255,default='certifications')
+    location = models.TextField(max_length=255,default='locations')
+    working_days = models.TextField(max_length=255,default='everyday')
+    def __str__(self):
+        return super().__str__()
     
 
 
@@ -126,9 +132,9 @@ class Enseignant(Utilisateur):
     ]
     departement=models.CharField(choices=departement_choices,max_length=50)
     specialty = models.TextField(max_length=255, default='IT')
-    portfolio = models.TextField(max_length=255, default='www.portfolio.com')
-    experiences=models.TextField(max_length=255, default='None')
-    institution = models.CharField(max_length=255, default='Université XYZ')
+    portfolio2 = models.TextField(max_length=255, default='www.portfolio.com')
+    experiences2=models.TextField(max_length=255, default='None')
+    institution2 = models.CharField(max_length=255, default='Université XYZ')
 
 
     def __str__(self):

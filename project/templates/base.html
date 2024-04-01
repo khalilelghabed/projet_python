@@ -89,13 +89,11 @@ li  {
 
     
     <div class="search">
-        <form action="{% url 'profil_search' %}" method="Post">
             {% csrf_token %}
                 <input name= 'search' type="text" class="searchTerm" placeholder="What are you looking for?">
                 <button type="submit" class="searchButton1">
                     <i class="fa fa-search"></i>
                 </button>
-        </form>
     </div>
    
 

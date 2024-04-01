@@ -1,9 +1,12 @@
 from django.db import models
-from Utilisateurs.models import Enseignant,Etudiant,Utilisateur
+from Utilisateurs.models import Enseignant,Etudiant,Utilisateur,Entreprise
 
 class Profil(models.Model):
     etudiant = models.OneToOneField(Etudiant, on_delete=models.CASCADE, blank=True, null=True)
     enseignant = models.OneToOneField(Enseignant, on_delete=models.CASCADE, blank=True, null=True)
+    entreprise = models.OneToOneField(Entreprise, on_delete=models.CASCADE, blank=True, null=True)
+
+    
     description = models.TextField(max_length=500)
     
    
@@ -12,6 +15,8 @@ class Profil(models.Model):
             return f"{self.etudiant.nom} {self.etudiant.prenom}"
         elif self.enseignant:
             return f"{self.enseignant.nom} {self.enseignant.prenom}"
+        elif self.entreprise:
+            return f"{self.entreprise.nom} {self.entreprise.prenom}"
         else:
             return "Profil sans utilisateur associé"
     
@@ -20,6 +25,7 @@ class Profil(models.Model):
             raise ValueError("Un profil doit être lié à un étudiant ou à un enseignant.")
         if self.etudiant is not None and self.enseignant is not None:
             raise ValueError("Un profil ne peut être lié à la fois à un étudiant et à un enseignant.")
+        
         super(Profil, self).save(*args, **kwargs)
 
 
