@@ -6,6 +6,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('home.urls')),
     path('accounts/',include('authantification.urls')),
+    path('accounts/',include('authantification.urls')),
+
     path('publications/',include('publications.urls')),
     path('classe privé/',include('ClassePrive.urls')),
     path('utilisateurs/',include('Utilisateurs.urls')),

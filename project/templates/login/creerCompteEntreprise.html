@@ -1,0 +1,49 @@
+<h4>Créer un nouveau compte</h4>
+<div class="creerForm">
+    <form method="post" action='' class="creer">
+        {% csrf_token %}
+        <div>
+        <label for="firstname">Company name</label>
+        <input type="text" name="firstname" id="firstname" required>
+    </div>
+    <div>
+        <label for="lastname">Owner name</label>
+        <input type="text" name="lastname" id="lastname" required>
+    </div>
+    <div>
+        <label for="email">email</label>
+        <input type="email" name="email" id="email" required>
+    </div>
+    <div>
+        <label for="password1">password</label>
+        <input type="password" name="password1" id="password1" required>
+    </div>
+    <div>
+        <label for="password2">confirmer</label>
+        <input type="password" name="password2" id="password2" required>
+    </div>
+    
+
+    <div>
+        <label for="Region"> Region: </label>
+            <select id="region" name="region">
+            <option value="TTH">TANGER-TÉTOUAN-AL HOCEIMA</option>
+            <option value="OR">ORIENTAL</option>
+            <option value="FM">FÈS-MEKNÈS</option>
+            <option value="RSK">RABAT-SALÉ-KÉNITRA</option>
+            <option value="BMK">BÉNI MELLAL-KHÉNIFRA</option>
+            <option value="CS">CASABLANCA-SETTAT</option>
+            <option value="MS">MARRAKECH-SAFI</option>
+            <option value="DT">DRÂA-TAFILALET</option>
+            <option value="SM">SOUSS-MASSA</option>
+            <option value="GS">GUELMIM-ES-SEMARA</option>
+            <option value="LSH">LAÂYOUNE-SAKIA EL HAMRA</option>
+            <option value="DE">DAKHLA-OUED ED-DAHAB</option>
+     
+            </select>
+
+    </div>      
+        <button type="submit">Créer un compte</button>
+    </form>
+   
+</div>

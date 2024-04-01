@@ -44,9 +44,7 @@ grid-area: section;
 aside {
 
     grid-area: aside;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    
 }
 
 
@@ -552,12 +550,13 @@ body {
     height: 70%; 
     border-radius: 28px 28px 4px 4px;
     padding: 25px 16px 0px 18px;
-    margin-top: 50px;
     cursor: pointer;
-    position: absolute; /* Change to absolute positioning */
+    position: fixed; /* Change to fixed positioning */
     right: 1px;
+    bottom: 0; /* Stick to the bottom of the page */
     z-index: 2;
 }
+
 
 .search-container {
     display: flex;
