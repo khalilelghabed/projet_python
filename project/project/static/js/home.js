@@ -108,9 +108,7 @@ document.getElementById('mediaInput').addEventListener('change', handleMediaSele
 // Autres parties de votre script ici...
 
 // Fonction pour créer la publication
-function creerPublicaion() {
-    document.getElementById("publicationForm").submit();
-}
+
 
 // Écouteur d'événements au chargement du DOM pour les icônes de téléchargement
 document.addEventListener('DOMContentLoaded', function() {
@@ -352,4 +350,10 @@ function creerCommentaire(publicationId) {
                 console.log('Erreur lors de la requête Ajax:', errorThrown);
             }
         });
+    }
+
+    function creerPublication() {
+
+        console.log("test")
+        document.getElementById("publicationForm").submit();
     }
