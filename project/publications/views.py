@@ -7,19 +7,39 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from Utilisateurs.models import Utilisateur
 from notification.models import Notification
+from django.core.files.storage import FileSystemStorage
+
 
 @login_required
 def createPublication(request):
     if request.method == 'POST':
-        print("La méthode s'applique")
         user = request.user.utilisateur
         contenu = request.POST.get('contenu')
-        fichier=request.POST.get('fichier')
-        media=request.POST.get('media')
-        publication = Publication(auteur=user, contenu=contenu,fichier=fichier, media=media)
+        fichier = request.FILES.get('fichier')  # Récupérer le fichier téléchargé
+        media = request.FILES.get('media')      # Récupérer le fichier média téléchargé
+
+        publication = Publication(auteur=user, contenu=contenu, fichier=fichier, media=media)
         publication.save()
+
+        # Vérification et sauvegarde des fichiers téléchargés
+        if fichier:
+            folder = 'publications/publications_fichiers/'
+            fs = FileSystemStorage(location=folder)
+            fs.save(fichier.name, fichier)
+
+        if media:
+            folder = 'publications/publications_medias/'
+            fs = FileSystemStorage(location=folder)
+            fs.save(media.name, media)
+
         messages.success(request, "Publication a été créée avec succès.")
-        return redirect('homeAuthentifie')        
+        return redirect('homeAuthentifie')
+       
+ 
+
+        
+ 
+           
     else:
         print("Erreur: méthode non autorisée")
         return HttpResponse(status=405)  

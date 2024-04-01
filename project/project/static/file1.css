@@ -98,6 +98,24 @@ header {
 .searchTerm:focus{
     color: #818bce;
 }
+#uploadIcon{
+    
+    cursor: pointer;
+
+
+}
+#uploadIcon:hover{
+    color: red;
+}
+#uploadIcon2{
+    
+    cursor: pointer;
+
+
+}
+#uploadIcon2:hover{
+    color: red;
+} 
 
 .searchButton1 {
     width: 40px;
@@ -401,8 +419,11 @@ header {
 }
 
 .event i, .media i ,.video i , .publish i{
-    
+    cursor: pointer;
     font-size: 24px; 
+}
+.publish :hover{
+    color: red;
 }
 
 .media img {

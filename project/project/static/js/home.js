@@ -83,9 +83,27 @@ function handleFileSelect(event) {
         fileListDiv.appendChild(fileName);
     }
 }
+function handleMediaSelect(event) {
+    const fileListDiv = document.getElementById('mediaList');
+    fileListDiv.innerHTML = ''; // Nettoyer la div des anciens fichiers
+
+    const files = event.target.files;
+    console.log("hi"); // Afficher les fichiers dans la console
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileName = document.createElement('p');
+        fileName.textContent = 'Selected Media: ' + file.name;
+        fileListDiv.appendChild(fileName);
+    }
+}
 
 // Écouteur d'événements pour le changement de fichier
+// Écouteur d'événements pour le changement de fichier pour le champ de fichier
 document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+
+// Écouteur d'événements pour le changement de fichier pour la liste des médias
+document.getElementById('mediaInput').addEventListener('change', handleMediaSelect);
+
 
 // Autres parties de votre script ici...
 
@@ -105,17 +123,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
 document.addEventListener('DOMContentLoaded', function() {
     const uploadIcon = document.getElementById('uploadIcon');
     const mediaInput = document.getElementById('mediaInput');
-    
+
     if (uploadIcon && mediaInput) {
         uploadIcon.addEventListener('click', function() {
             mediaInput.click();
         });
     }
 });
+
 function add_like(publicationId) {
     fetch('/ajouter-like/' + publicationId + '/', {
         method: 'POST',
