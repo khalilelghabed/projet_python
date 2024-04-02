@@ -38,7 +38,7 @@ def creer_compte(request):
                         nom=lastname,
                         prenom=firstname,
                         date_naissenc=date_naissence,
-                        type_profil='type',
+                        type_profil=type,
                         region=region
                     )
                     etudiant.save()
