@@ -118,14 +118,11 @@ class Enseignant(Utilisateur):
     ]
     departement=models.CharField(choices=departement_choices,max_length=50)
     specialty = models.TextField(max_length=255, default='IT')
-<<<<<<< HEAD
     portfolio = models.TextField(max_length=255, default='www.portfolio.com')
     experiences=models.TextField(max_length=255, default='None')
     institution = models.CharField(max_length=255, default='Université XYZ')
     portfolio2 = models.TextField(max_length=255, default='www.portfolio.com')
-=======
     
->>>>>>> e4b355674b8b8c282eaf2bd3b3f02cb358ce2b13
     experiences2=models.TextField(max_length=255, default='None')
     institution2 = models.CharField(max_length=255, default='Université XYZ')
 
