@@ -48,6 +48,19 @@ class Utilisateur(models.Model):
         ('F', 'Female'),
     ]
     bio = models.TextField(max_length=255, null=True, blank=True)
+    def is_following(self, other_user):
+        return self.following.filter(id=other_user.id).exists()
+
+    def follow(self, other_user):
+        if not self.is_following(other_user):
+            self.following.add(other_user)
+            other_user.followers.add(self)
+
+    def unfollow(self, other_user):
+        if self.is_following(other_user):
+            self.following.remove(other_user)
+            other_user.followers.remove(self)
+            
     def __str__(self):
         return f"{self.prenom} {self.nom}"
    

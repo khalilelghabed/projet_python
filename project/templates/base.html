@@ -69,7 +69,8 @@ li  {
 <header>
     <div class="logo"><p class="logo-text"><span class="career">Career</span><span class="forge">Forge</span></p></div>
     <div class="hed2">
-        <button class="active" onclick="selectButton(this)">Home</button>
+        <button class="active" onclick="selectButton(this)"><a href={% url "homeAuthentifie" %} style="nontext-decoration: none; /* Supprimer le soulignement */
+            color: inherit; ">Home</a></button>
         <button  onclick="selectButton(this)">Jobs</button>
         <button  onclick="selectButton(this)">Events</button>
     </div>
