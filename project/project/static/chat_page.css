@@ -3,8 +3,31 @@
 }
 
 body {
-    background-color: #f8c76b;
+    background-color: #080606;
 }
+
+
+/the navbar side with icon/
+.nav_chat {
+    display: flex;
+    align-items: center;
+    justify-content: space-around; /* Adjust spacing between icons */
+    flex-direction: column; /* Display icons vertically */
+}
+
+.nav_chat .icon-button {
+    font-size: 24px; /* Adjust the icon size */
+    color: #000; /* Adjust the icon color */
+}
+
+.selected-chat {
+    background-color: #F8C76B !important;
+    border-radius: 1px;
+}
+
+
+
+
 
 .nav_chat,
 .side_chat,
@@ -14,39 +37,44 @@ body {
 }
 
 .nav_chat {
-    background-color: #f8c76b;
-    max-width: 100px;
+    background-color: #F8C76B;
+    max-width: 60px;
 }
 
 
 /*             chat side           */
 .side_chat {
-    border-left: 0.2px solid #a3a2a2;
-    background-color: #f8c76b;
+    border-left: 0.2px solid #08010100;
+    background-color: #10010179;
     max-width: 350px;
+    overflow-y: auto; /* Enable vertical scrolling */
+   /* Adjust the height as needed */
 }
 
+
+
 .chat_list_header {
-    height: 80px;
-    background-color: #c1bdbd79;
+    height: 30px;
+    background-color: #00000079;
     padding-top: 10px;
     display: flex; /* Use Flexbox */
     align-items: center; /* Center items vertically */
     padding-left: 30px;
 }
 
+
 .chat_search {
     padding: 15px;
     width: 320px;
-    height: 42px;
-    background-color: #c1bdbd79;
+    height: 5px;
+    background-color: #0601014e;
 }
 
 .chat_search input {
     width: 270px; /* Adjust width as needed */
     height: 42px;
     background-color: #e0dfdf79;
-    border: 0.2px solid #a3a2a2;
+    border: 0.2px solid #F8C76B;
     border-radius: 4px;
     padding-left: 10px;
     outline: none; /* Remove the default focus outline */
@@ -70,7 +98,7 @@ body {
 }
 
 .chat_search input:hover{
-    border-color: #007bff;
+    border-color: #4C54BE;
 }
 .send_message input:focus {
     border-color: #007bff;
@@ -91,8 +119,12 @@ body {
     padding-bottom: 4px;
 }
 
+.user:hover{
+    color: #007bff;
+}
+
 .user img {
-    width: 50px;
+    width: 30px;
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
@@ -114,11 +146,12 @@ body {
 .user {
     display: flex;
     align-items: center;
+    border-radius: 50px;
 }
 
 .user-image img  {
-    width: 50px; /* Adjust the width as needed */
-    height: 50px; /* Adjust the height as needed */
+    width: 40px; /* Adjust the width as needed */
+    height: 40px; /* Adjust the height as needed */
     border-radius: 50%; /* To make the image circular */
     margin-right: 10px; /* Adjust the margin as needed */
     vertical-align: middle; /* Align the image vertically in the middle */
@@ -132,6 +165,8 @@ body {
 .selected_user h2{
     margin-bottom: 20px;
 }
+
+
 .selected_user img {
     width: 50px; /* Adjust the width as needed */
     height: 50px; /* Adjust the height as needed */
@@ -163,16 +198,23 @@ body {
 
 
 
-
-
-
-
-
 .messages {
-    border-left: 0.2px solid #a3a2a2;
-    /* Add left border */
-    background-color: #c1bdbd79;
-    position: relative;
+    background-color: transparent !important; /* Remove background color */
+    position: relative; /* Required for absolute positioning of the overlay */
+}
+
+.messages::before{
+    content: ""; /* Create a pseudo-element for the overlay */
+    position: absolute; /* Position the overlay */
+    top: 0; /* Align to the top of the chat item */
+    left: 0; /* Align to the left of the chat item */
+    width: 100%; /* Cover the entire chat item horizontally */
+    height: 100%; /* Cover the entire chat item vertically */
+    background-image: url('images/img.jpg'); /* Specify the path to your overlay image */
+    background-size: cover; /* Cover the entire chat item with the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image within the chat item */
+    opacity: 0.2; /* Adjust the opacity of the overlay */
 }
 
 
@@ -202,7 +244,7 @@ body {
 }  
 
 .sent_message {
-    background-color: #4CAF50; /* Green background color for sent messages */
+    background-color: #F8C76B; /* Green background color for sent messages */
     color: white; /* Text color for sent messages */
     float: right; /* Align sent messages to the right */
     clear: both; /* Ensure each message appears on a separate line */
