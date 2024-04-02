@@ -72,7 +72,7 @@ class Etudiant(Utilisateur):
     year_of_study = models.IntegerField(default=1)
     degree = models.CharField(max_length=255, default='Licence')
     top_skills = models.CharField(max_length=255, default='Python, Django, HTML')
-    experiences = models.TextField(default='Aucune expérience')
+    
     
     def __str__(self):
         return super().__str__()
@@ -137,7 +137,7 @@ class Enseignant(Utilisateur):
     ]
     departement=models.CharField(choices=departement_choices,max_length=50)
     specialty = models.TextField(max_length=255, default='IT')
-    portfolio2 = models.TextField(max_length=255, default='www.portfolio.com')
+    
     experiences2=models.TextField(max_length=255, default='None')
     institution2 = models.CharField(max_length=255, default='Université XYZ')
 
