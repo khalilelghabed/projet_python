@@ -172,7 +172,7 @@ li  {
         <div class="dropdown-content" id="dropdown-content">
             <a href="{% url 'profil_page' user.id %}">Profile</a>
             <a href="#">Settings</a>
-            <a href="#">Log Out</a>
+            <a href="{% url "logOut" %}">Log Out</a>
         </div>
     </div>
     {% endif %}

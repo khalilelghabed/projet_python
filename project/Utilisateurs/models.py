@@ -50,15 +50,13 @@ class Utilisateur(models.Model):
     bio = models.TextField(max_length=255, null=True, blank=True)
     def __str__(self):
         return f"{self.prenom} {self.nom}"
-    
-            
-            
+   
+
 @receiver(post_save, sender=User)
 def create_utilisateur(sender, instance, created, **kwargs):
     if created and instance.is_superuser:
         Utilisateur.objects.create(user=instance)
-   
-   
+    
     
     
 
@@ -75,7 +73,7 @@ class Etudiant(Utilisateur):
     degree = models.CharField(max_length=255, default='Licence')
     top_skills = models.CharField(max_length=255, default='Python, Django, HTML')
     experiences = models.TextField(default='Aucune expérience')
-    portfolio = models.TextField(max_length=255, default='www.portfolio.com')
+    
     def __str__(self):
         return super().__str__()
     
