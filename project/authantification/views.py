@@ -42,7 +42,7 @@ def creer_compte(request):
                         region=region
                     )
                     etudiant.save()
-                if type == 'ens':
+                elif type == 'ens':
                     enseignant = Enseignant.objects.create(
                         user=user,
                         nom=lastname,
