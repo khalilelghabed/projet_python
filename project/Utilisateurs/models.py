@@ -118,15 +118,12 @@ class Enseignant(Utilisateur):
     ]
     departement=models.CharField(choices=departement_choices,max_length=50)
     specialty = models.TextField(max_length=255, default='IT')
-<<<<<<< HEAD
     portfolio = models.TextField(max_length=255, default='www.portfolio.com')
     experiences=models.TextField(max_length=255, default='None')
     institution = models.CharField(max_length=255, default='Université XYZ')
-=======
     portfolio2 = models.TextField(max_length=255, default='www.portfolio.com')
     experiences2=models.TextField(max_length=255, default='None')
     institution2 = models.CharField(max_length=255, default='Université XYZ')
->>>>>>> f96709138bb8176d8029d3c16d41490796ec7735
 
 
     def __str__(self):
@@ -152,7 +149,6 @@ class ActivitePedarogique(models.Model):
         return self.titre
 
 
-<<<<<<< HEAD
 # cv models
     
 
@@ -272,6 +268,4 @@ class Social(models.Model):
 
     def __str__(self):
         return f"{self.platform}: {self.username}"
-=======
 # class Etudiant(Utilisateur):
->>>>>>> f96709138bb8176d8029d3c16d41490796ec7735
