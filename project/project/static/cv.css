@@ -271,3 +271,8 @@ form h4 {
 form h1 {
 	color: #4682A9;
 }
+li{
+	color: #4682A9;
+	font-size: large;
+	margin-bottom: 10px;
+}

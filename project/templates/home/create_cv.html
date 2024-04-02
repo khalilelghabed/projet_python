@@ -1,7 +1,19 @@
-<h1>Create CV</h1>
+{% extends 'home/cv_template.html' %}
+
+{% block cv_content %}
+<div class="container">
+    <h1>Create CV</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ cv_form.as_p }}
-        <!-- Include contact and social forms here if needed -->
+        
+        <!-- Include contact form -->
+        {{ contact_form.as_p }}
+        
+        <!-- Include social form -->
+        {{ social_form.as_p }}
+        
         <button type="submit">Save CV</button>
     </form>
+</div>
+{% endblock %}

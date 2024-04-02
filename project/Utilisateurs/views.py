@@ -13,7 +13,6 @@ def creerUtilisateur(request):
 
 
 
-@login_required
 def view_cv(request):
     cv = Cv.objects.filter(utilisateur=request.user.utilisateur).first()
 
@@ -37,38 +36,48 @@ def view_cv(request):
 
 @login_required
 def create_cv(request):
+    utilisateur = request.user.utilisateur
+    existing_cv = Cv.objects.filter(utilisateur=utilisateur).first()
+
     if request.method == 'POST':
-        cv_form = CvForm(request.POST)
+        if existing_cv:
+            # If a CV already exists, update it instead of creating a new one
+            cv_form = CvForm(request.POST, instance=existing_cv)
+        else:
+            cv_form = CvForm(request.POST)
+
         contact_form = ContactForm(request.POST)
         social_form = SocialForm(request.POST)
-        # Include other forms as needed
 
         if cv_form.is_valid() and contact_form.is_valid() and social_form.is_valid():
             cv = cv_form.save(commit=False)
-            cv.utilisateur = request.user.utilisateur
+            cv.utilisateur = utilisateur
             cv.save()
-            # Save contact and social info associated with the CV
+
             contact = contact_form.save()
             social = social_form.save()
+
             cv.contact = contact
             cv.social = social
             cv.save()
-            # Redirect the user to view their newly created CV
+
             return redirect('view_cv')
     else:
-        cv_form = CvForm()
+        if existing_cv:
+            # If a CV already exists, populate the form with its instance data
+            cv_form = CvForm(instance=existing_cv)
+        else:
+            cv_form = CvForm()
+
         contact_form = ContactForm()
         social_form = SocialForm()
-        # Instantiate other forms as needed
 
     context = {
         'cv_form': cv_form,
         'contact_form': contact_form,
         'social_form': social_form,
-        # Pass other forms to the context as needed
     }
     return render(request, 'home/create_cv.html', context)
-
 
 def edit_page(request):
     return render(request, 'home/edit_page.html')
