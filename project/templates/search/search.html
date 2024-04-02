@@ -55,7 +55,7 @@
 
     .results > div {
         width: 100%;
-        min-height: 400px;
+        min-height: 800px;
         margin-bottom: 3%;
     }
 
@@ -66,7 +66,7 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
         width: 100%;
-        height: 100%;
+        height: 800px;
     }
 
     .results > div .result_box .info {
@@ -119,63 +119,27 @@
     </div>
 </div>
 <div class="results">
+    {% for  utilisateur in utilisateurs  %}
     <div class="result_etudiant">
+       
         <div class="result_box">
             <div class="info">
-                <img src="photo_profil_etudiant.jpg" alt="Photo de profil">
+                <img src={{ utilisateur.photo_profil.url }} alt="Photo de profil">
                 <div>
-                    <p><a href="#">Nom Prénom</a></p>
-                    <p>Majeure</p>
+                    <p><a href="#">{{utilisateur.nom}} {{utilisateur.prenom}}</a></p>
+                    <p>{{utilisateur.etudiant.major}}
+                    
                 </div>
                
-                
+               
             </div>
             <hr>
-            <div class="info">
-                <img src="photo_profil_enseignant.jpg" alt="Photo de profil">
-                <div>
-                    <p><a href="#">Nom Prénom</a></p>
-                    <p>Majeure</p>
-                </div>
-                
-            </div>
+            {% endfor %} 
+        <p style="    text-align: center;">{{message}}</p>
         </div>
     </div>
-    <div class="result_enseignant">
-        <div class="result_box">
-            <div class="info">
-                <img src="photo_profil_enseignant.jpg" alt="Photo de profil">
-                <div>
-                    <p><a href="#">Nom Prénom</a></p>
-                    <p>Majeure</p>
-                </div>
-                
-            </div>
-            <div class="info">
-                <img src="photo_profil_enseignant.jpg" alt="Photo de profil">
-                <div>
-                    <p><a href="#">Nom Prénom</a></p>
-                    <p>Majeure</p>
-                </div>
-                
-            </div>
-            
-        </div>
     </div>
-    <div class="result_publications">
-        <div class="result_box">
-            <div class="info">
-                <select name="type_publication" id="type_publication">
-                    <option value="demande_stage">Demande de stage</option>
-                    <option value="presentation_projet">Présentation de projet</option>
-                    <option value="autre">Autre</option>
-                </select>
-            </div>
-            <div class="publication_content">
-                <!-- Contenu des publications -->
-            </div>
-        </div>
-    </div>
+
 </div>
 </div>
 {% endblock content %}
