@@ -102,12 +102,14 @@ class Entreprise(Utilisateur):
     working_days = models.TextField(max_length=255,default='everyday')
     def __str__(self):
         return super().__str__()
+class Entreprise(models.Model):
+    Industry=models.CharField(max_length=255)
     
 
 
 class projet(models.Model):
     nom=models.CharField(max_length=255)
-    description=models.TextField()
+    description=models.TextField(default='')
     date_creation=models.DateTimeField( auto_now_add=True)
     etudiant=models.ForeignKey(Etudiant,on_delete=models.CASCADE)
     def __str__(self):
@@ -115,29 +117,8 @@ class projet(models.Model):
     
 
 
-class Cv(models.Model):
-    nom=models.CharField(max_length=255)
-    prenom=models.CharField(max_length=255)
-    date_naissance=models.DateField()
-    email=models.EmailField( max_length=254)
-    phone_regex=RegexValidator(regex=r'^\+?1?\d{9,15}$',message='le numero de telephone doit etre saisir dans un format valide')
-    telephone=models.CharField(validators=[phone_regex],max_length=20,blank=True)
-    comptences=models.TextField(max_length=500)
-    experiences=models.TextField()
-    formaion=models.TextField()
-    langues_choices = [
-    ('FR', 'Français'),
-    ('EN', 'Anglais'),
-    ('ES', 'Espagnol'),
-    ('ar','arabe')
-    ]
-    langues=MultiSelectField(choices=langues_choices,max_choices=4, validators=[MaxValueMultiFieldValidator(4)])
-    centre_interet=models.TextField(max_length=255)
-    utilisateur = models.OneToOneField(Utilisateur, on_delete=models.CASCADE, null=True)
 
-    def __str__(self):
-        return f"{self.utilisateur.nom} {self.utilisateur.prenom}"
-    
+
 
 class Enseignant(Utilisateur):
     departement_choices= [
@@ -150,6 +131,10 @@ class Enseignant(Utilisateur):
     ]
     departement=models.CharField(choices=departement_choices,max_length=50)
     specialty = models.TextField(max_length=255, default='IT')
+    portfolio = models.TextField(max_length=255, default='www.portfolio.com')
+    experiences=models.TextField(max_length=255, default='None')
+    institution = models.CharField(max_length=255, default='Université XYZ')
+    portfolio2 = models.TextField(max_length=255, default='www.portfolio.com')
     
     experiences2=models.TextField(max_length=255, default='None')
     institution2 = models.CharField(max_length=255, default='Université XYZ')
@@ -161,7 +146,7 @@ class Enseignant(Utilisateur):
 
 class formation(models.Model):
     titre=models.CharField(max_length=100)
-    description=models.TextField()
+    description=models.TextField(default='')
     date_debut=models.DateTimeField( auto_now=False, auto_now_add=False)
     date_fin=models.DateField( auto_now=False, auto_now_add=False)
     etudiant=models.ManyToManyField(Etudiant)
@@ -172,10 +157,129 @@ class ActivitePedarogique(models.Model):
     titre=models.CharField(max_length=100)
     date=models.DateField( auto_now=False, auto_now_add=False)
     nombres_participants=models.IntegerField()
-    description=models.TextField()
+    description=models.TextField(default='')
     enseignant=models.ForeignKey(Enseignant, on_delete=models.CASCADE)
     def __str__(self):
         return self.titre
 
 
+# cv models
+    
+
+
+class Cv(models.Model):
+    utilisateur = models.OneToOneField('Utilisateur', on_delete=models.CASCADE, blank=False, null=True)
+    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    first_name = models.CharField(max_length=100, default='')
+    last_name = models.CharField(max_length=100, default='')
+    title = models.CharField(max_length=100, default='')
+    description = models.TextField(default='')  # Provide a default value for description
+    skills = models.ManyToManyField('Skill', blank=True)
+    references = models.ManyToManyField('Reference', blank=True)
+    educations = models.ManyToManyField('Education', blank=True)
+    certifications = models.ManyToManyField('Certification', blank=True)
+    experiences = models.ManyToManyField('Experience', blank=True)
+    awards = models.ManyToManyField('Award', blank=True)
+    interests = models.ManyToManyField('Interest', blank=True)
+    contact = models.OneToOneField('Contact', on_delete=models.CASCADE, null=True, blank=True)
+    social = models.OneToOneField('Social', on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return f"CV of {self.utilisateur}"
+
+    def save(self, *args, **kwargs):
+        if not self.first_name:
+            self.first_name = self.utilisateur.prenom
+        if not self.last_name:
+            self.last_name = self.utilisateur.nom
+        if not self.title:
+            self.title = self.utilisateur.type_profil
+        if not self.description:
+            self.description = self.utilisateur.bio
+        super().save(*args, **kwargs)
+
+
+class Skill(models.Model):
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
+    skill_name = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return self.skill_name
+
+class Reference(models.Model):
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
+    reference_name = models.CharField(max_length=100, null=True)
+    description = models.TextField(default='', null=True)
+
+    def __str__(self):
+        return self.reference_name
+
+class Education(models.Model):
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
+    time_period = models.CharField(max_length=100, null=True)
+    degree_title = models.CharField(max_length=100, null=True)
+    institution = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return self.degree_title
+
+class Certification(models.Model):
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
+    time_period = models.CharField(max_length=100, null=True)
+    certification_title = models.CharField(max_length=100, null=True)
+    description = models.TextField(default='', null=True)
+
+    def __str__(self):
+        return self.certification_title
+
+class Experience(models.Model):
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
+    time_period = models.CharField(max_length=100, null=True)
+    company_name = models.CharField(max_length=100, null=True)
+    position_title = models.CharField(max_length=100, null=True)
+    description = models.TextField(default='', null=True)
+
+    def __str__(self):
+        return self.position_title
+
+class Award(models.Model):
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
+    time_period = models.CharField(max_length=100, null=True)
+    award_title = models.CharField(max_length=100, null=True)
+    description = models.TextField(default='', null=True)
+
+    def __str__(self):
+        return self.award_title
+
+class Interest(models.Model):
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
+    interest_name = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return self.interest_name
+
+class Contact(models.Model):
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True)
+    location = models.CharField(max_length=100, null=True)
+    phone_number = models.CharField(max_length=100, null=True)
+    email = models.EmailField(null=True)
+
+    def __str__(self):
+        return self.email
+
+class Social(models.Model):
+    PLATFORM_CHOICES = [
+        ('LinkedIn', 'LinkedIn'),
+        ('Twitter', 'Twitter'),
+        ('Facebook', 'Facebook'),
+        ('Instagram', 'Instagram'),
+        ('GitHub', 'GitHub'),
+        # Add more platforms as needed
+    ]
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, null=True, blank=True)
+    platform = models.CharField(max_length=100, choices=PLATFORM_CHOICES, null=True, blank=True)
+    username = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return f"{self.platform}: {self.username}"
 # class Etudiant(Utilisateur):

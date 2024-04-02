@@ -3,7 +3,7 @@
 }
 
 body {
-    background-color: #c1bdbd79;
+    background-color: #f8c76b;
 }
 
 .nav_chat,
@@ -14,7 +14,7 @@ body {
 }
 
 .nav_chat {
-    background-color: #c1bdbd79;
+    background-color: #f8c76b;
     max-width: 100px;
 }
 
@@ -22,7 +22,7 @@ body {
 /*             chat side           */
 .side_chat {
     border-left: 0.2px solid #a3a2a2;
-    background-color: #c1bdbd79;
+    background-color: #f8c76b;
     max-width: 350px;
 }
 

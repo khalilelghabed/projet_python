@@ -11,6 +11,8 @@ from .forms import MessageForm
 from django.utils import timezone
 
 
+from django.db.models import Q
+
 def users(request):
     current_user = request.user
     search_query = request.GET.get('q')  # Get the search query from the request
@@ -19,20 +21,17 @@ def users(request):
     followers = current_user.utilisateur.followers.all()
     following = current_user.utilisateur.following.all()
 
-    # Retrieve public utilisateurs
-    public_utilisateurs = Utilisateur.objects.filter(is_public=True)
-
-    # Combine followers, following, and public utilisateurs
-    utilisateurs = followers | following | public_utilisateurs
+    # Retrieve users that are following the current user and are being followed by the current user
+    mutual_users = followers.filter(pk__in=following)
     
-    # Filter utilisateurs based on the search query
+    # Filter mutual_users based on the search query
     if search_query:
-        utilisateurs = utilisateurs.filter(Q(nom__icontains=search_query) | Q(prenom__icontains=search_query))
+        mutual_users = mutual_users.filter(Q(nom__icontains=search_query) | Q(prenom__icontains=search_query))
 
     # Create a dictionary to store the last message with each user
     last_messages = {}
 
-    for utilisateur in utilisateurs:
+    for utilisateur in mutual_users:
         # Get the conversation between the current user and the current utilisateur
         conversation = Conversation.objects.filter(
             Q(user1=current_user, user2=utilisateur.user) | Q(user1=utilisateur.user, user2=current_user)
@@ -48,7 +47,6 @@ def users(request):
         }
     
     return render(request, 'home/chat.html', {'last_messages': last_messages})
-
 
 @login_required
 def conversation_messages(request, profile_user_id):

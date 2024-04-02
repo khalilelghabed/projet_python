@@ -1,0 +1,15 @@
+<!-- edit_certification.html -->
+{% extends 'home/cv_template.html' %}
+
+{% block cv_content %}
+
+<div class="container">
+    <h1>Edit Certification</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+
+{% endblock %}
