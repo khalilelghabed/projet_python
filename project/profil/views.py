@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from Utilisateurs.models import Utilisateur,Etudiant,User,Enseignant,Entreprise
 from django.core.files.storage import FileSystemStorage
+from publications.models import Publication
 
 def profil_page(request, user_id):
     print(request.user)
@@ -10,7 +11,8 @@ def profil_page(request, user_id):
     print(utilisateur)
     is_own_profile = request.user == utilisateur.user  
     print(is_own_profile)# Assuming you have a 'user' field in your Utilisateur model
-    return render(request, 'profil/profileEtudiant.html', {'utilisateur': utilisateur, 'is_own_profile': is_own_profile})
+    publications_utilisateur = Publication.objects.filter(auteur=utilisateur)
+    return render(request, 'profil/profileEtudiant.html', {'utilisateur': utilisateur, 'is_own_profile': is_own_profile,'publications': publications_utilisateur})
 
 from datetime import datetime
 @login_required
@@ -148,7 +150,17 @@ def update_information_ens(request, user_id):
         return redirect('profil_page', user_id=user_id)
 
 
-    
+@login_required
+def toggle_follow(request, user_id):
+    user_to_follow = Utilisateur.objects.get(id=user_id)
+    current_user = request.user.utilisateur
+
+    if current_user.is_following(user_to_follow):
+        current_user.unfollow(user_to_follow)
+    else:
+        current_user.follow(user_to_follow)
+
+    return redirect('profil_page', user_id=user_id)
     
     
     
@@ -218,6 +230,8 @@ def update_information_ent(request, user_id):
     else:
         # Rediriger vers la page de profil si la méthode de la requête n'est pas POST
         return redirect('profil_page', user_id=user_id)
+
+
 
 # def profil_search(request):
     
