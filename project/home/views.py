@@ -6,7 +6,7 @@ from notification.models import Notification
 from publications.models import Publication
 def home(request):
    
-    return render(request, 'home/home.html')
+    return render(request, 'premierPage.html')
 
 
 @login_required
@@ -30,7 +30,7 @@ def home_authentifie(request):
         # Retrieve publications of mutual_users
         publication_suivies = Publication.objects.filter(Q(auteur__in=mutual_users) | Q(auteur=utilisateur)).order_by('-date_publication')
         
-        return render(request, "home/home_authentifie.html", {'publications': publication_suivies, 'utilisateurs': mutual_users, 'nombre_notifications_non_lues': count})
+        return render(request, "base.html", {'publications': publication_suivies, 'utilisateurs': mutual_users, 'nombre_notifications_non_lues': count})
               
     else:
         # L'utilisateur n'a pas d'objet Utilisateur associé

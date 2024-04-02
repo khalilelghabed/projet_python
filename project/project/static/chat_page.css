@@ -1,80 +1,73 @@
 .container {
     display: flex;
+    color: #213555;
 }
 
 body {
-    background-color: #080606;
+    background-color: #fdfdfd;
 }
-
-
-/the navbar side with icon/
-.nav_chat {
-    display: flex;
-    align-items: center;
-    justify-content: space-around; /* Adjust spacing between icons */
-    flex-direction: column; /* Display icons vertically */
-}
-
-.nav_chat .icon-button {
-    font-size: 24px; /* Adjust the icon size */
-    color: #000; /* Adjust the icon color */
-}
-
-.selected-chat {
-    background-color: #F8C76B !important;
-    border-radius: 1px;
-}
-
-
-
-
 
 .nav_chat,
 .side_chat,
 .messages {
     flex: 1;
     height: 100vh;
+    color: #213555;
 }
 
 .nav_chat {
-    background-color: #F8C76B;
-    max-width: 60px;
+    max-width: 5%;
+    display: flex;
+    flex-direction: column; /* Arrange buttons vertically */
+    align-items: center; /* Align buttons horizontally at the center */
+    margin: 0 auto;
+    padding-top: 3%;
+}
+
+.nav_chat .icon-button {
+    background: none;
+    border: none;
+    font-size: 24px; /* Change the font size to make icons bigger */
+    color: #387ADF; /* Change the color of icons */
+    margin-bottom: 60%;
+    margin-right: 10px;
+}
+
+.icon-button:hover {
+    color: lightblue; /* Change color on hover and adjust opacity */
+    opacity: 0.8; /* Adjust opacity on hover */
 }
 
 
 /*             chat side           */
 .side_chat {
-    border-left: 0.2px solid #08010100;
-    background-color: #10010179;
+    border-left: 0.2px solid #d8d8d8;
+    background-color: #fdfdfd;
     max-width: 350px;
-    overflow-y: auto; /* Enable vertical scrolling */
-   /* Adjust the height as needed */
+    color: #213555;
 }
 
-
-
 .chat_list_header {
-    height: 30px;
-    background-color: #00000079;
+    height: 80px;
+    background-color: #fdfdfd;
     padding-top: 10px;
     display: flex; /* Use Flexbox */
     align-items: center; /* Center items vertically */
     padding-left: 30px;
 }
 
-
 .chat_search {
     padding: 15px;
     width: 320px;
-    height: 5px;
-    background-color: #0601014e;
+    height: 42px;
+    background-color: #fdfdfd;
 }
 
 .chat_search input {
     width: 270px; /* Adjust width as needed */
     height: 42px;
     background-color: #e0dfdf79;
-    border: 0.2px solid #F8C76B;
+    border: 0.2px solid #d8d8d8;
     border-radius: 4px;
     padding-left: 10px;
     outline: none; /* Remove the default focus outline */
@@ -89,7 +82,7 @@ body {
     align-items: center;
 }
 .search_button {
-    color: black;
+    color: #9b9b9b79;
     font-size: 20px; /* Increase the size of the icon */
 }
 
@@ -98,7 +91,7 @@ body {
 }
 
 .chat_search input:hover{
-    border-color: #4C54BE;
+    border-color: #007bff;
 }
 .send_message input:focus {
     border-color: #007bff;
@@ -107,7 +100,7 @@ body {
 
 
 .users{
-
+    color: #213555;
     padding-top: 40px;
     padding-left: 20px;
 }
@@ -117,14 +110,11 @@ body {
     align-items: center;
     margin-bottom: 10px;
     padding-bottom: 4px;
-}
-
-.user:hover{
-    color: #007bff;
+    color: #213555 !important;
 }
 
 .user img {
-    width: 30px;
+    width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
@@ -146,12 +136,11 @@ body {
 .user {
     display: flex;
     align-items: center;
-    border-radius: 50px;
 }
 
 .user-image img  {
-    width: 40px; /* Adjust the width as needed */
-    height: 40px; /* Adjust the height as needed */
+    width: 50px; /* Adjust the width as needed */
+    height: 50px; /* Adjust the height as needed */
     border-radius: 50%; /* To make the image circular */
     margin-right: 10px; /* Adjust the margin as needed */
     vertical-align: middle; /* Align the image vertically in the middle */
@@ -165,8 +154,6 @@ body {
 .selected_user h2{
     margin-bottom: 20px;
 }
-
-
 .selected_user img {
     width: 50px; /* Adjust the width as needed */
     height: 50px; /* Adjust the height as needed */
@@ -183,6 +170,7 @@ body {
     margin-top: 4px;
     padding-top: 4px;
     width: 240px;
+    color: #213555;
 }
 .last_message_content{
     margin-left: 10px !important;
@@ -198,23 +186,16 @@ body {
 
 
 
-.messages {
-    background-color: transparent !important; /* Remove background color */
-    position: relative; /* Required for absolute positioning of the overlay */
-}
 
-.messages::before{
-    content: ""; /* Create a pseudo-element for the overlay */
-    position: absolute; /* Position the overlay */
-    top: 0; /* Align to the top of the chat item */
-    left: 0; /* Align to the left of the chat item */
-    width: 100%; /* Cover the entire chat item horizontally */
-    height: 100%; /* Cover the entire chat item vertically */
-    background-image: url('images/img.jpg'); /* Specify the path to your overlay image */
-    background-size: cover; /* Cover the entire chat item with the image */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    background-position: center; /* Center the image within the chat item */
-    opacity: 0.2; /* Adjust the opacity of the overlay */
+
+
+
+
+.messages {
+    border-left: 0.2px solid #d8d8d8;
+    /* Add left border */
+    background-color: #fdfdfd;
+    position: relative;
 }
 
 
@@ -230,13 +211,14 @@ body {
 }
 
 #no_messages {
-    background-color: lightgray;
-    padding: 20px; /* Example padding */
+    background-color: lightblue;
+    padding: 16px; /* Example padding */
     margin: auto; /* Center horizontally */
     position: absolute; /* Positioning */
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Center vertically and horizontally */
+    border-radius: 10px;
   }
 #message_yourself{
     margin-left: 100px;
@@ -244,7 +226,7 @@ body {
 }  
 
 .sent_message {
-    background-color: #F8C76B; /* Green background color for sent messages */
+    background-color: #aeb9cc; /* Green background color for sent messages */
     color: white; /* Text color for sent messages */
     float: right; /* Align sent messages to the right */
     clear: both; /* Ensure each message appears on a separate line */
@@ -255,7 +237,7 @@ body {
 }
 
 .received_message {
-    background-color: #2196F3; /* Blue background color for received messages */
+    background-color: #ACE2E1; /* Blue background color for received messages */
     color: white; /* Text color for received messages */
     float: left; /* Align received messages to the left */
     clear: both; /* Ensure each message appears on a separate line */
@@ -273,7 +255,8 @@ body {
     margin-bottom: 20px;
 }
 .send_message hr {
-    color: black !important;
+    color: lightblue !important;
+    margin-right: 10px;
 }
 .send_message form{
     height: 60px;
@@ -282,15 +265,15 @@ body {
     height: 50px;
     width: 80%;
     border-radius: 10px;
-    border-color: white;
+    border-color: lightblue;
     padding-left: 20px;
     margin-left: 40px;
 }
 .send_message input:hover{
-    border-color: #007bff;
+    border-color: lightblue;
 }
 .send_message input:focus {
-    border-color: #007bff;
+    border-color: lightblue;
     outline: none; /* Remove browser's default outline */
 }
 /* Add this CSS to your existing stylesheet or create a new one */
@@ -310,5 +293,10 @@ body {
     position: absolute; /* Positioning */
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Center vertically and horizontally */    
+    transform: translate(-50%, -50%); /* Center vertically and horizontally */
+    border-radius: 1px;    
+}
+
+.icon-button .icon {
+    font-size: 1.5em; /* Adjust the size as needed */
 }
