@@ -23,7 +23,7 @@
 <section>
     <div class="row justify-content-center">
         <div class="col-lg-8 mt-4 order-md-1 order-lg-2 order-1">
-            <div class="publication" id="publicationContainer2" style="margin: 7%">
+            <div class="publication" id="publicationContainer2" style="margin-left: 7% ;margin-bottom:7%">
                 {% if user.is_authenticated %}
                     <div class="profile">
                         <img src="{{ user.utilisateur.photo_profil.url }}" alt="Photo de profil">
@@ -32,27 +32,28 @@
                         </div>
                     </div>
                     <div class="content">
-                        <form method='post' id="publicationForm" action={% url "creatPublication" %}>
+                        <form method='post' id="publicationForm" action="{% url "creatPublication" %}" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <textarea placeholder="Exprimez-vous..." name="contenu"></textarea>
+                            <textarea placeholder="Créer une publication..." name="contenu"></textarea>
                             <div class="details">
                                 <div class="type">
                                     <div class="media">
-                                        <i id="uploadIcon" class="fas fa-image" style="font-size: 30px !important;"></i>
+                                        <i id="uploadIcon" class="fas fa-image" style="font-size: 30px !important; "></i>
                                         <input type="file" id="mediaInput" accept="image/,video/" style="display: none;" name="media">
                                     </div>
                                     <div class="fichier">
-                                        <i id ='uploadIcon2' class="fa fa-file" style="font-size:24px ; margin-top: 10%; margin-left: 10%;"></i>
-                                        <input type="file" id="fileInput" style="display: none;" name="fichier">
+                                        <i id="uploadIcon2" class="fa fa-file" style="font-size:24px; margin-top: 10%; margin-left: 10%;"></i>
+                                        <input type="file" id="fileInput" style="display: none;" name="fichier" onchange="handleFileSelect(event)">
                                     </div>
                                 </div>
                                 <div class="publish">
-                                    <i class="fas fa-paper-plane" id="submitForm" onclick='creerPublicaion()'></i>
+                                    <i class="fas fa-paper-plane" id="submitForm" onclick='creerPublication()'></i>
                                 </div>
                             </div>
                         </form>
                         <div id="fileList"></div>
-                    </div>
+                        <div id="mediaList"></div>
+                    </div>                        
                     {% for message in messages %}
                         <script>
                             alert('{{ message }}')
@@ -157,7 +158,10 @@
                 {% endfor %}
                 
             </div>
-            <button id="loadMoreButton" class="btn btn-primary mt-3" style="width:90%" >Charger plus</button>
+            <button id="loadMoreButton" class="btn btn-primary mt-3" style=" width: 90%;
+            align-self: center;
+            position: relative;
+            left: 8%;" >Charger plus</button>
         </div>
         
     </div>

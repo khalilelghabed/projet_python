@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'chat',
     'notification.apps.NotificationConfig',
+    'search.apps.SearchConfig'
 ]
 
 MIDDLEWARE = [

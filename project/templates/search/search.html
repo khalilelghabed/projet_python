@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block content %}
+<style >
+    /* Reset CSS */
+  
+    /* Style général */
+    .content {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        width: 100%%
+    }
+  
+  
+ 
+    .container {
+        width: 100%;
+    }
+
+    /* Styles de la zone de recherche */
+    .search6 > button {
+        width: 80px;
+    }
+
+    .search6_type {
+        display: flex;
+        width: 50%;
+        margin-left: 10%;
+
+    
+    }
+
+    .search6_type > div {
+        margin: 10%;    }
+
+    .search6_option {
+        padding: 10px 20px;
+        margin-right: 10px;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .search6_option:hover {
+        background-color: #0056b3;
+    }
+
+    /* Styles des résultats */
+    .results {
+        padding: 0;
+        position: relative;
+        width: 100%;
+    }
+
+    .results > div {
+        width: 100%;
+        min-height: 400px;
+        margin-bottom: 3%;
+    }
+
+    .results > div .result_box {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .results > div .result_box .info {
+        display: flex;
+    }
+
+    .results > div .result_box .info img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 20px;
+    }
+
+    .results > div .result_box .info p {
+        margin-bottom: 5px;
+    }
+
+    .results > div .result_box .info a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .results > div .result_box .info a:hover {
+        text-decoration: underline;
+    }
+
+    .publication_type select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    .publication_content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        width: 100%;
+    }
+</style>
+<div class="content"> 
+<div class="search6">
+    <div class="search6_type">
+        <div class="search6_option etudiant" onclick="afficherEtudiant()">Étudiants</div>
+        <div class="search6_option enseignant" onclick="afficherEnseignant()">Enseignants</div>
+        <div class="search6_option publication" onclick="afficherPublications()">Publications</div>
+    </div>
+</div>
+<div class="results">
+    <div class="result_etudiant">
+        <div class="result_box">
+            <div class="info">
+                <img src="photo_profil_etudiant.jpg" alt="Photo de profil">
+                <div>
+                    <p><a href="#">Nom Prénom</a></p>
+                    <p>Majeure</p>
+                </div>
+               
+                
+            </div>
+            <hr>
+            <div class="info">
+                <img src="photo_profil_enseignant.jpg" alt="Photo de profil">
+                <div>
+                    <p><a href="#">Nom Prénom</a></p>
+                    <p>Majeure</p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="result_enseignant">
+        <div class="result_box">
+            <div class="info">
+                <img src="photo_profil_enseignant.jpg" alt="Photo de profil">
+                <div>
+                    <p><a href="#">Nom Prénom</a></p>
+                    <p>Majeure</p>
+                </div>
+                
+            </div>
+            <div class="info">
+                <img src="photo_profil_enseignant.jpg" alt="Photo de profil">
+                <div>
+                    <p><a href="#">Nom Prénom</a></p>
+                    <p>Majeure</p>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+    <div class="result_publications">
+        <div class="result_box">
+            <div class="info">
+                <select name="type_publication" id="type_publication">
+                    <option value="demande_stage">Demande de stage</option>
+                    <option value="presentation_projet">Présentation de projet</option>
+                    <option value="autre">Autre</option>
+                </select>
+            </div>
+            <div class="publication_content">
+                <!-- Contenu des publications -->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}

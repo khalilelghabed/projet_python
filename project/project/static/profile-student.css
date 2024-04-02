@@ -22,7 +22,7 @@ section {
 .cover-pic {
     width: 100%;
     height: 150px;
-    background-color: #4C54BE ;
+    background-color: #ffba39 ;
 }
 .profile-pic {
     width: 150px;
@@ -48,7 +48,7 @@ section {
     margin-left: 30%;
     margin-top: -10px;
     font-size: larger; /* Make user role smaller */
-    color: rgba(255, 255, 255, 0.667); /* Make user role font color slightly lighter than black */
+    color: rgba(255, 255, 255, 0.833); /* Make user role font color slightly lighter than black */
     font-family: Arial, sans-serif; /* Use a different font for user role */
 }
 .profile-details {
@@ -77,8 +77,7 @@ section {
 }
 
 .follow-button.unfollowed {
-    background-color: #4C54BE ; /* Blue color */
-}
+    background-color: rgb(29, 28, 28);}
 
 .follow-button.followed {
     background-color: #6c757d; /* Gray color */
@@ -123,8 +122,7 @@ section {
     height: auto;
     min-height: 700px;
     margin-bottom: 10%;
-
-    
+  
     
 }
 
@@ -132,16 +130,15 @@ section {
     text-align: center;
 }
 .btn-outline-primary {
-    color: #4C54BE ;
+    color: #ffba39 ;
     background-color: transparent;
     background-image: none;
-    border-color: #4C54BE ;
-  }
-  
+    border-color: #ffba39 ;
+  } 
   .btn-outline-primary:hover {
     color: #fff;
-    background-color: #4C54BE ;
-    border-color: #4C54BE ;
+    background-color: #ffba39 ;
+    border-color: #ffba39 ;
   }
   .btn-outline {
     border: none;
@@ -151,17 +148,6 @@ section {
     text-decoration: underline;
     cursor: pointer;
 }
-
-
-
-
-
-
-
-
-
-
-
 .about-section {
     padding: 20px;
     border: 1px solid #eaeaea;
@@ -176,7 +162,7 @@ section {
 }
 
 .about-section button {
-    background-color: #4C54BE ;
+    background-color: #ffba39 ;
     color: #fff;
     border: none;
     padding: 8px 16px;
@@ -249,7 +235,7 @@ section {
 }
 
 #update-widget button {
-    background-color: #4C54BE ;
+    background-color: #ffba39 ;
     color: #fff;
     border: none;
     padding: 5px 10px;
@@ -262,7 +248,12 @@ section {
     right: 5px;
     color: rgb(255, 208, 0);
 }
-
+.blue-book{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #ffba39;
+}
 
 .sm{
     min-height: 150px;

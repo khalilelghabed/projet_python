@@ -17,6 +17,21 @@ def home_authentifie(request):
     for notification in all_notifications:
         if not notification.is_read:
             count += 1
+    return render(request, 'premierPage.html')
+
+@login_required
+def home_authentifie(request):
+    
+    
+    utilisateur = request.user.utilisateur
+    utilisateurs = Utilisateur.objects.all()
+    allNotifications=utilisateur.notifier.all()
+    count=0
+    for notification in allNotifications:
+        if notification.is_read==False:
+            count=count+1
+    print(count)
+    
 
     if utilisateur is not None:
         # Retrieve users that are following the current user and are being followed by the current user
