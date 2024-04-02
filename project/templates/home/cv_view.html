@@ -1,14 +1,147 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends 'home/cv_template.html' %}
+
+{% block cv_content %}
 <div class="container">
-    <h2>Your CV</h2>
-    {% if cv %}
-    <p>Name: {{ cv.nom }}</p>
-    <p>First Name: {{ cv.prenom }}</p>
-    <!-- Display other CV fields as needed -->
-    {% else %}
-    <p>No CV found.</p>
-    <a href="{% url 'create_cv' %}" class="text-decoration-none">Create CV</a>
-    {% endif %}
+    <a href="{% url 'edit_page' %}"  class="edit-link" title="Click to edit"><i class="bi bi-pen"></i></a>
+    <div class="profile">
+        <div class="profile_container">
+            <div class="profile_profileImg">
+                {% if cv.profile_image %}
+                    <img src="{{ cv.profile_image.url }}" alt="{{ cv.first_name }} {{ cv.last_name }}">
+                {% else %}
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4MJsV58xh-vFYz3u4WMpS65vCvnGwBYc54SfmKToORTHdZALkZNGvpBlt4dc45A0M-y0&usqp=CAU">
+                {% endif %}
+            </div>
+            <div>
+                <h1 class="profile_name">
+                    <span class="profile_name_firstName">{{ cv.first_name }}</span>
+                    <span class="profile_name_lastName">{{ cv.last_name }}</span>
+                </h1>
+                <p class="profile_title">{{ cv.title }}</p>
+                <p class="description profile_description">{{ cv.description }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="group-1">
+        {% if cv.skills.all %}
+            <div class="skills">
+                <h3 class="title">Skills</h3>
+                <ul class="skills_list description">
+                    {% for skill in cv.skills.all %}
+                        <li>{{ skill.skill_name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if cv.references.all %}
+            <div class="ref">
+                <h3 class="title">References</h3>
+                {% for reference in cv.references.all %}
+                    <div class="ref_item">
+                        <h4 class="ref_name">{{ reference.reference_name }}</h4>
+                        <p class="description">{{ reference.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if cv.educations.all %}
+            <div class="edu">
+                <h3 class="title">Education</h3>
+                {% for education in cv.educations.all %}
+                    <div class="edu_item">
+                        <p class="item_preTitle">{{ education.time_period }}</p>
+                        <h4 class="item_title">{{ education.degree_title }}</h4>
+                        <p class="item_subtitle">{{ education.institution }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <!-- Add other sections here such as certifications, awards, etc. -->
+
+        {% if cv.certifications.all %}
+            <div class="certification">
+                <h3 class="title">Certifications</h3>
+                {% for certification in cv.certifications.all %}
+                    <div class="certification_item">
+                        <p class="item_preTitle">{{ certification.time_period }}</p>
+                        <h4 class="item_title">{{ certification.certification_title }}</h4>
+                        <p class="description">{{ certification.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="group-2">
+        <!-- Repeat the pattern for experiences, awards, interests, contact, and social -->
+        {% if cv.experiences.all %}
+            <div class="exp">
+                <h3 class="title">Experience</h3>
+                {% for experience in cv.experiences.all %}
+                    <div class="exp_item">
+                        <p class="item_preTitle">{{ experience.time_period }}</p>
+                        <h4 class="item_title">{{ experience.company_name }}</h4>
+                        <p class="item_subtitle">{{ experience.position_title }}</p>
+                        <p class="description">{{ experience.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if cv.awards.all %}
+            <div class="awards">
+                <h3 class="title">Awards</h3>
+                {% for award in cv.awards.all %}
+                    <div class="awards_item">
+                        <p class="item_preTitle">{{ award.time_period }}</p>
+                        <h4 class="item_title">{{ award.award_title }}</h4>
+                        <p class="description">{{ award.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if cv.interests.all %}
+            <div class="interest">
+                <h3 class="title">Interest</h3>
+                <div class="interest_items">
+                    {% for interest in cv.interests.all %}
+                        <div class="interest_item">
+                            <span>{{ interest.interest_name }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <hr>
+    <div class="group-3">
+        {% if cv.contact %}
+            <div class="contact">
+                <h3 class="title">Contact</h3>
+                <div class="contact_info">
+                    <p class="description">{{ cv.contact.location }}</p>
+                    <p class="description">{{ cv.contact.phone_number }}</p>
+                    <p class="description">{{ cv.contact.email }}</p>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if cv.social %}
+            <div class="social">
+                <h3 class="title">Socials</h3>
+                <div class="social_items">
+                    <a href="#" target="_blank" class="social_item">
+                        <span>{{ cv.social.platform }}</span>
+                        <span>{{ cv.social.username }}</span>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

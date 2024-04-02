@@ -7,48 +7,33 @@ from publications.models import Publication
 def home(request):
    
     return render(request, 'home/home.html')
+
 @login_required
 def home_authentifie(request):
-    publication_suivies = []
-    
-    
     utilisateur = request.user.utilisateur
     utilisateurs = Utilisateur.objects.all()
-    allNotifications=utilisateur.notifier.all()
-    count=0
-    for notification in allNotifications:
-        if notification.is_read==False:
-            count=count+1
-    print(count)
-    
-
-    # Check if there's a search query
-    search_query = request.GET.get('q')
-    if search_query:
-        utilisateurs = utilisateurs.filter(nom__icontains=search_query) | utilisateurs.filter(prenom__icontains=search_query)
-
-    if request.user.utilisateur:
-        following = request.user.utilisateur.following.all()
-        if following.count() > 0:
-            for utilisateur in following:
-                publication_suivies.extend(utilisateur.publier.all())
-
-    return render(request, "home/home_authentifie.html", {'publications': publication_suivies, 'utilisateurs': utilisateurs, 'search_query': search_query})
-
+    all_notifications = utilisateur.notifier.all()
+    count = 0
+    for notification in all_notifications:
+        if not notification.is_read:
+            count += 1
 
     if utilisateur is not None:
-        # L'utilisateur a un objet Utilisateur associé
-        following = utilisateur.following.all()
-        publication_suivies = Publication.objects.filter(Q(auteur__in=following) | Q(auteur=utilisateur)).order_by('-date_publication')
+        # Retrieve users that are following the current user and are being followed by the current user
+        mutual_users = utilisateur.followers.filter(pk__in=utilisateur.following.values_list('pk', flat=True))
         
-        return render(request, "home/home_authentifie.html", {'publications': publication_suivies, 'utilisateurs': utilisateurs,'nombre_notifications_non_lues':count})
+        # Retrieve publications of mutual_users
+        publication_suivies = Publication.objects.filter(Q(auteur__in=mutual_users) | Q(auteur=utilisateur)).order_by('-date_publication')
+        
+        return render(request, "home/home_authentifie.html", {'publications': publication_suivies, 'utilisateurs': mutual_users, 'nombre_notifications_non_lues': count})
               
     else:
         # L'utilisateur n'a pas d'objet Utilisateur associé
-        following = None
         print("L'utilisateur n'a pas d'objet Utilisateur associé.")
 
     return render(request, "home/home_authentifie.html", {'utilisateurs': utilisateurs})
+
+
 from django.http import JsonResponse
 
 def ajouter_like(request, publication_id):

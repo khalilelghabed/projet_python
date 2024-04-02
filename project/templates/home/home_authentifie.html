@@ -109,11 +109,11 @@
                             <div class="post-meta d-flex justify-content-between">
                                 <ul class="list-unstyled mb-0">
                                     <li class="list-inline-item me-2 mb-0"><a href="javascript:void(0)" class="text-muted like">
-                                        <i class="ti ti-heart me-1" data-publication-id="{{ publication.id }}" onclick="add_like({{ publication.id }})"></i>
+                                        <i class="ti ti-heart me-1" data-publication-id="{{ publication.id }}" onclick="add_like('{{ publication.id }}')"></i>
                                         <span id="nombre-likes-{{ publication.id }}">{{ publication.nombre_react }}</span>
                                     </a></li>
                                     <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments">
-                                        <i class="ti ti-message-circle me-1" onclick="afficher_commentaires({{ publication.id }})"></i>
+                                        <i class="ti ti-message-circle me-1" onclick="afficher_commentaires('{{ publication.id }}')"></i>
                                         <span id="nombre_commentaires_{{publication.id}}">{{publication.nombre_commentaires}}</span>
                                     </a></li>
                                 </ul>
@@ -146,10 +146,10 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="VoirPlus" ><button class="btn btn-sm btn-secondary" onclick="afficherPlusCommentaire({{ publication.id }})" style="display:none" id="voirPlus_{{publication.id}}">Voir plus</button></div>
+                    <div class="VoirPlus" ><button class="btn btn-sm btn-secondary" onclick="afficherPlusCommentaire('{{ publication.id }}')" style="display:none" id="voirPlus_{{publication.id}}">Voir plus</button></div>
                     <div class='ajouterCommentaire'  id="user_{{publication.id}}" data-username="{{ user.username }}" data-user-id="{{ user.utilisateur.id }}"> 
                         <textarea id="commentaire_{{ publication.id }}" class="comment-input" placeholder="Ajouter un commentaire"></textarea>
-                        <button id class="send-button"  onclick="creerCommentaire({{publication.id}})"><i class="fas fa-paper-plane"></i></button>
+                        <button id class="send-button"  onclick="creerCommentaire('{{publication.id}}')"><i class="fas fa-paper-plane"></i></button>
                         <script>
                             var creer_commentaire_url = "{% url 'creer_commentaire' %}";
                         </script>

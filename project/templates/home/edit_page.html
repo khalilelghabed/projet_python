@@ -1,0 +1,20 @@
+{% extends 'home/cv_template.html' %}
+
+{% block cv_content %}
+
+<div class="container">
+<ul>
+    <li><a href="{% url 'edit_profile' %}" class="edit_profile">Edit PROFILE</a></li>
+    <li><a href="{% url 'edit_skill' %}"  class="edit_skill">Edit EXPERTISE</a></li>
+    <li><a href="{% url 'edit_reference' %}" class="edit_reference">Edit REFERENCE</a></li>
+
+    <li><a href="{% url 'edit_education' %}" class="edit_education">Edit EDUCATION</a></li>
+
+    <li><a href="{% url 'edit_certification' %}" class="edit_certification">Edit CERTIFICATION</a></li>
+
+    
+    <li><a href="{% url 'edit_social' %}" class="edit_socials">Edit SOCIALS</a></li>
+
+</ul>
+</div>
+{% endblock %}

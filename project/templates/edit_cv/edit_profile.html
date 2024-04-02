@@ -1,0 +1,36 @@
+<!-- edit_profile.html -->
+{% extends 'home/cv_template.html' %}
+
+{% block cv_content %}
+
+
+<div class="container">
+    <h1>Edit Profile</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <h4 for="id_profile_image" class="control-h4">Profile Image:</h4><br>
+            {{ form.profile_image }}
+        </div>
+        <div class="form-group">
+            <h4 for="id_first_name" class="control-h4">First Name:</h4><br>
+            {{ form.first_name }}
+        </div>
+        <div class="form-group">
+            <h4 for="id_last_name" class="control-h4">Last Name:</h4><br>
+            {{ form.last_name }}
+        </div>
+        <div class="form-group">
+            <h4 for="id_title" class="control-h4">Title:</h4><br>
+            {{ form.title }}
+        </div>
+        <div class="form-group">
+            <h4 for="id_description" class="control-h4">Description:</h4><br>
+            {{ form.description }}
+        </div>
+        <!-- Add similar form fields for other fields -->
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+
+{% endblock %}
