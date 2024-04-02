@@ -1,33 +1,40 @@
-{% block content  %}
-<h4>se connecter</h4>
-<div class="creerForm">
+{% extends "premierPage.html" %}
+{% block content %}
+  <div class="untree_co-section">
     
-    <form method="POST" action="" class="login">
-        {% csrf_token %}
-        <div>
-        <label for="email">email :</label>
-        <input type="email" name="email" id="email" required >
+    <div class="container">
+
+      <div class="row mb-5 justify-content-center">
+        <div class="col-lg-5 mx-auto order-1" data-aos="fade-up" data-aos-delay="200">
+          <form action="#" class="form-box" method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-12 mb-3">
+                <input type="email" name="email" id="email" required class="form-control" placeholder="email">
+              </div>
+              <div class="col-12 mb-3">
+                <input type="password" name="password" id="password" required   class="form-control" placeholder="password">
+              </div>
+
+              
+              <div class="col-12">
+                <input type="submit" value="se connecter" class="btn btn-primary">
+              </div>
+              <p style="font-size: 12px;">tu n'as pas un compte ? <a href="{% url 'creerCompte'%}" >creer un compte</a></p>
+              <p style="font-size: 1em; font-weight: bolder; color: red;">
+            
+
+                <p style="color:red;">{{error_message}}</p>
+                
+              </p>
+            </div>
+            
+          </form>
+          
         </div>
+      </div>
 
-    
-    <div>
-        <label for="password">password :</label>
-        <input type="password" name="password" id="password" required  minlength=10>
+      
     </div>
-       <div>
-         <p style="font-size: 12px;">tu n'as pas un compte ? <a href="{% url 'creerCompte'%}" >creer un compte</a></p>
-        <button type="submit" class="send">se connecter </button>
-    </div>
-        <p style="font-size: 1em; font-weight: bolder; color: red;">
-            
-
-            <p style="color:red;">{{error_message}}</p>
-            
-          </p>
-
-    </form>
-   
-    </div>
-
-
-{% endblock content  %}
+  </div> <!-- /.untree_co-section -->
+  {% endblock content %}
