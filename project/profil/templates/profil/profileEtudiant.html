@@ -115,8 +115,8 @@
         
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
             <h5 class="mb-0">Contacts</h5>
-            <p>email: {{utilisateur.email}}<br>phone: {{utilisateur.tele}} <br>Website: {{utilisateur.entreprise.website3}} <br>
-                Location: {{utilisateur.entreprise.location}}
+            <p>email: {{utilisateur.email}}<br>phone: {{utilisateur.tele}} <br>Website: {{utilisateur.entp.website3}} <br>
+                Location: {{utilisateur.entp.location}}
             </p>
         </div>
     </nav>
@@ -127,9 +127,9 @@
         </div>
         <div class="sm widget card border-1 rounded shadow p-4 mt-4 mx-2">
             <h5 class="mb-0">More Info !</h5>
-            <p>Specialties: {{utilisateur.entreprise.specialties}} <br>
-            Certifications: {{utilisateur.entreprise.certifications}} <br>
-            Comapany size: {{utilisateur.entreprise.size}} <br>
+            <p>Specialties: {{utilisateur.entp.specialties}} <br>
+            Certifications: {{utilisateur.entp.certifications}} <br>
+            Comapany size: {{utilisateur.entp.size}} <br>
         </p>
         </div>
     </aside>
@@ -157,7 +157,7 @@
             <h2 class="user-role">Teacher</h2>
             {% endif %}
             {% if utilisateur.type_profil == 'ent' %}
-            <h1 class="user-name">{{utilisateur.entreprise.company_name}}</h1>
+            <h1 class="user-name">{{utilisateur.entp.company_name}}</h1>
             <h2 class="user-role">Comapany</h2>
             {% endif %}
 
@@ -167,10 +167,14 @@
                 
             <div class="follow-info">
                 
-                <span>{{utilisateur.following.count}}</span>
-                <span>{{utilisateur.followers.count}}</span>
+                <span>Following : {{following.count}}</span>
+                <span>Followers : {{followers.count}}</span>
                 {% if not is_own_profile %}
-                <button class="follow-button unfollowed" onclick="toggleFollow(this)">Follow</button>
+                <form action="{% url 'toggle_follow' user_id=utilisateur.id %}" method="post">
+                    {% csrf_token %}
+                    <input id="myCheck" type="hidden" name="followclicked" value="0">
+                    <button type="submit" class="follow-button {%if is_followed%}followed{%else%}unfollowed{%endif%}" onclick="toggleFollow(this)">{%if is_followed%}Following{%else%}Follow{%endif%}</button>
+                </form>                
                 {% endif %}
             </div>
         </div>
@@ -181,13 +185,13 @@
         <button id="about-button" class="btn btn-outline primary">Settings</button>
         <button id="posts-button" class="btn btn-outline primary ">Posts</button>
         {% if not utilisateur.type_profil == 'ent' %}
-        <button id="resume-button" class="btn btn-outline primary">Resume</button>
+        <!-- <button id="resume-button" class="btn btn-outline primary">Resume</button> -->
         {% endif %}
         {% endif %}
         {% if not is_own_profile %}
         <button id="posts-button" class="btn btn-outline primary ">Posts</button>
         {% if not utilisateur.type_profil == 'ent' %}
-        <button id="resume-button" class="btn btn-outline primary">Resume</button>
+        <!-- <button id="resume-button" class="btn btn-outline primary">Resume</button> -->
         {% endif %}
         {% endif %}
     </div>
@@ -384,11 +388,11 @@
             <h2>Settings</h2>
             <div class="info-item">
                 <label for="company_name">Comapany Name:</label>
-                <span id="company_name">{{utilisateur.entreprise.company_name}}</span>
+                <span id="company_name">{{utilisateur.entp.company_name}}</span>
             </div>
             <div class="info-item">
                 <label for="owner_name">Owner Name:</label>
-                <span id="owner_name">{{utilisateur.entreprise.owner_name}}</span>
+                <span id="owner_name">{{utilisateur.entp.owner_name}}</span>
             </div>
             <div class="info-item">
                 <label for="bio">About:</label>
@@ -405,27 +409,27 @@
             
             <div class="info-item">
                 <label for="website3">Website:</label>
-                <span id="website3">{{utilisateur.entreprise.website3}}</span>
+                <span id="website3">{{utilisateur.entp.website3}}</span>
             </div>
             <div class="info-item">
                 <label for="size">Comapany size:</label>
-                <span id="size">{{utilisateur.entreprise.size}}</span>
+                <span id="size">{{utilisateur.entp.size}}</span>
             </div>
             <div class="info-item">
                 <label for="specialties">Specialties:</label>
-                <span id="specialties">{{utilisateur.entreprise.specialties}}</span>
+                <span id="specialties">{{utilisateur.entp.specialties}}</span>
             </div>
             <div class="info-item">
                 <label for="certifications">Certifications:</label>
-                <span id="certifications">{{utilisateur.entreprise.certifications}}</span>
+                <span id="certifications">{{utilisateur.entp.certifications}}</span>
             </div>
             <div class="info-item">
                 <label for="location">Location:</label>
-                <span id="location">{{utilisateur.entreprise.location}}</span>
+                <span id="location">{{utilisateur.entp.location}}</span>
             </div>
             <div class="info-item">
                 <label for="working_days">Working Days:</label>
-                <span id="working_days">{{utilisateur.entreprise.working_days}}</span>
+                <span id="working_days">{{utilisateur.entp.working_days}}</span>
             </div>
            
           <button id="update-button" onclick="toggleUpdateWidget()">Update Information</button>

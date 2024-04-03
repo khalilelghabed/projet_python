@@ -18,6 +18,7 @@ urlpatterns = [
     path('<int:user_id>/update_etu/', views.update_information_etu, name='update_etu'),
     path('<int:user_id>/update_ens/', views.update_information_ens, name='update_ens'),
     path('<int:user_id>/update_ent/', views.update_information_ent, name='update_ent'),
-    path('toggle_follow/<int:user_id>/', views.toggle_follow, name='toggle_follow'),
+    #path('toggle_follow/<int:user_id>/', views.toggle_follow, name='toggle_follow'),
+    path('toggle_follow/<int:user_id>/', views.follow, name='toggle_follow'),
     
 ]

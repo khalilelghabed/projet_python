@@ -1,12 +1,13 @@
 from django.contrib import admin
 from .models import *
-from .models import Utilisateur,Etudiant, projet, Cv,Enseignant,Entreprise
+from .models import Utilisateur,Etudiant, projet, Cv,Enseignant,Entp as Entreprise,Connexion
 from django.contrib import admin
 
 
    
 
 admin.site.register(Utilisateur)
+admin.site.register(Connexion)
 
 
 admin.site.register(Etudiant)

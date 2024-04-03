@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from Utilisateurs.models import Utilisateur,Etudiant,User,Enseignant,Entreprise
+from Utilisateurs.models import Utilisateur,Etudiant,User,Enseignant,Entp as Entreprise,Connexion
 from django.core.files.storage import FileSystemStorage
 from publications.models import Publication
 
@@ -12,7 +12,10 @@ def profil_page(request, user_id):
     is_own_profile = request.user == utilisateur.user  
     print(is_own_profile)# Assuming you have a 'user' field in your Utilisateur model
     publications_utilisateur = Publication.objects.filter(auteur=utilisateur)
-    return render(request, 'profil/profileEtudiant.html', {'utilisateur': utilisateur, 'is_own_profile': is_own_profile,'publications': publications_utilisateur})
+    following = Connexion.objects.filter(follower = utilisateur)
+    followers = Connexion.objects.filter(followed = utilisateur)
+    is_followed = Connexion.objects.filter(follower = request.user.utilisateur ,followed = utilisateur).exists()
+    return render(request, 'profil/profileEtudiant.html', {'utilisateur': utilisateur, 'is_own_profile': is_own_profile,'publications': publications_utilisateur,"following":following,"followers":followers,"is_followed":is_followed})
 
 from datetime import datetime
 @login_required
@@ -162,7 +165,14 @@ def toggle_follow(request, user_id):
 
     return redirect('profil_page', user_id=user_id)
     
-    
+def follow(request,user_id):
+    user_to_follow = Utilisateur.objects.get(id=user_id)
+    if Connexion.objects.filter(follower=request.user.utilisateur,followed=user_to_follow).exists():
+        Connexion.objects.get(follower=request.user.utilisateur,followed=user_to_follow).delete()
+    else :
+        Connexion.objects.create(follower=request.user.utilisateur,followed=user_to_follow)
+    return redirect('profil_page', user_id=user_id)
+
     
     
 

@@ -71,6 +71,13 @@ def create_utilisateur(sender, instance, created, **kwargs):
         Utilisateur.objects.create(user=instance)
     
     
+class Connexion(models.Model):
+    follower = models.ForeignKey(Utilisateur,related_name = "follower",on_delete=models.CASCADE)
+    followed = models.ForeignKey(Utilisateur,related_name = "followed",on_delete=models.CASCADE)
+    dateConnection = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.follower} : {self.followed}"    
     
 
 
@@ -91,7 +98,7 @@ class Etudiant(Utilisateur):
         return super().__str__()
     
 
-class Entreprise(Utilisateur):
+class Entp(Utilisateur):
     company_name = models.CharField(max_length=50, default='Company X')
     owner_name = models.CharField(max_length=50, default='Sam smith')
     website3 = models.TextField(max_length=255, default='www.website.com')
@@ -102,8 +109,6 @@ class Entreprise(Utilisateur):
     working_days = models.TextField(max_length=255,default='everyday')
     def __str__(self):
         return super().__str__()
-class Entreprise(models.Model):
-    Industry=models.CharField(max_length=255)
     
 
 

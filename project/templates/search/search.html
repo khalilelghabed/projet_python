@@ -7,7 +7,7 @@
     .content {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
-        width: 100%%
+        width: 100%;
     }
   
   
@@ -126,7 +126,7 @@
             <div class="info">
                 <img src={{ utilisateur.photo_profil.url }} alt="Photo de profil">
                 <div>
-                    <p><a href="#">{{utilisateur.nom}} {{utilisateur.prenom}}</a></p>
+                    <p><a href="/profil/{{utilisateur.id}}">{{utilisateur.nom}} {{utilisateur.prenom}}</a></p>
                     <p>{{utilisateur.etudiant.major}}
                     
                 </div>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import  HttpResponse
-from Utilisateurs.models import Utilisateur, Enseignant,Etudiant,Entreprise
+from Utilisateurs.models import Utilisateur, Enseignant,Etudiant,Entp as Entreprise
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login , authenticate, logout 
